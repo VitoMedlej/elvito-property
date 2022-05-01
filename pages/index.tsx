@@ -1,13 +1,27 @@
-import { Box } from '@mui/material'
-import type { NextPage } from 'next'
+import type {NextPage} from 'next'
+import Hero from '../components/Hero/Hero';
+import Featured from '../components/Featured/Featured';
+import Stats from '../components/Stats/Stats';
+import Category from '../components/Category/Category';
+import HeadLine from '../components/HeadLine/HeadLine';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+const Home : NextPage = () => {
+  
 
 
-const Home: NextPage = () => {
-  return (
-    <Box sx={{color:'red'}}>
-      hello world
-    </Box>
-  )
+    
+    return (
+        <>
+         <Hero/>
+         <Featured/>
+         <Stats/>
+         <Category/>
+         <HeadLine/>
+        </>
+
+    )
 }
 
 export default Home

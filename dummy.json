@@ -1,0 +1,31 @@
+[
+
+    {
+        "title": "",
+        "_id" : "",
+        "ownerID" : "",
+        "ownerName" : "",
+        "description" : "",
+        "state":"active",
+        "purpose":"for-rent",
+        "rentFrequency":"monthly",
+        "slug": "",
+        "createdAt" : 0,
+        "rooms":0,
+        "baths":1,
+        "propertySize" : "",
+        "coverPhoto" : "",
+        "images" : [""],
+        "phoneNumber" : 0,
+        "contactName":"",
+        "keywords" : [""],
+        "type":"",
+        "price" : 0,
+        "currency" : "USD",
+        "furnished" : false,
+        "location" : "",
+        "payment" : ""
+      
+    }
+
+]
