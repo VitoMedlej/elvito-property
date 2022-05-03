@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 
 export interface IStatInfo {
     stat :  number;
@@ -10,4 +11,11 @@ export interface ICategoryItem {
     title : string
     href : string
     height : string
+}
+export interface IFilterOption {
+    isOpen : boolean;
+    buttonText: string
+    title : string
+    children : any
+    setOpen : Dispatch<SetStateAction<boolean>>
 }
