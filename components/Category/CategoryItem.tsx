@@ -8,7 +8,7 @@ const CategoryItem = ({img, height, href, title} : ICategoryItem) => {
     return (
         <Box
             className='box'
-            onClick={() => router.push(`/real-estate-and-homes/${href}`, undefined, {scroll: false})}
+            onClick={() => router.push(`/real-estate-and-homes/${href}`, undefined, {scroll: true})}
             sx={{
             height: {
                 xs: `${height === '410px'

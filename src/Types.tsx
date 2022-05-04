@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import {Dispatch, SetStateAction} from "react";
 
 export interface IStatInfo {
-    stat :  number;
+    stat : number;
     title : string
-    positive ?: boolean
-    delay ?: number
+    positive?: boolean
+    delay?: number
 }
 export interface ICategoryItem {
     img : string
@@ -14,8 +14,29 @@ export interface ICategoryItem {
 }
 export interface IFilterOption {
     isOpen : boolean;
-    buttonText: string
-    title : string
+    buttonText : string
+    title?: string
     children : any
-    setOpen : Dispatch<SetStateAction<boolean>>
+    name : string
+    setOpen : Dispatch < SetStateAction < any >>
+}
+export interface IPropertySection {
+    sectionTitle : string | undefined
+}
+export interface IHouseCard {
+    width?:  {
+        xs  ?: string,
+        sm  ?: string,
+        md  ?: string
+    } | string
+    isMinWidthDisabled ?: boolean
+    isFeatured ?:boolean
+}
+export interface IBreadcrumbLink {
+    title : string;
+    href : string;
+}
+export interface IBreadcrumb {
+    id : string;
+    category : string;
 }

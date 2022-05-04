@@ -38,6 +38,10 @@ img {
   padding: 10px 0px 10px 15px;
 }
 
+.icons {
+  pointer-events: none;
+}
+
 .BR {
   -webkit-transition: 0.2s ease;
   transition: 0.2s ease;

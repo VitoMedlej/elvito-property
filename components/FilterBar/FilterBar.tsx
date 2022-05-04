@@ -15,8 +15,7 @@ import DesktopFilterSection from "./FilterOptions/DesktopFilterSection"
 import SearchBox from "./SearchBox"
 
 const FilterBar = () => {
-    const [isOpen,
-        setOpen] = useState(false)
+
 
     return (
         <Box
@@ -35,25 +34,27 @@ const FilterBar = () => {
         }}>
             <SearchBox/>
             <DesktopFilterSection/>
-       
-            <Box>
 
+            <Box>
                 <Button
-                    onClick={() => setOpen(!isOpen)}
+                    
                     sx={{
                     py: '7px',
-                    border: 'none',
-                    background: '#d42c2a',
+                    mx : '5px',
+                    background: 'transparent',
+                    color: '#d42c2a',
+                    border: '1px solid #d42c2a',
                     ':hover': {
-                        background: '#c10d0b',
-                        border: 'none'
+                        border: '1px solid #d42c2a',
+                        background: '#d42c2a',
+                        color: 'white'
                     }
                 }}
                     variant='outlined'
                     size='small'>
 
                     <Typography
-                        color='white'
+                        fontWeight='500'
                         fontSize={{
                         xs: '12px'
                     }}>

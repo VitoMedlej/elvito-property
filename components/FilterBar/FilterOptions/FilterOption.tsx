@@ -10,15 +10,28 @@ import {
 import {useState} from "react";
 import {IFilterOption} from "../../../src/Types";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import {defaultState} from "./DesktopFilterSection";
 
-const FilterOption = ({children, isOpen, title, setOpen, buttonText} : IFilterOption) => {
+const FilterOption = ({
+    children,
+    isOpen,
+    title,
+    name,
+    setOpen,
+    buttonText
+} : IFilterOption) => {
 
     const [anchorEl,
         setAnchorEl] = useState < null | HTMLElement > (null);
 
     const handleClick = (event : React.MouseEvent < HTMLElement >) => {
         setAnchorEl(event.currentTarget);
-        setOpen(!isOpen)
+        let targetName = event.target as React.ButtonHTMLAttributes < HTMLButtonElement >;
+        if (targetName.name) 
+            setOpen({
+                ...defaultState,
+                [targetName.name]: !isOpen
+            })
 
     };
 
@@ -28,17 +41,19 @@ const FilterOption = ({children, isOpen, title, setOpen, buttonText} : IFilterOp
             background: 'white'
         }}>
             <Button
-                startIcon={< KeyboardArrowDownIcon />}
+                name={`${name}`}
+                startIcon={< KeyboardArrowDownIcon   />}
                 onClick={(e) => handleClick(e)}
                 sx={{
                 py: '4px',
-                color: '#d42c2a',
-                border: '1px solid #d42c2a',
+                color: '#494949',
+                border: '1px solid #494949',
                 ':hover': {
-                    background: '#c10d0b',
-                    border: '1px solid #d42c2a',
-                    color: 'white'
-                }
+                    background: '#e9e9e9',
+                    border: '1px solid #494949',
+                  
+                },
+            
             }}
                 size='small'
                 variant='outlined'>
@@ -67,14 +82,15 @@ const FilterOption = ({children, isOpen, title, setOpen, buttonText} : IFilterOp
                             mt: '1em',
                             boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'
                         }}>
-                            <Typography
+                            {title && <Typography
                                 fontWeight='500'
                                 sx={{
                                 py: '1.1em'
                             }}>
-                                Filter by price
-                            </Typography>
+                                {title}
+                            </Typography>}
                             <> {children} </>
+
                         </Box>
                     </Fade>
                 )}

@@ -5,7 +5,6 @@ const Footer = () => {
         <Box
             sx={{
             width: '100%',
-            display:'none',
             background: 'black',
             color: 'white',
             height: '300px'

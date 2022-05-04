@@ -1,10 +1,13 @@
 import {Box, Button, Drawer} from "@mui/material"
 import {useRouter} from "next/router"
 import {useState} from "react"
-import FilterBar from "../../components/FilterBar/FilterBar"
+import FilterBar from "../../../components/FilterBar/FilterBar"
+import PropertySection from "../../../components/PropertySection/PropertySection"
+
 
 const id = () => {
     const router = useRouter()
+
     const [isDrawerOpen,
         setDrawerOpen] = useState(false)
     const toggleDrawer = (open : boolean) => (event : React.KeyboardEvent | React.MouseEvent) => {
@@ -13,6 +16,7 @@ const id = () => {
         }
 
         setDrawerOpen(open);
+
     };
     return (
         <Box
@@ -25,7 +29,8 @@ const id = () => {
         }}>
 
             <FilterBar/>
-        
+            <PropertySection sectionTitle={`${router.query.id || 'propertie'}`}/>
+
             <Drawer open={isDrawerOpen} onClose={toggleDrawer(false)}>
                 <Box sx={{
                     width: '300px'

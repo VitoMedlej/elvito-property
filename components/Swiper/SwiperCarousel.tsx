@@ -36,21 +36,21 @@ const SwiperCarousel = () => {
                 slidesPerView: 2
             }
         }}>
-            
+
             <SwiperSlide>
-                <HouseCard/>
+                <HouseCard width='95%' isFeatured={true}/>
             </SwiperSlide>
             <SwiperSlide>
-                <HouseCard/>
+                <HouseCard width='95%' isFeatured={true}/>
             </SwiperSlide>
             <SwiperSlide>
-                <HouseCard/>
+                <HouseCard width='95%' isFeatured={true}/>
             </SwiperSlide>
             <SwiperSlide>
-                <HouseCard/>
+                <HouseCard width='95%' isFeatured={true}/>
             </SwiperSlide>
             <SwiperSlide>
-                <HouseCard/>
+                <HouseCard width='95%' isFeatured={true}/>
             </SwiperSlide>
 
         </Swiper>
