@@ -6,11 +6,18 @@ body {
   scroll-behavior: smooth;
 }
 
-img {
+.img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.img2 {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .LandingPage:after {
@@ -79,5 +86,20 @@ img {
   z-index: 215215;
   color: white;
   pointer-events: none;
+}
+
+.swiper-button-disabled,
+.swiper-button-next,
+.swiper-button-prev {
+  padding: 5px;
+}
+
+.swiper-button-disabled:after,
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  -webkit-filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.6));
+          filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.6));
+  color: white;
+  font-weight: 600;
 }
 /*# sourceMappingURL=Styles.css.map */

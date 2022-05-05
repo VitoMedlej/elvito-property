@@ -31,6 +31,7 @@ export default function HouseCard({width ,isMinWidthDisabled,isFeatured} : IHous
         }}>
             <CardMedia
                 component="img"
+                className='img'
                 height="140"
                 image="https://ap.rdcpix.com/06547a8e2a49c644f7a277130c39e3del-m4093847176od-w480_h360.webp"
                 alt="green iguana"/>

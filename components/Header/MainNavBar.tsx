@@ -79,7 +79,7 @@ const MainNavBar = () => {
                 </Box>
                 <Box
                     sx={{
-                    width: '100%',
+                    width: '90%',
                     display: 'flex',
                     justifyContent: {
                         xs: 'flex-end',

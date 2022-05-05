@@ -5,10 +5,15 @@ body {
     scroll-behavior: smooth;
 }
 
-img {
+.img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.img2 {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .LandingPage {
     &:after {
@@ -71,3 +76,14 @@ img {
     color: white;
     pointer-events: none;
 }
+.swiper-button-disabled,
+.swiper-button-next,
+.swiper-button-prev {
+    padding: 5px;
+    &:after {
+        filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.6));
+        color: white;
+        font-weight: 600;
+    }
+}
+ 
