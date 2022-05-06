@@ -5,7 +5,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import {useRouter} from "next/router";
 import {useEffect, useRef} from "react";
 import gsap from "gsap";
-
+import Image from 'next/image'
 
 
 const MainNavBar = () => {

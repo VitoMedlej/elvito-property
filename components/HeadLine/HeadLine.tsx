@@ -3,6 +3,9 @@ import {useRouter} from "next/router"
 import {useEffect, useRef} from "react"
 import {gsap} from "gsap";
 
+
+
+
 const HeadLine = () => {
     const router = useRouter()
 
@@ -26,7 +29,7 @@ const HeadLine = () => {
                 start :'bottom 70%'
             }
         })
-    }, [])
+    })
 
     return (
         <Box

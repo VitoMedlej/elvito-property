@@ -10,7 +10,7 @@ import 'swiper/css'
 import 'swiper/css/navigation';
 import {useState} from "react";
 
-const index = () => {
+const Index = () => {
     const [className,
         setClassName] = useState('img')
     const router = useRouter()
@@ -214,4 +214,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Index

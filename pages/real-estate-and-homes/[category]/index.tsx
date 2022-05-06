@@ -5,7 +5,7 @@ import FilterBar from "../../../components/FilterBar/FilterBar"
 import PropertySection from "../../../components/PropertySection/PropertySection"
 
 
-const id = () => {
+const Index = () => {
     const router = useRouter()
 
     const [isDrawerOpen,
@@ -41,4 +41,4 @@ const id = () => {
     )
 }
 
-export default id
+export default Index

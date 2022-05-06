@@ -1,6 +1,6 @@
 import {Box, IconButton, Typography} from "@mui/material"
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import {useEffect, useLayoutEffect, useRef} from "react";
+import {useEffect, useRef} from "react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
 
@@ -26,7 +26,7 @@ const Hero = () => {
             })
         }
      
-    }, [])
+    })
 
     return (
         <Box>
@@ -93,7 +93,7 @@ const Hero = () => {
                         },
                         fontWeight: '400'
                     }}>
-                        We'll help you find your perfect home
+                        We&apos;ll help you find your perfect home
                     </Typography>
                 </Box>
                 <Box
