@@ -61,9 +61,10 @@ const MainNavBar = () => {
             }}
                 maxWidth="lg">
                 <Box
+                    data-cy='logo'
                     className='logo'
                     onClick={() => {
-                        
+                  
                     router.push('/')
                 }}
                     sx={{
