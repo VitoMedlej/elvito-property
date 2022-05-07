@@ -57,6 +57,7 @@ const ContactForm = ({isHiddenOnMobile} : IContactForm) => {
                 }}>
                     Submit
                 </Button>
+         
             </Box>
         </Box>
     )

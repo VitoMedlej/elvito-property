@@ -9,11 +9,15 @@ import {
     InputLabel,
     ListItemText,
     OutlinedInput,
-    Select
+    Select,
+    Backdrop
 } from "@mui/material"
 import {useState} from "react"
 import FilterOption from "./FilterOption"
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+
+
+
 export const defaultState = {
     isPriceFilterOpen: false,
     isTypeFilterOpen: false,
@@ -70,6 +74,7 @@ const pricesArray = [
 ]
 
 const DesktopFilterSection = () => {
+    const [isBackDropOpen,setBackDropOpen] = useState(false)
     const [personName,
         setPersonName] = useState < string[] > ([]);
     const [filterStates,
@@ -84,6 +89,11 @@ const DesktopFilterSection = () => {
             ? value.split(',')
             : value,);
     };
+    const BackDropHandler = () => {
+        setBackDropOpen(!isBackDropOpen)
+    }
+    
+
     return (
         <Box
             sx={{
@@ -92,13 +102,23 @@ const DesktopFilterSection = () => {
                 md: ' flex'
             }
         }}>
+            <Backdrop
+                sx={{background:'transparent',display:{xs:'none',md:'block'}}}
+                open={isBackDropOpen}
+                onClick={()=>{
+                setFilterStates(defaultState)
+                setBackDropOpen(false);
+                }}
+            />
             <FilterOption
                 name={'isPriceFilterOpen'}
                 title='Filter By Price'
                 buttonText='price'
+                BackDropHandler={BackDropHandler}
                 isOpen={filterStates.isPriceFilterOpen}
+                
                 setOpen={setFilterStates}>
-                <>
+                <Box sx={{zIndex:'51251251'}}>
                     <TextField
                     id="filled-select-currency"
                     select
@@ -114,7 +134,7 @@ const DesktopFilterSection = () => {
                     {pricesArray
                         .filter(price => price.value < 380000)
                         .map(price => {
-                            return <MenuItem key={price.value} value={price.value}>
+                            return <MenuItem  key={price.value} value={price.value}>
                                 {price.price}
                             </MenuItem>
                         })}
@@ -138,11 +158,12 @@ const DesktopFilterSection = () => {
                             </MenuItem>
                         })}
                 </TextField>
-            </>
+            </Box>
 
         </FilterOption>
 
         <FilterOption
+        BackDropHandler={BackDropHandler}
             name={'isTypeFilterOpen'}
             title='Filter By Type '
             buttonText='Property Type'
@@ -174,6 +195,7 @@ const DesktopFilterSection = () => {
         </FilterOption>
 
         <FilterOption
+        BackDropHandler={BackDropHandler}
             name='isBedsFilterOpen'
             buttonText={`Beds & baths`}
             isOpen={filterStates.isBedsFilterOpen}

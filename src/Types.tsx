@@ -20,6 +20,7 @@ export interface IFilterOption {
     title?: string
     children : any
     name : string
+    BackDropHandler ?: () => void
     setOpen : Dispatch < SetStateAction < any >>
 }
 export interface IPropertySection {
@@ -58,4 +59,8 @@ export interface ISummaryInfo {
 export interface ISwipeableMenuDrawer {
     setDrawerOpen: Dispatch<SetStateAction<boolean>>;
     isDrawerOpen :  boolean
+}
+export interface ITopNavBarLink {
+    title : string 
+    href : string
 }

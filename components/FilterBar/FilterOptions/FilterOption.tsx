@@ -17,6 +17,7 @@ const FilterOption = ({
     isOpen,
     title,
     name,
+    BackDropHandler,
     setOpen,
     buttonText
 } : IFilterOption) => {
@@ -32,15 +33,17 @@ const FilterOption = ({
                 ...defaultState,
                 [targetName.name]: !isOpen
             })
-
+            BackDropHandler && BackDropHandler()
     };
 
     return (
         <Box sx={{
             mx: '5px',
+            
             background: 'white'
         }}>
             <Button
+            className='iconBtn'
                 name={`${name}`}
                 startIcon={< KeyboardArrowDownIcon   />}
                 onClick={(e) => handleClick(e)}

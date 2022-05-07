@@ -6,25 +6,12 @@ import {useRouter} from "next/router";
 import {useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
+import { ITopNavBarLink } from "../../src/Types";
+import TopNavBarLink from "./TopNavBarLink";
 
 
 
-const TopNavBarLink = ({title} : any) => {
-    return <Button
-        className='btn'
-        sx={{
-        color: 'black',
-        mr: '10px',
-        borderBottom: '2px solid transparent',
-        borderRadius: '0',
-        ':hover': {
-            borderBottom: '2px solid #DA020E',
-            background: 'none'
-        }
-    }}>
-        {title}
-    </Button>
-}
+
 
 const MainNavBar = () => {
     const [isDrawerOpen,
@@ -121,8 +108,8 @@ const MainNavBar = () => {
                             md: '2em'
                         }
                     }}>
-                        {(['Buy', 'sell', 'Rent']as const).map(title => {
-                            return <TopNavBarLink key={title} title={title}/>
+                        {([{title:'Buy',href:"/"},{title:'Sell',href:"/submit-property"} , {title:'Rent',href:"/submit-property"}]as const).map(item => {
+                            return <TopNavBarLink key={item.title} href={item.href} title={item.title}/>
                         })
 }
 

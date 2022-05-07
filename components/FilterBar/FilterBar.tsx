@@ -13,6 +13,7 @@ import {useState} from "react"
 import DesktopFilterSection from "./FilterOptions/DesktopFilterSection"
 
 import SearchBox from "./SearchBox"
+import { Drawer } from '@mui/material';
 
 const FilterBar = () => {
 
@@ -34,7 +35,11 @@ const FilterBar = () => {
         }}>
             <SearchBox/>
             <DesktopFilterSection/>
-
+            <Box>
+                <Drawer open={false} anchor='top'>
+                    hello
+                </Drawer>
+            </Box>
             <Box>
                 <Button
                     

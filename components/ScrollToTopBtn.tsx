@@ -10,22 +10,22 @@ const styles = {
     bottom: '5%',
     right: '2%',
     zIndex: '55555',
-    height:'50px',
+    height: '50px'
 }
 
 const ScrollToTopBtn = () => {
     const [isVisible,
         setVisible] = useState(false)
 
-        useEffect(() => {
-          window.addEventListener('scroll', () => {
-              if (window.scrollY > 300) {
-                  setVisible(true);
-              } else {
-                  setVisible(false);
-              }
-          });
-      }, []);
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                setVisible(true);
+            } else {
+                setVisible(false);
+            }
+        });
+    }, []);
 
     return (
 
