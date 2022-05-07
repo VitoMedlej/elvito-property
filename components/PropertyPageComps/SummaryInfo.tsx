@@ -8,16 +8,18 @@ const SummaryInfo = ({Icon ,title ,MainTitle} : ISummaryInfo) => {
             gap: '10px',
             display: 'flex',
             alignItems: 'center',
-            color: '#333333'
+            color: '#333333',
+            width:'33%',
+            pb:'1em',
         }}>
         <>
           {<Icon/>}
 
             <Box>
-                <Typography fontSize=".9em" fontWeight='bold'>
+                <Typography fontSize="1em" fontWeight='600'>
                     {MainTitle}
                 </Typography>
-                <Typography fontSize=".7em">
+                <Typography fontSize=".83em">
                   {title}
                 </Typography>
             </Box>

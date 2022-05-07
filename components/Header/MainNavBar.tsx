@@ -3,18 +3,35 @@ import MenuIcon from '@mui/icons-material/Menu';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {useRouter} from "next/router";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import gsap from "gsap";
-import Image from 'next/image'
+import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
 
+
+
+const TopNavBarLink = ({title} : any) => {
+    return <Button
+        className='btn'
+        sx={{
+        color: 'black',
+        mr: '10px',
+        borderBottom: '2px solid transparent',
+        borderRadius: '0',
+        ':hover': {
+            borderBottom: '2px solid #DA020E',
+            background: 'none'
+        }
+    }}>
+        {title}
+    </Button>
+}
 
 const MainNavBar = () => {
-
-
+    const [isDrawerOpen,
+        setDrawerOpen] = useState(false)
     const router = useRouter()
     const ref = useRef()
 
-    
     const q = gsap
         .utils
         .selector(ref);
@@ -24,31 +41,36 @@ const MainNavBar = () => {
 
             gsap.fromTo('.logo', {
                 opacity: 0
-        }, {
-            opacity: 1,
-            delay: .3
-        })
-        gsap.fromTo(q(".btn"), {
-            transform: 'translateY(-60px)',
-            opacity: 0
-        }, {
-            opacity: '1',
-            transform: 'translateY(0)',
-            stagger: 0.15,
-            delay: .1
-        });
-    }
+            }, {
+                opacity: 1,
+                delay: .3
+            })
+            gsap.fromTo(q(".btn"), {
+                transform: 'translateY(-60px)',
+                opacity: 0
+            }, {
+                opacity: '1',
+                transform: 'translateY(0)',
+                stagger: 0.15,
+                delay: .1
+            });
+        }
 
     }, []);
 
     return (
+
         <AppBar
-        id='appbar'
+            id='appbar'
             sx={{
             boxShadow: 'none',
             background: 'white',
             position: 'relative'
         }}>
+            <SwipeableMenuDrawer
+            setDrawerOpen={setDrawerOpen}
+            isDrawerOpen={isDrawerOpen}
+            />
             <Container
                 sx={{
                 px: {
@@ -64,7 +86,6 @@ const MainNavBar = () => {
                     data-cy='logo'
                     className='logo'
                     onClick={() => {
-                  
                     router.push('/')
                 }}
                     sx={{
@@ -100,48 +121,10 @@ const MainNavBar = () => {
                             md: '2em'
                         }
                     }}>
-                        <Button
-                            className='btn'
-                            sx={{
-                            color: 'black',
-                            mr: '10px',
-                            borderBottom: '2px solid transparent',
-                            borderRadius: '0',
-                            ':hover': {
-                                borderBottom: '2px solid #DA020E',
-                                background: 'none'
-                            }
-                        }}>
-                            Buy
-                        </Button>
-                        <Button
-                            className='btn'
-                            sx={{
-                            color: 'black',
-                            mr: '10px',
-                            borderBottom: '2px solid transparent',
-                            borderRadius: '0',
-                            ':hover': {
-                                borderBottom: '2px solid #DA020E',
-                                background: 'none'
-                            }
-                        }}>
-                            Rent
-                        </Button>
-                        <Button
-                            className='btn'
-                            sx={{
-                            color: 'black',
-                            mr: '10px',
-                            borderBottom: '2px solid transparent',
-                            borderRadius: '0',
-                            ':hover': {
-                                borderBottom: '2px solid #DA020E',
-                                background: 'none'
-                            }
-                        }}>
-                            Sell
-                        </Button>
+                        {(['Buy', 'sell', 'Rent']as const).map(title => {
+                            return <TopNavBarLink key={title} title={title}/>
+                        })
+}
 
                     </Box>
 
@@ -156,6 +139,7 @@ const MainNavBar = () => {
                             }}/>
                         </IconButton>
                         <IconButton
+                            onClick={() => setDrawerOpen(!isDrawerOpen)}
                             className='btn'
                             sx={{
                             display: {

@@ -55,3 +55,7 @@ export interface ISummaryInfo {
     title : string 
     MainTitle : string
 }
+export interface ISwipeableMenuDrawer {
+    setDrawerOpen: Dispatch<SetStateAction<boolean>>;
+    isDrawerOpen :  boolean
+}

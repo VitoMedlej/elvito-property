@@ -8,17 +8,23 @@ import MainNavBar from '../components/Header/MainNavBar'
 import {theme} from '../components/Mui/FontTheme'
 import '../styles/Styles.css'
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import {gsap} from "gsap";
+import ScrollToTopBtn from '../components/ScrollToTopBtn'
+import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
+import gsap from 'gsap';
+
 
 
 
 function MyApp({Component, pageProps} : AppProps) {
-    gsap.registerPlugin(ScrollTrigger);    
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollToPlugin);
+
     return (
         <ThemeProvider theme={theme}>
 
             <MainNavBar/>
             <Component th {...pageProps}/>
+            <ScrollToTopBtn/>
             <Footer/>
 
         </ThemeProvider>
