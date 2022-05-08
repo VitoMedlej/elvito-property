@@ -17,7 +17,7 @@ const Breadcrumb = ({category, id} : IBreadcrumb) => {
                 <Box
                     sx={{
                     cursor: 'pointer',
-                    color: '#0043ff',
+                    color: '#1976d2',
                     textDecoration: 'underline',
                     display: 'flex',
                     alignItems: 'center',

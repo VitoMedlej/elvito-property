@@ -1,10 +1,14 @@
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import {Box, IconButton} from '@mui/material';
+import {Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
 import router from 'next/router';
-import { ISwipeableMenuDrawer } from '../../src/Types';
+import {ISwipeableMenuDrawer} from '../../src/Types';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
 
-const SwipeableMenuDrawer = ({setDrawerOpen,isDrawerOpen} : ISwipeableMenuDrawer ) => {
+
+
+
+const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawer) => {
     return (
         <SwipeableDrawer
             onOpen={() => setDrawerOpen(true)}
@@ -56,7 +60,21 @@ const SwipeableMenuDrawer = ({setDrawerOpen,isDrawerOpen} : ISwipeableMenuDrawer
                     </IconButton>
                 </Box>
             </Box>
-
+            <Box>
+                <List>
+                    <ListItem button >
+                        <ListItemIcon>                      
+                                 <InboxIcon/>
+                        </ListItemIcon>
+                        <ListItemText>
+                           <Typography color='black'>
+                          Btn
+                           </Typography>
+                        </ListItemText>
+                    </ListItem>
+                    
+                </List>
+            </Box>
         </SwipeableDrawer>
     )
 }

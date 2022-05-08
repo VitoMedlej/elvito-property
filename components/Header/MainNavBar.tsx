@@ -1,17 +1,23 @@
-import {AppBar, Box, Button, Container, IconButton} from "@mui/material"
+import {
+    AppBar,
+    Box,
+    Button,
+    Container,
+    Fade,
+    IconButton,
+    Popper,
+    Typography
+} from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import {useRouter} from "next/router";
 import {useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
-import { ITopNavBarLink } from "../../src/Types";
+import {ITopNavBarLink} from "../../src/Types";
 import TopNavBarLink from "./TopNavBarLink";
-
-
-
-
+import Link from "next/link";
+import UserAccountBtn from './UserAccountBtn';
 
 const MainNavBar = () => {
     const [isDrawerOpen,
@@ -45,6 +51,7 @@ const MainNavBar = () => {
 
     }, []);
 
+
     return (
 
         <AppBar
@@ -54,10 +61,7 @@ const MainNavBar = () => {
             background: 'white',
             position: 'relative'
         }}>
-            <SwipeableMenuDrawer
-            setDrawerOpen={setDrawerOpen}
-            isDrawerOpen={isDrawerOpen}
-            />
+            <SwipeableMenuDrawer setDrawerOpen={setDrawerOpen} isDrawerOpen={isDrawerOpen}/>
             <Container
                 sx={{
                 px: {
@@ -108,7 +112,18 @@ const MainNavBar = () => {
                             md: '2em'
                         }
                     }}>
-                        {([{title:'Buy',href:"/"},{title:'Sell',href:"/submit-property"} , {title:'Rent',href:"/submit-property"}]as const).map(item => {
+                        {([
+                            {
+                                title: 'Buy',
+                                href: "/"
+                            }, {
+                                title: 'Sell',
+                                href: "/submit-property"
+                            }, {
+                                title: 'Rent',
+                                href: "/submit-property"
+                            }
+                        ]as const).map(item => {
                             return <TopNavBarLink key={item.title} href={item.href} title={item.title}/>
                         })
 }
@@ -139,22 +154,8 @@ const MainNavBar = () => {
                                 color: 'black'
                             }}/>
                         </IconButton>
-                        <IconButton
-                            className='btn'
-                            sx={{
-                            display: {
-                                xs: 'none',
-                                md: ' flex'
-                            }
-                        }}>
-                            <AccountCircleOutlinedIcon
-                                sx={{
-                                ml: '10px',
-                                color: 'black'
-                            }}/>
 
-                        </IconButton>
-
+                        <UserAccountBtn/>
                     </Box>
                 </Box>
             </Container>

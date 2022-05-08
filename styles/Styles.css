@@ -106,4 +106,8 @@ body {
 .iconBtn span {
   pointer-events: none;
 }
+
+.link a {
+  color: #1976d2;
+}
 /*# sourceMappingURL=Styles.css.map */

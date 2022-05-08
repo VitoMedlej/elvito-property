@@ -47,13 +47,12 @@ const ContactForm = ({isHiddenOnMobile} : IContactForm) => {
                 <Button
                     variant="contained"
                     sx={{
-                    background: '#d42c2a',
-                    border: '1px solid #d42c2a',
-                    ':hover': {
-                        background: 'white',
-                        color: '#d42c2a',
-                        border: '1px solid #d42c2a'
-                    }
+                        backgroundColor: "#d42c2a",
+                        border: "1px solid #d42c2a",
+                        ":hover": {
+                            background: '#bb0806',
+                            border: "1px solid #bb0806"
+                        }
                 }}>
                     Submit
                 </Button>
