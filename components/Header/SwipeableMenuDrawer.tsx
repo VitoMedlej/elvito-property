@@ -1,16 +1,20 @@
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import {Box, IconButton, List, ListItem, ListItemIcon, ListItemText, Typography} from '@mui/material';
+import {Box, IconButton, List} from '@mui/material';
 import router from 'next/router';
 import {ISwipeableMenuDrawer} from '../../src/Types';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-
+import MenuBtn from './MenuBtn';
+import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 
 
 const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawer) => {
     return (
         <SwipeableDrawer
+            sx={{display:{xs:'auto',md:'hidden'}}}
             onOpen={() => setDrawerOpen(true)}
             onClose={() => setDrawerOpen(false)}
             open={isDrawerOpen}
@@ -62,18 +66,35 @@ const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawe
             </Box>
             <Box>
                 <List>
-                    <ListItem button >
-                        <ListItemIcon>                      
-                                 <InboxIcon/>
-                        </ListItemIcon>
-                        <ListItemText>
-                           <Typography color='black'>
-                          Btn
-                           </Typography>
-                        </ListItemText>
-                    </ListItem>
-                    
+
+                    <MenuBtn
+                        handleClick={() => setDrawerOpen(false)}
+                        title='Buy'
+                        href='/real-estate-and-homes/properties?for=sale'
+                        Icon={PaidOutlinedIcon}/>
+
+                    <MenuBtn
+                        handleClick={() => setDrawerOpen(false)}
+                        title='Sell'
+                        href='/submit-property'
+                        Icon={SellOutlinedIcon}/>
+
+                    <MenuBtn
+                        handleClick={() => setDrawerOpen(false)}
+                        title='Rent'
+                        href='/real-estate-and-homes/properties?for=rent'
+                        Icon={CalendarMonthOutlinedIcon}/>
+
+                        <MenuBtn
+                        handleClick={() => setDrawerOpen(false)}
+                        title='User'
+                        href='/account/login'
+                        Icon={PersonOutlineOutlinedIcon}/>
+
+
+
                 </List>
+
             </Box>
         </SwipeableDrawer>
     )

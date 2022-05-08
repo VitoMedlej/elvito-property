@@ -51,7 +51,7 @@ const LoginForm = () => {
                 <Box
                     sx={{
                     boxShadow: 'rgb(0 0 0 / 15%) 0px 8px 24px',
-                    p: '2em 3em ',
+                    p: {xs:' 2em 1em',md:'2em 3em '},
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center'

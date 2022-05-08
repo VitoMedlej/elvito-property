@@ -64,3 +64,9 @@ export interface ITopNavBarLink {
     title : string 
     href : string
 }
+export interface IMenuBtn {
+    href : string
+    Icon : OverridableComponent<SvgIconTypeMap<{}, "svg">>
+    title : string
+    handleClick : () => void
+}

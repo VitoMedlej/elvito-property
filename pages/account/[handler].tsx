@@ -16,14 +16,14 @@ const Handler = () => {
                     container
                     sx={{
                     mx: {
-                        xs: '3vw',
+                        sm: '3vw',
                         lg: 'auto'
                     },
                     my: '5em',
                     justifyContent: 'center'
                 }}>
 
-                    <Grid item xs={12} sm={7} md={5}>
+                    <Grid item xs={12} sm={8} md={6} lg={5.5}>
                         {handler === 'login' && <LoginForm/>}
                         {handler === 'register' && <RegisterForm/>}
                     </Grid>
