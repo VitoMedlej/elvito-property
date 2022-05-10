@@ -5,8 +5,6 @@ import {useRef, useEffect} from "react";
 
 const Category = () => {
 
-  
-
     const ref = useRef()
     const q = gsap
         .utils
@@ -18,12 +16,12 @@ const Category = () => {
             opacity: 0,
             y: '20px'
         }, {
-            ease:'ease',
+            ease: 'ease',
             y: 0,
             opacity: 1,
             stagger: .19,
             scrollTrigger: {
-                trigger: '.sectionTitle',           
+                trigger: '.sectionTitle',
                 start: '100% 45%'
 
             }
@@ -33,7 +31,7 @@ const Category = () => {
     return (
         <Box>
             <Box
-             ref={ref}
+                ref={ref}
                 maxWidth='lg'
                 sx={{
                 mt: {
@@ -65,7 +63,6 @@ const Category = () => {
                 }}>
                     <Grid xs={12} md={4.3} item>
                         <CategoryItem
-
                             href='apartment'
                             title='Apartments'
                             height='410px'
@@ -73,7 +70,6 @@ const Category = () => {
                     </Grid>
 
                     <Box
-                       
                         sx={{
                         display: 'flex',
                         flexWrap: 'wrap',

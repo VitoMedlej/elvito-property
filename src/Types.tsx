@@ -70,3 +70,7 @@ export interface IMenuBtn {
     title : string
     handleClick : () => void
 }
+export interface IDetailsSection {
+    title : string
+    children : any
+}
