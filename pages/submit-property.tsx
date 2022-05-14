@@ -9,12 +9,12 @@ import {
     Typography
 } from "@mui/material"
 import OutlinedInput from '@mui/material/OutlinedInput';
-import { useState } from "react";
+import {useState} from "react";
 import AccountRequiredNote from "../components/SubmitProperty/AccountRequiredNote"
-import DetailsSection from "../components/SubmitProperty/DetailsSection";
+import DetailsSection from '../components/SubmitProperty/DetailsSection';
 import ImageGalleryForm from '../components/SubmitProperty/Forms/ImageGalleryForm';
-
-
+import TextInput from "../components/SubmitProperty/Forms/TextInput";
+import FormHandlingHook from "../src/Hooks/FormHandlingHook";
 
 const propertyTypes = ['apartment', 'villa', 'comercial', 'land', 'chalet']
 const currencies = ['USD', 'EUR', 'LBP']
@@ -51,18 +51,17 @@ const textFieldStyles = {
         md: '32%'
     }
 }
-const defaultFormState = {}
+
 const submitProperty = () => {
-    const [formData,setFormData] = useState(defaultFormState)
+    const {handleImageChange, handleOwnerDetailsChange, handleInputChange, formData} = FormHandlingHook()
 
     return (
 
         <Box
-            onSubmit={(e : any)=>{
-                e.preventDefault();
-          
-                
-            }}
+            onSubmit={(e : any) => {
+            e.preventDefault();
+            console.log(formData)
+        }}
             component='form'
             maxWidth="lg"
             sx={{
@@ -77,26 +76,38 @@ const submitProperty = () => {
             {false && <AccountRequiredNote/>}
 
             <DetailsSection title='Main Details'>
-                <TextField
+                {/* <TextField
                     sx={{
                     ...textFieldStyles
                 }}
+                    value={formData.title}
+                    onChange={(e) => handleInputChange(e)}
+                    name='title'
                     size='small'
                     id="PropertyTitle"
                     label="Property title"
-                    variant="outlined"/>
+                    variant="outlined"/> */}
+                    <TextInput value={formData.title}
+                    name='title'
+                    handleChangeEvent={handleInputChange}
+                    label='Property title'
+                    />
+
                 <TextField
                     select
                     sx={{
                     ...textFieldStyles
                 }}
                     size='small'
+                    onChange={(e) => handleInputChange(e)}
+                    value={`${formData.state}`}
                     id="outlined-basic-state"
                     label="State"
+                    name='state'
                     variant="outlined">
                     <MenuItem value={'active'}>
                         <Typography>
-                            active
+                            ready
                         </Typography>
                     </MenuItem>
                     <MenuItem value={'inactive'}>
@@ -107,18 +118,20 @@ const submitProperty = () => {
 
                 </TextField>
                 <TextField
-                    
+                    onChange={(e) => handleInputChange(e)}
+                    value={`${formData.type}`}
                     sx={{
                     ...textFieldStyles
                 }}
                     size='small'
                     id="outlined-basic-type"
                     label="type"
+                    name='type'
                     select
                     variant="outlined">
                     {propertyTypes.map(type => {
 
-                        return <MenuItem key={type}>
+                        return <MenuItem value={type} key={type}>
                             <Typography>
                                 {type}
                             </Typography>
@@ -132,17 +145,20 @@ const submitProperty = () => {
                 }}>
 
                     <TextField
+                        onChange={(e) => handleInputChange(e)}
+                        value={`${formData.currency}`}
+                        defaultValue={`${formData.currency}`}
                         sx={{
                         ...textFieldStyles
                     }}
+                        name='currency'
                         size='small'
-                        
                         id="outlined-basic-currency"
                         label="currency"
                         select
                         variant="outlined">
                         {currencies.map(currency => {
-                            return <MenuItem key={currency}>
+                            return <MenuItem value={currency} key={currency}>
                                 <Typography>
                                     {currency}
                                 </Typography>
@@ -151,34 +167,32 @@ const submitProperty = () => {
 
                     </TextField>
                     <TextField
+                        onChange={(e) => handleInputChange(e)}
+                        value={formData.price}
                         sx={{
                         ...textFieldStyles
                     }}
+                        name='price'
                         type="number"
                         size='small'
                         id="price"
                         label="Price (numbers only)"
                         variant="outlined"/>
-
-                    <TextField
-                        sx={{
-                        ...textFieldStyles
-                    }}
-                        size='small'
-                        id="sizes"
-                        label="Property Size (provide unit)"
-                        variant="outlined"/> {true && <TextField
-                        sx={{
-                        ...textFieldStyles
-                    }}
-                        size='small'
                         
+                        {formData.purpose === 'for-rent' && <TextField
+                        sx={{
+                        ...textFieldStyles
+                    }}
+                        onChange={(e) => handleInputChange(e)}
+                        value={`${formData.rentFrequency}`}
+                        size='small'
+                        name='rentFrequency'
                         id="outlined-basic-rentFreq"
                         label="Rent frequency"
                         select
                         variant="outlined">
                         {RentFrequency.map(frequency => {
-                            return <MenuItem key={frequency}>
+                            return <MenuItem value={frequency} key={frequency}>
                                 <Typography>
                                     {frequency}
                                 </Typography>
@@ -189,10 +203,12 @@ const submitProperty = () => {
 }
 
                     <TextField
-                        
+                        onChange={(e) => handleInputChange(e)}
+                        value={formData.paymentMethod}
                         sx={{
                         ...textFieldStyles
                     }}
+                        name='paymentMethod'
                         size='small'
                         id="outlined-basic-paymentMethod"
                         label="Payment Method"
@@ -200,7 +216,7 @@ const submitProperty = () => {
                         variant="outlined">
                         {paymentMethods.map(method => {
 
-                            return <MenuItem key={method}>
+                            return <MenuItem value={method} key={method}>
                                 <Typography>
                                     {method}
                                 </Typography>
@@ -210,7 +226,9 @@ const submitProperty = () => {
                     </TextField>
 
                     <TextField
-                        
+                        onChange={(e) => handleInputChange(e)}
+                        value={formData.location}
+                        name='location'
                         sx={{
                         ...textFieldStyles
                     }}
@@ -220,11 +238,39 @@ const submitProperty = () => {
                         type='text'
                         variant="outlined"/>
 
+
+                              <TextField
+                        onChange={(e) => handleInputChange(e)}
+                        value={formData.purpose}
+                        sx={{
+                        ...textFieldStyles
+                    }}
+                        size='small'
+                        id="propertyPurpose"
+                        name='purpose'
+                        label="Purpose"
+                        select
+                        variant="outlined">
+                            <MenuItem value='for-sale'>
+                                <Typography>
+                                    For Sale
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem value='for-rent'>
+                                <Typography>
+                                    For Rent
+                                </Typography>
+                            </MenuItem>
+                        </TextField>
+
                 </Box>
             </DetailsSection>
 
             <DetailsSection title='Property Description'>
                 <TextField
+                    onChange={(e) => handleInputChange(e)}
+                    value={formData.description}
+                    name='description'
                     id="outlined-multiline-Description"
                     label="Description"
                     multiline
@@ -237,8 +283,14 @@ const submitProperty = () => {
                 }}/>
             </DetailsSection>
 
-            {true && <DetailsSection title='Property Features'>
-                <TextField
+             <DetailsSection title='Property Features'>
+              {
+                  formData.type !== 'land' &&
+                  <>
+               <TextField
+                    onChange={(e) => handleInputChange(e)}
+                    value={formData.bathrooms}
+                    name='bathrooms'
                     sx={{
                     ...textFieldStyles
                 }}
@@ -255,6 +307,9 @@ const submitProperty = () => {
                     variant="outlined"/>
 
                 <TextField
+                    onChange={(e) => handleInputChange(e)}
+                    value={formData.rooms}
+                    name='rooms'
                     sx={{
                     ...textFieldStyles
                 }}
@@ -271,6 +326,9 @@ const submitProperty = () => {
                     variant="outlined"/>
 
                 <TextField
+                    onChange={(e) => handleInputChange(e)}
+                    value={formData.balconies}
+                    name='balconies'
                     sx={{
                     ...textFieldStyles
                 }}
@@ -286,24 +344,29 @@ const submitProperty = () => {
                     label="Balconies"
                     variant="outlined"/>
                 <TextField
+                    onChange={(e) => handleInputChange(e)}
+                    value={formData.isFurnished}
+                    name='isFurnished'
                     size='small'
                     label="Furnished"
                     sx={{
                     ...textFieldStyles
                 }}
                     select>
-                    <MenuItem>
+                    <MenuItem value={'true'}>
                         <Typography>
                             Furnished
                         </Typography>
                     </MenuItem>
 
-                    <MenuItem>
+                    <MenuItem value={'false'}>
                         <Typography>
                             Not Furnished
                         </Typography>
                     </MenuItem>
                 </TextField>
+                </>
+                }
 
                 <FormControl
                     size='small'
@@ -312,10 +375,12 @@ const submitProperty = () => {
                 }}>
                     <InputLabel id="demo-multiple-name-label">Key words</InputLabel>
                     <Select
+                        onChange={(e) => handleInputChange(e)}
+                        value={formData.keywords}
+                        name='keywords'
                         labelId="demo-multiple-name-label2"
                         id="demo-multiple-name2"
                         multiple
-                        value={[]}
                         input={< OutlinedInput label = "keywords" />}>
                         {keywords.map((word) => (
                             <MenuItem key={word} value={word}>
@@ -324,11 +389,23 @@ const submitProperty = () => {
                         ))}
                     </Select>
                 </FormControl>
-
-            </DetailsSection>}
+                <TextField
+                    onChange={(e) => handleInputChange(e)}
+                    value={formData.propertySize}
+                    sx={{
+                    ...textFieldStyles
+                }}
+                    size='small'
+                    id="propertySize"
+                    name='propertySize'
+                    label="Property Size (provide unit)"
+                    variant="outlined"/>
+            </DetailsSection>
 
             <DetailsSection title='Contact Details'>
                 <TextField
+                    onChange={(e) => handleOwnerDetailsChange(e)}
+                    name='ownerName'
                     sx={{
                     ...textFieldStyles
                 }}
@@ -336,13 +413,14 @@ const submitProperty = () => {
                     type='text'
                     id="ContactName"
                     label="Name"
-                    
                     variant="outlined"/>
                 <TextField
+                    name='ownerEmail'
                     sx={{
                     ...textFieldStyles
                 }}
-                    
+                    value={formData.ownerDetails.ownerEmail}
+                    onChange={(e) => handleOwnerDetailsChange(e)}
                     size='small'
                     type='email'
                     id="ContactEmail"
@@ -351,10 +429,11 @@ const submitProperty = () => {
                     variant="outlined"/>
 
                 <TextField
+                    onChange={(e) => handleOwnerDetailsChange(e)}
+                    name='ownerPhoneNumber'
                     sx={{
                     ...textFieldStyles
                 }}
-                    
                     size='small'
                     InputProps={{
                     inputProps: {
@@ -367,8 +446,7 @@ const submitProperty = () => {
                     variant="outlined"/>
             </DetailsSection>
 
-        <ImageGalleryForm/>
-
+            <ImageGalleryForm onChange={handleImageChange}/>
 
             <DetailsSection
                 sx={{
@@ -392,7 +470,9 @@ const submitProperty = () => {
                     Submit
                 </Button>
             </DetailsSection>
+
         </Box>
+
     )
 }
 

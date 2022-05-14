@@ -75,3 +75,33 @@ export interface IDetailsSection {
     children : any
     sx ?: any
 }
+export interface IFormData {
+    bathrooms: number;
+    coverPhoto: string;
+    createdAt: number;
+    currency: string;
+    description: string;
+    isFurnished: boolean;
+    images: string[];
+    keywords: string[];
+    location: string;
+    ownerDetails : {
+        ownerId: string,
+        ownerName: string,
+        ownerEmail: string,
+        ownerPhoneNumber: string,
+        ownerProfileImage: string
+    },
+    balconies: number,
+    paymentMethod: string,
+    price: number,
+    propertySize: string,
+    purpose: string ,
+    rentFrequency: string,
+    rooms: number,
+    slug: string,
+    state: string,
+    title: string,
+    type: string
+  
+}

@@ -12,7 +12,9 @@ const styles2 = {
     height: '100%'
 }
 
-const ImageGalleryForm = () => {
+const ImageGalleryForm = (props : {
+    onChange: (imagesArray : string[]) => void
+}) => {
 
     const [imagesArray,
         setImagesArray] = useState < string[] > ([])
@@ -26,6 +28,7 @@ const ImageGalleryForm = () => {
                     ImagesUrls.push(promisesResults.cdnUrl)
             }
             setImagesArray(ImagesUrls)
+            props.onChange(ImagesUrls)
         }
     }
 
