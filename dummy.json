@@ -27,20 +27,6 @@
         "furnished": false,
         "location": "",
         "payment": ""
-    },
-    {
-      
-        "ownerDetails": {
-            "ownerId": "",
-            "ownerName": "",
-            "ownerEmail": "",
-            "ownerPhoneNumber" : "",
-            "ownerProfileImage" : ""
-        },
-        "coverPhoto": "",
-        "images": [""],
-        "location": ""
-       
     }
 
 ]

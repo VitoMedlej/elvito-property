@@ -55,6 +55,7 @@ const Category = () => {
                 }}>
                     Explore Different Categories
                 </Typography>
+             
                 <Grid
                     container
                     sx={{

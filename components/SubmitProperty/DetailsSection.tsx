@@ -7,7 +7,7 @@ const styles = {
     gap: '1em',
     flexWrap: 'wrap'
 }
-const DetailsSection = ({title, children} : IDetailsSection) => {
+const DetailsSection = ({title, children, sx} : IDetailsSection) => {
     return (
         <Box
             sx={{
@@ -26,7 +26,8 @@ const DetailsSection = ({title, children} : IDetailsSection) => {
                 {title}
             </Typography>
             <Box sx={{
-                ...styles
+                ...styles,
+                ...sx
             }}>
                 {children}
             </Box>

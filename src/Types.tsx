@@ -73,4 +73,5 @@ export interface IMenuBtn {
 export interface IDetailsSection {
     title : string
     children : any
+    sx ?: any
 }
