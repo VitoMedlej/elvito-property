@@ -1,5 +1,6 @@
-import { SvgIconTypeMap } from "@mui/material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
+import {SvgIconTypeMap} from "@mui/material";
+import {OverridableComponent} from "@mui/material/OverridableComponent";
+import { ChangeEvent } from "react";
 import {Dispatch, SetStateAction} from "react";
 
 export interface IStatInfo {
@@ -20,7 +21,7 @@ export interface IFilterOption {
     title?: string
     children : any
     name : string
-    BackDropHandler ?: () => void
+    BackDropHandler?: () => void
     setOpen : Dispatch < SetStateAction < any >>
 }
 export interface IPropertySection {
@@ -50,41 +51,43 @@ export interface IContactForm {
     isHiddenOnMobile?: boolean;
 }
 export interface ISummaryInfo {
-    Icon :OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
+    Icon : OverridableComponent < SvgIconTypeMap < {},
+    "svg" >> & {
         muiName: string;
     }
-    title : string 
+    title : string
     MainTitle : string
 }
 export interface ISwipeableMenuDrawer {
-    setDrawerOpen: Dispatch<SetStateAction<boolean>>;
-    isDrawerOpen :  boolean
+    setDrawerOpen : Dispatch < SetStateAction < boolean >>;
+    isDrawerOpen : boolean
 }
 export interface ITopNavBarLink {
-    title : string 
+    title : string
     href : string
 }
 export interface IMenuBtn {
     href : string
-    Icon : OverridableComponent<SvgIconTypeMap<{}, "svg">>
+    Icon : OverridableComponent < SvgIconTypeMap < {},
+    "svg" >>;
     title : string
     handleClick : () => void
 }
 export interface IDetailsSection {
     title : string
     children : any
-    sx ?: any
+    sx?: any
 }
 export interface IFormData {
-    bathrooms: number;
-    coverPhoto: string;
-    createdAt: number;
-    currency: string;
-    description: string;
-    isFurnished: boolean;
-    images: string[];
-    keywords: string[];
-    location: string;
+    bathrooms : number;
+    coverPhoto : string;
+    createdAt : string ;
+    currency : string;
+    description : string;
+    isFurnished : boolean;
+    images : string[];
+    keywords : string[];
+    location : string;
     ownerDetails : {
         ownerId: string,
         ownerName: string,
@@ -92,16 +95,30 @@ export interface IFormData {
         ownerPhoneNumber: string,
         ownerProfileImage: string
     },
-    balconies: number,
-    paymentMethod: string,
-    price: number,
-    propertySize: string,
-    purpose: string ,
-    rentFrequency: string,
-    rooms: number,
-    slug: string,
-    state: string,
-    title: string,
-    type: string
-  
+    balconies : number,
+    paymentMethod : string,
+    price : number,
+    propertySize : string,
+    purpose : string,
+    rentFrequency : string,
+    rooms : number,
+    slug : string,
+    state : string,
+    title : string,
+    type : string
+}
+
+export interface ICustomInput  {
+    name : string
+    value : string | number | string[]
+    label : string
+    onChange : (e : any,isNumber ?: boolean) => void
+    type?: string
+    children ?: any
+    InputProps ?: {
+        inputProps: {
+            min: number;
+            max: number;
+        };
+    } 
 }

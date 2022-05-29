@@ -1,0 +1,57 @@
+
+
+ 
+
+
+
+[
+    {"textFieldStyles" : {
+        "width": {
+          "xs": "100%",
+          "sm": "48%",
+          "md": "32%"
+        }
+      },
+    "paymentMethods":[
+        "Cash",
+        "Cheque",
+        "Credit/Debit Card",
+        "any"
+      ],
+      "RentFrequency" : [
+        "Annually",
+        "Monthy",
+        "Weekly"
+      ],
+      "keywords" : [
+        "cheap",
+        "clean",
+        "for sale",
+        "sale",
+        "beirut",
+        "family house",
+        "villa",
+        "for rent",
+        "wide area",
+        "backyard",
+        "garden",
+        "garage",
+        "maids room",
+        "selling a home",
+        "buy home",
+        "furnished",
+        "modern"
+      ],
+      "styles" : {
+        "width": "100%",
+        "display": "flex",
+        "gap": "1em",
+        "flexWrap": "wrap"
+      }
+    ,
+    "currencies" : ["USD", "EUR", "LBP"]
+    ,
+    "propertyTypes" : ["apartment", "villa", "comercial", "land", "chalet"]
+    
+    }
+]

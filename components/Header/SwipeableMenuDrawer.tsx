@@ -8,13 +8,18 @@ import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-
-
+import { useSession } from 'next-auth/react';
 
 const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawer) => {
+    const {data : session } = useSession()
     return (
         <SwipeableDrawer
-            sx={{display:{xs:'auto',md:'hidden'}}}
+            sx={{
+            display: {
+                xs: 'auto',
+                md: 'hidden'
+            }
+        }}
             onOpen={() => setDrawerOpen(true)}
             onClose={() => setDrawerOpen(false)}
             open={isDrawerOpen}
@@ -85,13 +90,11 @@ const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawe
                         href='/real-estate-and-homes/properties?for=rent'
                         Icon={CalendarMonthOutlinedIcon}/>
 
-                        <MenuBtn
+                    <MenuBtn
                         handleClick={() => setDrawerOpen(false)}
                         title='User'
-                        href='/account/login'
+                        href={session?.user ? `/dashboard/${session.user.name}` :'/account/login'}
                         Icon={PersonOutlineOutlinedIcon}/>
-
-
 
                 </List>
 

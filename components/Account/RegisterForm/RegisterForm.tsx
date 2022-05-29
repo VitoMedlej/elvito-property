@@ -14,18 +14,12 @@ import {
     Button
 } from '@mui/material';
 import {Copyright} from '../LoginForm/LoginForm';
+import RegisterHook from '../../../src/Hooks/accountHooks/RegisterHook';
 
 const theme = createTheme();
 
 const RegisterFrom = () => {
-    const handleSubmit = (event : React.FormEvent < HTMLFormElement >) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password')
-        });
-    };
+    const {error, isLoading, handleSubmit} = RegisterHook()
 
     return (
         <ThemeProvider theme={theme}>
@@ -34,20 +28,35 @@ const RegisterFrom = () => {
                 <Box
                     sx={{
                     boxShadow: 'rgb(0 0 0 / 15%) 0px 8px 24px',
-                    p: {xs:' 2em 1em',md:'2em 3em '},
+                    p: {
+                        xs: ' 2em 1em',
+                        md: '2em 3em '
+                    },
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center'
                 }}>
                     <Avatar
                         sx={{
-                        m: {sm:1},
+                        m: {
+                            sm: 1
+                        },
                         bgcolor: '#d42c2a'
                     }}>
                         <LockOutlinedIcon/>
                     </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
+                    <Typography
+                        sx={{
+                        fontSize: "1em",
+                        textAlign: 'center'
+                    }}
+                        color={error
+                        ? 'red'
+                        : 'black'}
+                        component="h1">
+                        {error
+                            ? error
+                            : 'Sign in'}
                     </Typography>
                     <Box
                         component="form"
@@ -62,16 +71,18 @@ const RegisterFrom = () => {
                                 <TextField
                                     required
                                     fullWidth
-                                    id="Name"
+                                    id="username"
                                     autoFocus
+                                    type='text'
                                     label="Your Name"
-                                    name="Name"
+                                    name="username"
                                     autoComplete="name"/>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
+                                    type='email'
                                     id="email"
                                     label="Email Address"
                                     name="email"
@@ -90,6 +101,7 @@ const RegisterFrom = () => {
 
                         </Grid>
                         <Button
+                            disabled={isLoading}
                             type="submit"
                             fullWidth
                             variant='contained'
@@ -122,3 +134,4 @@ const RegisterFrom = () => {
     );
 }
 export default RegisterFrom
+

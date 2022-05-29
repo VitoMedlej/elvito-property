@@ -11,22 +11,28 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import ScrollToTopBtn from '../components/ScrollToTopBtn'
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 import gsap from 'gsap';
+import {SessionProvider} from "next-auth/react"
 
-
-
-
-function MyApp({Component, pageProps} : AppProps) {
+function MyApp({
+    Component,
+    pageProps: {
+        session,
+        ...pageProps
+    }
+} : AppProps) {
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(ScrollToPlugin);
 
     return (
         <ThemeProvider theme={theme}>
+            <SessionProvider session={session}>
 
-            <MainNavBar/>
-            <Component th {...pageProps}/>
-            <ScrollToTopBtn/>
-            <Footer/>
+                <MainNavBar/>
+                <Component th {...pageProps}/>
+                <ScrollToTopBtn/>
+                <Footer/>
 
+            </SessionProvider>
         </ThemeProvider>
     )
 

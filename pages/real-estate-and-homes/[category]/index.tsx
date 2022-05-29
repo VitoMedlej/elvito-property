@@ -1,12 +1,13 @@
 import {Box, Button, Drawer} from "@mui/material"
+import {useSession} from "next-auth/react"
 import {useRouter} from "next/router"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import FilterBar from "../../../components/FilterBar/FilterBar"
 import PropertySection from "../../../components/PropertySection/PropertySection"
 
-
 const Index = () => {
     const router = useRouter()
+    const {data: session} = useSession()
 
     const [isDrawerOpen,
         setDrawerOpen] = useState(false)
@@ -18,6 +19,7 @@ const Index = () => {
         setDrawerOpen(open);
 
     };
+
     return (
         <Box
             sx={{

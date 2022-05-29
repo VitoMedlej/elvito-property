@@ -13,6 +13,10 @@ import {
     Button
 } from '@mui/material';
 import Link from 'next/link'
+import {getProviders, signIn, signOut} from 'next-auth/react';
+import {useState} from 'react';
+import LoginHook from '../../../src/Hooks/accountHooks/LoginHook';
+
 export function Copyright(props : any) {
     return (
         <Typography
@@ -33,14 +37,8 @@ export function Copyright(props : any) {
 const theme = createTheme();
 
 const LoginForm = () => {
-    const handleSubmit = (event : React.FormEvent < HTMLFormElement >) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password')
-        });
-    };
+
+    const {error, handleSubmit, isLoading} = LoginHook()
 
     return (
         <ThemeProvider theme={theme}>
@@ -51,7 +49,10 @@ const LoginForm = () => {
                 <Box
                     sx={{
                     boxShadow: 'rgb(0 0 0 / 15%) 0px 8px 24px',
-                    p: {xs:' 2em 1em',md:'2em 3em '},
+                    p: {
+                        xs: ' 2em 1em',
+                        md: '2em 3em '
+                    },
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center'
@@ -63,8 +64,18 @@ const LoginForm = () => {
                     }}>
                         <LockOutlinedIcon/>
                     </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
+                    <Typography
+                        sx={{
+                        fontSize: "1em",
+                        textAlign: 'center'
+                    }}
+                        color={error
+                        ? 'red'
+                        : 'black'}
+                        component="h1">
+                        {error
+                            ? error
+                            : 'Sign in'}
                     </Typography>
                     <Box
                         component="form"
@@ -86,6 +97,12 @@ const LoginForm = () => {
                             margin="normal"
                             required
                             fullWidth
+                            InputProps={{
+                            inputProps: {
+                                min: 3,
+                                max: 20
+                            }
+                        }}
                             name="password"
                             label="Password"
                             type="password"
@@ -95,13 +112,16 @@ const LoginForm = () => {
                             control={< Checkbox value = "remember" color = "primary" />}
                             label="Remember me"/>
                         <Button
+                            disabled={isLoading}
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{
                             backgroundColor: "#d42c2a",
                             mt: 3,
-                            border: "1px solid #d42c2a",
+                            border: !isLoading
+                                ? "1px solid #d42c2a"
+                                : 'none',
                             mb: 2,
                             ":hover": {
                                 background: '#bb0806',
@@ -110,6 +130,7 @@ const LoginForm = () => {
                         }}>
                             Sign In
                         </Button>
+
                         <Grid container>
 
                             <Grid className='link' item>

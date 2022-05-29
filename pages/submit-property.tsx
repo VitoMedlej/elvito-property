@@ -9,58 +9,39 @@ import {
     Typography
 } from "@mui/material"
 import OutlinedInput from '@mui/material/OutlinedInput';
-import {useState} from "react";
 import AccountRequiredNote from "../components/SubmitProperty/AccountRequiredNote"
 import DetailsSection from '../components/SubmitProperty/DetailsSection';
 import ImageGalleryForm from '../components/SubmitProperty/Forms/ImageGalleryForm';
-import TextInput from "../components/SubmitProperty/Forms/TextInput";
+import CustomInput from "../components/SubmitProperty/Forms/CustomInput";
 import FormHandlingHook from "../src/Hooks/FormHandlingHook";
+import staticData from '../staticData.json'
 
-const propertyTypes = ['apartment', 'villa', 'comercial', 'land', 'chalet']
-const currencies = ['USD', 'EUR', 'LBP']
-const styles = {
-    width: '100%',
-    display: 'flex',
-    gap: '1em',
-    flexWrap: 'wrap'
-}
-
-const keywords = [
-    'cheap',
-    'clean',
-    'for sale',
-    'sale',
-    'beirut',
-    'family house',
-    'villa',
-    'for rent',
-    'wide area',
-    'backyard',
-    'garden',
-    'garage',
-    'maids room',,
-    'furnished',
-    'modern'
-]
-const RentFrequency = ['Annually', 'Monthy', 'Weekly']
-const paymentMethods = ['Cash', 'Cheque', 'Credit/Debit Card']
-const textFieldStyles = {
-    width: {
-        xs: '100%',
-        sm: '48%',
-        md: '32%'
-    }
-}
+const {
+    propertyTypes,
+    currencies,
+    paymentMethods,
+    RentFrequency,
+    styles,
+    keywords,
+    textFieldStyles
+} = staticData[0]
 
 const submitProperty = () => {
-    const {handleImageChange, handleOwnerDetailsChange, handleInputChange, formData} = FormHandlingHook()
+    const {
+        handleImageChange,
+        handleSubmit,
+        handleOwnerDetailsChange,
+        handleBoolChange,
+        handleInputChange,
+        formData
+    } = FormHandlingHook();
 
     return (
 
         <Box
-            onSubmit={(e : any) => {
+            onSubmit={async(e : any) => {
             e.preventDefault();
-            console.log(formData)
+            handleSubmit();
         }}
             component='form'
             maxWidth="lg"
@@ -76,59 +57,34 @@ const submitProperty = () => {
             {false && <AccountRequiredNote/>}
 
             <DetailsSection title='Main Details'>
-                {/* <TextField
-                    sx={{
-                    ...textFieldStyles
-                }}
+                <CustomInput
                     value={formData.title}
-                    onChange={(e) => handleInputChange(e)}
                     name='title'
-                    size='small'
-                    id="PropertyTitle"
-                    label="Property title"
-                    variant="outlined"/> */}
-                    <TextInput value={formData.title}
-                    name='title'
-                    handleChangeEvent={handleInputChange}
-                    label='Property title'
-                    />
+                    onChange={handleInputChange}
+                    label='Property title'/>
 
-                <TextField
-                    select
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
-                    onChange={(e) => handleInputChange(e)}
-                    value={`${formData.state}`}
-                    id="outlined-basic-state"
+                <CustomInput
                     label="State"
                     name='state'
-                    variant="outlined">
-                    <MenuItem value={'active'}>
-                        <Typography>
-                            ready
-                        </Typography>
-                    </MenuItem>
-                    <MenuItem value={'inactive'}>
-                        <Typography>
-                            inactive
-                        </Typography>
-                    </MenuItem>
+                    value={`${formData.state}`}
+                    onChange={handleInputChange}>
 
-                </TextField>
-                <TextField
-                    onChange={(e) => handleInputChange(e)}
-                    value={`${formData.type}`}
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
-                    id="outlined-basic-type"
+                    {['active', 'inactive'].map(state => {
+
+                        return <MenuItem value={state} key={state}>
+                            <Typography>
+                                {state}
+                            </Typography>
+                        </MenuItem>
+                    })}
+
+                </CustomInput>
+                <CustomInput
                     label="type"
                     name='type'
-                    select
-                    variant="outlined">
+                    value={`${formData.type}`}
+                    onChange={handleInputChange}>
+
                     {propertyTypes.map(type => {
 
                         return <MenuItem value={type} key={type}>
@@ -138,25 +94,16 @@ const submitProperty = () => {
                         </MenuItem>
                     })}
 
-                </TextField>
+                </CustomInput>
 
                 <Box sx={{
                     ...styles
                 }}>
-
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
-                        value={`${formData.currency}`}
-                        defaultValue={`${formData.currency}`}
-                        sx={{
-                        ...textFieldStyles
-                    }}
-                        name='currency'
-                        size='small'
-                        id="outlined-basic-currency"
+                    <CustomInput
                         label="currency"
-                        select
-                        variant="outlined">
+                        name='currency'
+                        onChange={handleInputChange}
+                        value={`${formData.currency}`}>
                         {currencies.map(currency => {
                             return <MenuItem value={currency} key={currency}>
                                 <Typography>
@@ -165,32 +112,22 @@ const submitProperty = () => {
                             </MenuItem>
                         })}
 
-                    </TextField>
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
+                    </CustomInput>
+
+                    <CustomInput
+                        onChange={handleInputChange}
                         value={formData.price}
-                        sx={{
-                        ...textFieldStyles
-                    }}
                         name='price'
                         type="number"
-                        size='small'
-                        id="price"
-                        label="Price (numbers only)"
-                        variant="outlined"/>
-                        
-                        {formData.purpose === 'for-rent' && <TextField
-                        sx={{
-                        ...textFieldStyles
-                    }}
-                        onChange={(e) => handleInputChange(e)}
+                        label="Price (numbers only)">
+                    
+                    </CustomInput>
+
+                    {formData.purpose === 'for-rent' && <CustomInput
+                        onChange={handleInputChange}
                         value={`${formData.rentFrequency}`}
-                        size='small'
                         name='rentFrequency'
-                        id="outlined-basic-rentFreq"
-                        label="Rent frequency"
-                        select
-                        variant="outlined">
+                        label="Rent frequency">
                         {RentFrequency.map(frequency => {
                             return <MenuItem value={frequency} key={frequency}>
                                 <Typography>
@@ -199,21 +136,14 @@ const submitProperty = () => {
                             </MenuItem>
                         })}
 
-                    </TextField>
+                    </CustomInput>
 }
 
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
+                    <CustomInput
+                        onChange={handleInputChange}
                         value={formData.paymentMethod}
-                        sx={{
-                        ...textFieldStyles
-                    }}
                         name='paymentMethod'
-                        size='small'
-                        id="outlined-basic-paymentMethod"
-                        label="Payment Method"
-                        select
-                        variant="outlined">
+                        label="Payment Method">
                         {paymentMethods.map(method => {
 
                             return <MenuItem value={method} key={method}>
@@ -223,45 +153,30 @@ const submitProperty = () => {
                             </MenuItem>
                         })}
 
-                    </TextField>
+                    </CustomInput>
 
-                    <TextField
-                        onChange={(e) => handleInputChange(e)}
+                    <CustomInput
+                        onChange={handleInputChange}
                         value={formData.location}
                         name='location'
-                        sx={{
-                        ...textFieldStyles
-                    }}
-                        size='small'
-                        id="outlined-basic-location"
-                        label="Location"
-                        type='text'
-                        variant="outlined"/>
+                        label="Location"/>
 
-
-                              <TextField
-                        onChange={(e) => handleInputChange(e)}
+                    <CustomInput
+                        onChange={handleInputChange}
                         value={formData.purpose}
-                        sx={{
-                        ...textFieldStyles
-                    }}
-                        size='small'
-                        id="propertyPurpose"
                         name='purpose'
-                        label="Purpose"
-                        select
-                        variant="outlined">
-                            <MenuItem value='for-sale'>
-                                <Typography>
-                                    For Sale
-                                </Typography>
-                            </MenuItem>
-                            <MenuItem value='for-rent'>
-                                <Typography>
-                                    For Rent
-                                </Typography>
-                            </MenuItem>
-                        </TextField>
+                        label="Purpose">
+                        <MenuItem value='for-sale'>
+                            <Typography>
+                                For Sale
+                            </Typography>
+                        </MenuItem>
+                        <MenuItem value='for-rent'>
+                            <Typography>
+                                For Rent
+                            </Typography>
+                        </MenuItem>
+                    </CustomInput>
 
                 </Box>
             </DetailsSection>
@@ -283,37 +198,25 @@ const submitProperty = () => {
                 }}/>
             </DetailsSection>
 
-             <DetailsSection title='Property Features'>
-              {
-                  formData.type !== 'land' &&
-                  <>
-               <TextField
-                    onChange={(e) => handleInputChange(e)}
+            <DetailsSection title='Property Features'>
+
+                <CustomInput
+                    onChange={handleInputChange}
                     value={formData.bathrooms}
                     name='bathrooms'
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
-                    type='number'
                     InputProps={{
                     inputProps: {
                         min: 0,
                         max: 15
                     }
                 }}
-                    id="PropertyBathrooms"
-                    label="Bathrooms"
-                    variant="outlined"/>
+                    type='number'
+                    label="Bathrooms"/>
 
-                <TextField
-                    onChange={(e) => handleInputChange(e)}
+                <CustomInput
+                    onChange={handleInputChange}
                     value={formData.rooms}
                     name='rooms'
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
                     type='number'
                     InputProps={{
                     inputProps: {
@@ -321,18 +224,12 @@ const submitProperty = () => {
                         max: 15
                     }
                 }}
-                    id="PropertyBedrooms"
-                    label="Bedrooms"
-                    variant="outlined"/>
+                    label="Bedrooms"/>
 
-                <TextField
-                    onChange={(e) => handleInputChange(e)}
+                <CustomInput
+                    onChange={handleInputChange}
                     value={formData.balconies}
                     name='balconies'
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
                     type='number'
                     InputProps={{
                     inputProps: {
@@ -340,33 +237,25 @@ const submitProperty = () => {
                         max: 15
                     }
                 }}
-                    id="PropertyBalconies"
-                    label="Balconies"
-                    variant="outlined"/>
-                <TextField
-                    onChange={(e) => handleInputChange(e)}
-                    value={formData.isFurnished}
+                    label="Balconies"/>
+                <CustomInput
+                    onChange={handleBoolChange}
+                    value={`${formData.isFurnished
+                    ? 'true'
+                    : 'false'}`}
                     name='isFurnished'
-                    size='small'
-                    label="Furnished"
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    select>
+                    label="Furnished">
                     <MenuItem value={'true'}>
                         <Typography>
                             Furnished
                         </Typography>
                     </MenuItem>
-
-                    <MenuItem value={'false'}>
+                    < MenuItem value={'false'}>
                         <Typography>
                             Not Furnished
                         </Typography>
                     </MenuItem>
-                </TextField>
-                </>
-                }
+                </CustomInput >
 
                 <FormControl
                     size='small'
@@ -389,61 +278,33 @@ const submitProperty = () => {
                         ))}
                     </Select>
                 </FormControl>
-                <TextField
-                    onChange={(e) => handleInputChange(e)}
+                <CustomInput
+                    onChange={handleInputChange}
                     value={formData.propertySize}
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
-                    id="propertySize"
                     name='propertySize'
-                    label="Property Size (provide unit)"
-                    variant="outlined"/>
+                    label="Property Size (provide unit)"/>
             </DetailsSection>
 
             <DetailsSection title='Contact Details'>
-                <TextField
-                    onChange={(e) => handleOwnerDetailsChange(e)}
+                <CustomInput
+                    onChange={handleOwnerDetailsChange}
                     name='ownerName'
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
+                    value={formData.ownerDetails.ownerName}
                     type='text'
-                    id="ContactName"
-                    label="Name"
-                    variant="outlined"/>
-                <TextField
+                    label="Name"/>
+                <CustomInput
                     name='ownerEmail'
-                    sx={{
-                    ...textFieldStyles
-                }}
                     value={formData.ownerDetails.ownerEmail}
-                    onChange={(e) => handleOwnerDetailsChange(e)}
-                    size='small'
+                    onChange={handleOwnerDetailsChange}
                     type='email'
-                    id="ContactEmail"
-                    label="Email"
-                    autoComplete=''
-                    variant="outlined"/>
+                    label="Email"/>
 
-                <TextField
-                    onChange={(e) => handleOwnerDetailsChange(e)}
+                <CustomInput
+                    onChange={handleOwnerDetailsChange}
                     name='ownerPhoneNumber'
-                    sx={{
-                    ...textFieldStyles
-                }}
-                    size='small'
-                    InputProps={{
-                    inputProps: {
-                        min: 1,
-                        max: 30
-                    }
-                }}
-                    id="ContactPhone"
-                    label="Phone Number"
-                    variant="outlined"/>
+                    type='number'
+                    value={formData.ownerDetails.ownerPhoneNumber}
+                    label="Phone Number"/>
             </DetailsSection>
 
             <ImageGalleryForm onChange={handleImageChange}/>

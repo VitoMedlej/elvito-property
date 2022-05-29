@@ -1,10 +1,11 @@
-import {useState} from 'react'
+import {ChangeEvent, useState} from 'react'
 import {IFormData} from '../Types'
-const defaultFormState = {
+
+const defaultFormState : IFormData = {
     balconies: 0,
     bathrooms: 0,
     coverPhoto: "",
-    createdAt: 0,
+    createdAt: '',
     currency: "USD",
     description: "",
     isFurnished: false,
@@ -29,19 +30,27 @@ const defaultFormState = {
     title: "",
     type: ""
 }
+
 const FormHandlingHook = () => {
     const [formData,
         setFormData] = useState < IFormData > (defaultFormState)
 
-    const handleInputChange = (e : any) => {
-        const value = e.target.value
-        setFormData({
-            ...formData,
-            [e.target.name]: value
-        })
+    const handleInputChange = (e : any, isNumber?: boolean) => {
+        let value = e.target
+            ?.value
+        if (value) {
+
+            if (isNumber && typeof(value) !== 'number') 
+                value = JSON.parse(value)
+            setFormData({
+                ...formData,
+                [e.target.name]: value
+            })
+        }
     }
     const handleOwnerDetailsChange = (e : any) => {
-        const value = e.target.value
+        const value = e.target
+            ?.value
 
         setFormData({
             ...formData,
@@ -51,14 +60,56 @@ const FormHandlingHook = () => {
             }
         })
     }
-    const handleImageChange = (imagesArray : string[]) => {
-        setFormData({
+    const handleImageChange = async(imagesArray : string[]) => {
+        await setFormData({
             ...formData,
             images: imagesArray,
             coverPhoto: imagesArray[0]
         })
     }
-    return {handleImageChange, handleOwnerDetailsChange, handleInputChange, formData}
+    const handleBoolChange = (e : ChangeEvent < HTMLInputElement | HTMLTextAreaElement >) => {
+        let bool = `${e.target.value}`
+        // weird chunk of code ik ,just checking if the string is a boolean and then parse it
+        if (bool && bool === 'false' || bool === 'true') { 
+            setFormData({
+                ...formData,
+                [e.target.name]: JSON.parse(`${bool}`)
+            })
+            return
+        }
+    }
+    const handleSubmit = async() => {
+        let today = new Date().toLocaleDateString()
+
+        setFormData({
+            ...formData,
+            createdAt: today
+        })
+
+        if (formData) {
+
+            const request = await fetch('api/submit-property', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+
+            const response = await request.json()
+            console.log('response: ', response);
+
+        }
+
+    }
+    return {
+        handleImageChange,
+        handleSubmit,
+        handleBoolChange,
+        handleOwnerDetailsChange,
+        handleInputChange,
+        formData
+    }
 }
 
 export default FormHandlingHook

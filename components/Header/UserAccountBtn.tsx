@@ -1,14 +1,32 @@
-import { Box, Button, Fade, IconButton, Link, Popper, Typography } from "@mui/material"
+import {
+    Box,
+    Button,
+    Fade,
+    IconButton,
+    Link,
+    Popper,
+    Typography
+} from "@mui/material"
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import router from "next/router";
-import { useState } from "react";
+import {useState} from "react";
+import {useSession} from "next-auth/react";
 
 const UserAccountBtn = () => {
+    const {data: session} = useSession()
+    console.log('session: ', session);
+
     const [anchorEl,
         setAnchorEl] = useState < null | HTMLElement > (null);
     const [isOpen,
         setOpen] = useState(false)
     const handleClick = (event : React.MouseEvent < HTMLElement >) => {
+        if (session
+            ?.user) {
+
+            router.push(`/dashboard/${session.user.name}`);
+            return
+        }
         setAnchorEl(event.currentTarget);
         setOpen(!isOpen)
     };
@@ -68,7 +86,7 @@ const UserAccountBtn = () => {
                             </Typography>
                             <Button
                                 onClick={() => {
-                                router.push('/account/login')
+                                router.push('/account/login');
                                 setOpen(false)
                             }}
                                 type="submit"
@@ -91,11 +109,10 @@ const UserAccountBtn = () => {
                             }}>
 
                                 <Box
-                                onClick={()=>{
-                                router.push('/account/register')
-                                setOpen(false)
-
-                                }} >
+                                    onClick={() => {
+                                    router.push('/account/register');
+                                    setOpen(false)
+                                }}>
                                     <Typography
                                         sx={{
                                         textDecoration: 'underline',

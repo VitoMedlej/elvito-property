@@ -1,12 +1,8 @@
 import {
     AppBar,
     Box,
-    Button,
     Container,
-    Fade,
     IconButton,
-    Popper,
-    Typography
 } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -14,10 +10,9 @@ import {useRouter} from "next/router";
 import {useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
-import {ITopNavBarLink} from "../../src/Types";
 import TopNavBarLink from "./TopNavBarLink";
-import Link from "next/link";
 import UserAccountBtn from './UserAccountBtn';
+import {useSession} from "next-auth/react";
 
 const MainNavBar = () => {
     const [isDrawerOpen,
@@ -51,9 +46,9 @@ const MainNavBar = () => {
 
     }, []);
 
-
+    const {data: session} = useSession()
+    
     return (
-
         <AppBar
             id='appbar'
             sx={{
@@ -141,7 +136,11 @@ const MainNavBar = () => {
                             }}/>
                         </IconButton>
                         <IconButton
-                            onClick={() => setDrawerOpen(!isDrawerOpen)}
+                            onClick={() => {
+                          
+                            
+                            setDrawerOpen(!isDrawerOpen)
+                        }}
                             className='btn'
                             sx={{
                             display: {
