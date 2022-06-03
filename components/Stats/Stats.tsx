@@ -6,7 +6,6 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 const Stats = () => {
 
-
     const [isReady,
         setReady] = useState(false)
     const ref = useRef()
@@ -21,7 +20,6 @@ const Stats = () => {
 
     }, [])
     return (
-        <Box>
             <Box
                 maxWidth='lg'
                 sx={{
@@ -75,7 +73,6 @@ const Stats = () => {
 
                 </Box>
             </Box>
-        </Box>
     )
 }
 

@@ -15,6 +15,7 @@ import ImageGalleryForm from '../components/SubmitProperty/Forms/ImageGalleryFor
 import CustomInput from "../components/SubmitProperty/Forms/CustomInput";
 import FormHandlingHook from "../src/Hooks/FormHandlingHook";
 import staticData from '../staticData.json'
+import {useSession} from "next-auth/react";
 
 const {
     propertyTypes,
@@ -35,18 +36,21 @@ const submitProperty = () => {
         handleInputChange,
         formData
     } = FormHandlingHook();
-
+    const session = useSession()
+    const isAuthed = session && session.status === 'authenticated' && session.data.user
+  
     return (
 
         <Box
             onSubmit={async(e : any) => {
             e.preventDefault();
-            handleSubmit();
-        }}
+            if (isAuthed) 
+                handleSubmit();
+            }}
             component='form'
             maxWidth="lg"
             sx={{
-            boxShadow: 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px',
+            boxShadow: isAuthed ? 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' : '',
             my: '3em',
             minHeight: '90vh',
             mx: {
@@ -54,283 +58,285 @@ const submitProperty = () => {
                 lg: 'auto'
             }
         }}>
-            {false && <AccountRequiredNote/>}
+            {isAuthed
+                ? <Box>
+                        <DetailsSection title='Main Details'>
+                            <CustomInput
+                                value={formData.title}
+                                name='title'
+                                onChange={handleInputChange}
+                                label='Property title'/>
 
-            <DetailsSection title='Main Details'>
-                <CustomInput
-                    value={formData.title}
-                    name='title'
-                    onChange={handleInputChange}
-                    label='Property title'/>
+                            <CustomInput
+                                label="State"
+                                name='state'
+                                value={`${formData.state}`}
+                                onChange={handleInputChange}>
 
-                <CustomInput
-                    label="State"
-                    name='state'
-                    value={`${formData.state}`}
-                    onChange={handleInputChange}>
+                                {['active', 'inactive'].map(state => {
 
-                    {['active', 'inactive'].map(state => {
+                                    return <MenuItem value={state} key={state}>
+                                        <Typography>
+                                            {state}
+                                        </Typography>
+                                    </MenuItem>
+                                })}
 
-                        return <MenuItem value={state} key={state}>
-                            <Typography>
-                                {state}
-                            </Typography>
-                        </MenuItem>
-                    })}
+                            </CustomInput>
+                            <CustomInput
+                                label="type"
+                                name='type'
+                                value={`${formData.type}`}
+                                onChange={handleInputChange}>
 
-                </CustomInput>
-                <CustomInput
-                    label="type"
-                    name='type'
-                    value={`${formData.type}`}
-                    onChange={handleInputChange}>
+                                {propertyTypes.map(type => {
 
-                    {propertyTypes.map(type => {
+                                    return <MenuItem value={type} key={type}>
+                                        <Typography>
+                                            {type}
+                                        </Typography>
+                                    </MenuItem>
+                                })}
 
-                        return <MenuItem value={type} key={type}>
-                            <Typography>
-                                {type}
-                            </Typography>
-                        </MenuItem>
-                    })}
+                            </CustomInput>
 
-                </CustomInput>
+                            <Box
+                                sx={{
+                                ...styles
+                            }}>
+                                <CustomInput
+                                    label="currency"
+                                    name='currency'
+                                    onChange={handleInputChange}
+                                    value={`${formData.currency}`}>
+                                    {currencies.map(currency => {
+                                        return <MenuItem value={currency} key={currency}>
+                                            <Typography>
+                                                {currency}
+                                            </Typography>
+                                        </MenuItem>
+                                    })}
 
-                <Box sx={{
-                    ...styles
-                }}>
-                    <CustomInput
-                        label="currency"
-                        name='currency'
-                        onChange={handleInputChange}
-                        value={`${formData.currency}`}>
-                        {currencies.map(currency => {
-                            return <MenuItem value={currency} key={currency}>
-                                <Typography>
-                                    {currency}
-                                </Typography>
-                            </MenuItem>
-                        })}
+                                </CustomInput>
 
-                    </CustomInput>
+                                <CustomInput
+                                    onChange={handleInputChange}
+                                    value={formData.price}
+                                    name='price'
+                                    type="number"
+                                    label="Price (numbers only)"></CustomInput>
 
-                    <CustomInput
-                        onChange={handleInputChange}
-                        value={formData.price}
-                        name='price'
-                        type="number"
-                        label="Price (numbers only)">
-                    
-                    </CustomInput>
+                                {formData.purpose === 'for-rent' && <CustomInput
+                                    onChange={handleInputChange}
+                                    value={`${formData.rentFrequency}`}
+                                    name='rentFrequency'
+                                    label="Rent frequency">
+                                    {RentFrequency.map(frequency => {
+                                        return <MenuItem value={frequency} key={frequency}>
+                                            <Typography>
+                                                {frequency}
+                                            </Typography>
+                                        </MenuItem>
+                                    })}
 
-                    {formData.purpose === 'for-rent' && <CustomInput
-                        onChange={handleInputChange}
-                        value={`${formData.rentFrequency}`}
-                        name='rentFrequency'
-                        label="Rent frequency">
-                        {RentFrequency.map(frequency => {
-                            return <MenuItem value={frequency} key={frequency}>
-                                <Typography>
-                                    {frequency}
-                                </Typography>
-                            </MenuItem>
-                        })}
-
-                    </CustomInput>
+                                </CustomInput>
 }
 
-                    <CustomInput
-                        onChange={handleInputChange}
-                        value={formData.paymentMethod}
-                        name='paymentMethod'
-                        label="Payment Method">
-                        {paymentMethods.map(method => {
+                                <CustomInput
+                                    onChange={handleInputChange}
+                                    value={formData.paymentMethod}
+                                    name='paymentMethod'
+                                    label="Payment Method">
+                                    {paymentMethods.map(method => {
 
-                            return <MenuItem value={method} key={method}>
-                                <Typography>
-                                    {method}
-                                </Typography>
-                            </MenuItem>
-                        })}
+                                        return <MenuItem value={method} key={method}>
+                                            <Typography>
+                                                {method}
+                                            </Typography>
+                                        </MenuItem>
+                                    })}
 
-                    </CustomInput>
+                                </CustomInput>
 
-                    <CustomInput
-                        onChange={handleInputChange}
-                        value={formData.location}
-                        name='location'
-                        label="Location"/>
+                                <CustomInput
+                                    onChange={handleInputChange}
+                                    value={formData.location}
+                                    name='location'
+                                    label="Location"/>
 
-                    <CustomInput
-                        onChange={handleInputChange}
-                        value={formData.purpose}
-                        name='purpose'
-                        label="Purpose">
-                        <MenuItem value='for-sale'>
-                            <Typography>
-                                For Sale
-                            </Typography>
-                        </MenuItem>
-                        <MenuItem value='for-rent'>
-                            <Typography>
-                                For Rent
-                            </Typography>
-                        </MenuItem>
-                    </CustomInput>
+                                <CustomInput
+                                    onChange={handleInputChange}
+                                    value={formData.purpose}
+                                    name='purpose'
+                                    label="Purpose">
+                                    <MenuItem value='for-sale'>
+                                        <Typography>
+                                            For Sale
+                                        </Typography>
+                                    </MenuItem>
+                                    <MenuItem value='for-rent'>
+                                        <Typography>
+                                            For Rent
+                                        </Typography>
+                                    </MenuItem>
+                                </CustomInput>
 
-                </Box>
-            </DetailsSection>
+                            </Box>
+                        </DetailsSection>
 
-            <DetailsSection title='Property Description'>
-                <TextField
-                    onChange={(e) => handleInputChange(e)}
-                    value={formData.description}
-                    name='description'
-                    id="outlined-multiline-Description"
-                    label="Description"
-                    multiline
-                    rows={4}
-                    sx={{
-                    width: {
-                        xs: '100%',
-                        sm: '99%'
-                    }
-                }}/>
-            </DetailsSection>
+                        <DetailsSection title='Property Description'>
+                            <TextField
+                                onChange={(e) => handleInputChange(e)}
+                                value={formData.description}
+                                name='description'
+                                id="outlined-multiline-Description"
+                                label="Description"
+                                multiline
+                                rows={4}
+                                sx={{
+                                width: {
+                                    xs: '100%',
+                                    sm: '99%'
+                                }
+                            }}/>
+                        </DetailsSection>
 
-            <DetailsSection title='Property Features'>
+                        <DetailsSection title='Property Features'>
 
-                <CustomInput
-                    onChange={handleInputChange}
-                    value={formData.bathrooms}
-                    name='bathrooms'
-                    InputProps={{
-                    inputProps: {
-                        min: 0,
-                        max: 15
-                    }
-                }}
-                    type='number'
-                    label="Bathrooms"/>
+                            <CustomInput
+                                onChange={handleInputChange}
+                                value={formData.bathrooms}
+                                name='bathrooms'
+                                InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                    max: 15
+                                }
+                            }}
+                                type='number'
+                                label="Bathrooms"/>
 
-                <CustomInput
-                    onChange={handleInputChange}
-                    value={formData.rooms}
-                    name='rooms'
-                    type='number'
-                    InputProps={{
-                    inputProps: {
-                        min: 0,
-                        max: 15
-                    }
-                }}
-                    label="Bedrooms"/>
+                            <CustomInput
+                                onChange={handleInputChange}
+                                value={formData.rooms}
+                                name='rooms'
+                                type='number'
+                                InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                    max: 15
+                                }
+                            }}
+                                label="Bedrooms"/>
 
-                <CustomInput
-                    onChange={handleInputChange}
-                    value={formData.balconies}
-                    name='balconies'
-                    type='number'
-                    InputProps={{
-                    inputProps: {
-                        min: 0,
-                        max: 15
-                    }
-                }}
-                    label="Balconies"/>
-                <CustomInput
-                    onChange={handleBoolChange}
-                    value={`${formData.isFurnished
-                    ? 'true'
-                    : 'false'}`}
-                    name='isFurnished'
-                    label="Furnished">
-                    <MenuItem value={'true'}>
-                        <Typography>
-                            Furnished
-                        </Typography>
-                    </MenuItem>
-                    < MenuItem value={'false'}>
-                        <Typography>
-                            Not Furnished
-                        </Typography>
-                    </MenuItem>
-                </CustomInput >
+                            <CustomInput
+                                onChange={handleInputChange}
+                                value={formData.balconies}
+                                name='balconies'
+                                type='number'
+                                InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                    max: 15
+                                }
+                            }}
+                                label="Balconies"/>
+                            <CustomInput
+                                onChange={handleBoolChange}
+                                value={`${formData.isFurnished
+                                ? 'true'
+                                : 'false'}`}
+                                name='isFurnished'
+                                label="Furnished">
+                                <MenuItem value={'true'}>
+                                    <Typography>
+                                        Furnished
+                                    </Typography>
+                                </MenuItem>
+                                < MenuItem value={'false'}>
+                                    <Typography>
+                                        Not Furnished
+                                    </Typography>
+                                </MenuItem>
+                            </CustomInput >
 
-                <FormControl
-                    size='small'
-                    sx={{
-                    ...textFieldStyles
-                }}>
-                    <InputLabel id="demo-multiple-name-label">Key words</InputLabel>
-                    <Select
-                        onChange={(e) => handleInputChange(e)}
-                        value={formData.keywords}
-                        name='keywords'
-                        labelId="demo-multiple-name-label2"
-                        id="demo-multiple-name2"
-                        multiple
-                        input={< OutlinedInput label = "keywords" />}>
-                        {keywords.map((word) => (
-                            <MenuItem key={word} value={word}>
-                                {word}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <CustomInput
-                    onChange={handleInputChange}
-                    value={formData.propertySize}
-                    name='propertySize'
-                    label="Property Size (provide unit)"/>
-            </DetailsSection>
+                            <FormControl
+                                size='small'
+                                sx={{
+                                ...textFieldStyles
+                            }}>
+                                <InputLabel id="demo-multiple-name-label">Key words</InputLabel>
+                                <Select
+                                    onChange={(e) => handleInputChange(e)}
+                                    value={formData.keywords}
+                                    name='keywords'
+                                    labelId="demo-multiple-name-label2"
+                                    id="demo-multiple-name2"
+                                    multiple
+                                    input={< OutlinedInput label = "keywords" />}>
+                                    {keywords.map((word) => (
+                                        <MenuItem key={word} value={word}>
+                                            {word}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <CustomInput
+                                onChange={handleInputChange}
+                                value={formData.propertySize}
+                                name='propertySize'
+                                label="Property Size (provide unit)"/>
+                        </DetailsSection>
 
-            <DetailsSection title='Contact Details'>
-                <CustomInput
-                    onChange={handleOwnerDetailsChange}
-                    name='ownerName'
-                    value={formData.ownerDetails.ownerName}
-                    type='text'
-                    label="Name"/>
-                <CustomInput
-                    name='ownerEmail'
-                    value={formData.ownerDetails.ownerEmail}
-                    onChange={handleOwnerDetailsChange}
-                    type='email'
-                    label="Email"/>
+                        <DetailsSection title='Contact Details'>
+                            <CustomInput
+                                onChange={handleOwnerDetailsChange}
+                                name='ownerName'
+                                value={formData.ownerDetails.ownerName}
+                                type='text'
+                                label="Name"/>
+                            <CustomInput
+                                name='ownerEmail'
+                                value={formData.ownerDetails.ownerEmail}
+                                onChange={handleOwnerDetailsChange}
+                                type='email'
+                                label="Email"/>
 
-                <CustomInput
-                    onChange={handleOwnerDetailsChange}
-                    name='ownerPhoneNumber'
-                    type='number'
-                    value={formData.ownerDetails.ownerPhoneNumber}
-                    label="Phone Number"/>
-            </DetailsSection>
+                            <CustomInput
+                                onChange={handleOwnerDetailsChange}
+                                name='ownerPhoneNumber'
+                                type='number'
+                                value={formData.ownerDetails.ownerPhoneNumber}
+                                label="Phone Number"/>
+                        </DetailsSection>
 
-            <ImageGalleryForm onChange={handleImageChange}/>
+                        <ImageGalleryForm onChange={handleImageChange}/>
 
-            <DetailsSection
-                sx={{
-                mx: '0 auto',
-                justifyContent: 'center'
-            }}
-                title=''>
-                <Button
-                    type='submit'
-                    sx={{
-                    background: '#d42c2a',
-                    width: {
-                        xs: '100%',
-                        sm: '300px'
-                    },
-                    ':hover': {
-                        background: '#bb0806'
-                    },
-                    color: 'white'
-                }}>
-                    Submit
-                </Button>
-            </DetailsSection>
+                        <DetailsSection
+                            sx={{
+                            mx: '0 auto',
+                            justifyContent: 'center'
+                        }}
+                            title=''>
+                            <Button
+                                type='submit'
+                                sx={{
+                                background: '#d42c2a',
+                                width: {
+                                    xs: '100%',
+                                    sm: '300px'
+                                },
+                                ':hover': {
+                                    background: '#bb0806'
+                                },
+                                color: 'white'
+                            }}>
+                                Submit
+                            </Button>
+                        </DetailsSection>
+                    </Box>
+
+                : <AccountRequiredNote/>}
 
         </Box>
 

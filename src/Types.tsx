@@ -122,3 +122,16 @@ export interface ICustomInput  {
         };
     } 
 }
+export interface ICurrentUser {
+
+    userName?: string | null | undefined;
+    userEmail?: string | null | undefined;
+    userImage?: string | null | undefined;
+    id?: string | null | undefined;
+
+}
+export interface IMain {
+    isLoading : boolean
+    currentUser : ICurrentUser | null
+    setCurrentUser : Dispatch<SetStateAction<ICurrentUser | null>>
+}

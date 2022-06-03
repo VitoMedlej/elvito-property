@@ -25,11 +25,16 @@ const RegisterHook = () => {
                 userEmail: data.get('email'),
                 userPassword: data.get('password')
             }
+            if (!`${formData
+                ?.userEmail}`.includes('@')) {
+                setError('Please make sure to enter a vaild email')
+                return
+            }
             if (!formData || !formData.userName || !formData.userEmail || !formData.userPassword) {
                 setError('Please make sure to fill in the inputs.')
                 return
             }
-            if (`${formData.userPassword}`.length < 4) {
+            if (`${formData.userPassword}`.length < 4 || formData.userPassword === formData.userName) {
                 setError('Please make sure your password is strong enough')
                 return
             }

@@ -14,7 +14,6 @@ import {useSession} from "next-auth/react";
 
 const UserAccountBtn = () => {
     const {data: session} = useSession()
-    console.log('session: ', session);
 
     const [anchorEl,
         setAnchorEl] = useState < null | HTMLElement > (null);

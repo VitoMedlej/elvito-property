@@ -13,22 +13,20 @@ const LoginHook = () => {
     const handleSubmit = async(event : React.FormEvent < HTMLFormElement >) => {
         try {
             event.preventDefault();
-
             if (session
                 ?.user) {
                 setError('You are already logged in. ')
-
                 return
             }
             const data = new FormData(event.currentTarget);
             const email = data.get('email')
             const password = `${data.get('password')}`
-
             if (!email || !password || password.length < 4) {
                 setError('Please make sure to fill in the inputs .')
                 return
             }
             setLoading(true)
+
             const status : any | undefined = await signIn('credentials', {
                 redirect: false,
                 userEmail: email,
@@ -36,9 +34,12 @@ const LoginHook = () => {
             });
             console.log('status: ', status);
             setLoading(false)
+            if (session?.id) {
+                console.log(session.id);
+                
+            }
             if (status && status
-                ?.ok) {
-                router.push('/dashboard/' + status.user.name)
+                ?.ok ) {
                 return
             }
             setError('please check your credentials and try again')
