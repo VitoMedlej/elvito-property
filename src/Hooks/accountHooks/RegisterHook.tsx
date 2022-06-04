@@ -1,6 +1,6 @@
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 
 const RegisterHook = () => {
     const {data: session} = useSession()
@@ -8,7 +8,17 @@ const RegisterHook = () => {
         setLoading] = useState(false)
     const [error,
         setError] = useState('')
+    const [formData,
+        setFormData] = useState({userName: '', userEmail: '', userPassword: ''})
     const router = useRouter()
+
+    const handleChange = (event : ChangeEvent < HTMLInputElement | HTMLTextAreaElement >) => {
+        const value = event.target as HTMLInputElement
+        setFormData({
+            ...formData,
+            [value.name]: `${value.value}`
+        })
+    }
     const handleSubmit = async(event : React.FormEvent < HTMLFormElement >) => {
         try {
 
@@ -19,18 +29,13 @@ const RegisterHook = () => {
 
                 return
             }
-            const data = new FormData(event.currentTarget);
-            const formData = {
-                userName: data.get('username'),
-                userEmail: data.get('email'),
-                userPassword: data.get('password')
-            }
+
             if (!`${formData
                 ?.userEmail}`.includes('@')) {
                 setError('Please make sure to enter a vaild email')
                 return
             }
-            if (!formData || !formData.userName || !formData.userEmail || !formData.userPassword) {
+            if (!formData || !formData.userName || !formData.userEmail || formData.userPassword.length < 4) {
                 setError('Please make sure to fill in the inputs.')
                 return
             }
@@ -54,9 +59,8 @@ const RegisterHook = () => {
                 router.push('/account/login')
                 return
             }
-            setError('Error ')
+            setError(`${response.message}`)
 
-            console.log('response: ', response);
         } catch (err) {
             setLoading(false)
             setError('Error')
@@ -65,7 +69,7 @@ const RegisterHook = () => {
 
         }
     };
-    return {error, isLoading, handleSubmit}
+    return {error, formData, handleChange, isLoading, handleSubmit}
 }
 
 export default RegisterHook

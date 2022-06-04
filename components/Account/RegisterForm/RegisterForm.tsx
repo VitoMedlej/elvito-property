@@ -19,7 +19,8 @@ import RegisterHook from '../../../src/Hooks/accountHooks/RegisterHook';
 const theme = createTheme();
 
 const RegisterFrom = () => {
-    const {error, isLoading, handleSubmit} = RegisterHook()
+    const {error, isLoading, handleChange,formData ,handleSubmit} = RegisterHook()
+    console.log('formData: ', formData);
 
     return (
         <ThemeProvider theme={theme}>
@@ -46,6 +47,8 @@ const RegisterFrom = () => {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography
+                      data-cy='form-info'
+
                         sx={{
                         fontSize: "1em",
                         textAlign: 'center'
@@ -55,7 +58,7 @@ const RegisterFrom = () => {
                         : 'black'}
                         component="h1">
                         {error
-                            ? error
+                            ? `${error}`
                             : 'Sign in'}
                     </Typography>
                     <Box
@@ -69,30 +72,39 @@ const RegisterFrom = () => {
 
                             <Grid item xs={12}>
                                 <TextField
+                                    value={formData.userName}
+                                    onChange={(e)=>handleChange(e)}
                                     required
                                     fullWidth
                                     id="username"
+                                    data-cy='create-name'
                                     autoFocus
                                     type='text'
                                     label="Your Name"
-                                    name="username"
+                                    name="userName"
                                     autoComplete="name"/>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                  value={formData.userEmail}
+                                  onChange={(e)=>handleChange(e)}
+                                    data-cy='create-email'
                                     required
                                     fullWidth
                                     type='email'
                                     id="email"
                                     label="Email Address"
-                                    name="email"
+                                    name="userEmail"
                                     autoComplete="email"/>
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    data-cy='create-password'
+                                    value={formData.userPassword}
+                                    onChange={(e)=>handleChange(e)}
                                     required
                                     fullWidth
-                                    name="password"
+                                    name="userPassword"
                                     label="Password"
                                     type="password"
                                     id="password"
@@ -104,6 +116,7 @@ const RegisterFrom = () => {
                             disabled={isLoading}
                             type="submit"
                             fullWidth
+                            data-cy='submit-btn'
                             variant='contained'
                             sx={{
                             backgroundColor: "#d42c2a",

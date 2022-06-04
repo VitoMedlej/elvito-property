@@ -3,10 +3,12 @@ import {useRouter} from "next/router";
 import {useState} from "react";
 
 const LoginHook = () => {
-    const router = useRouter()
+
     const {data: session} = useSession()
     const [isLoading,
         setLoading] = useState(false)
+    const [password,
+        setPassword] = useState('')
     const [error,
         setError] = useState('')
 
@@ -20,7 +22,8 @@ const LoginHook = () => {
             }
             const data = new FormData(event.currentTarget);
             const email = data.get('email')
-            const password = `${data.get('password')}`
+
+            console.log('password: ', password);
             if (!email || !password || password.length < 4) {
                 setError('Please make sure to fill in the inputs .')
                 return
@@ -32,14 +35,16 @@ const LoginHook = () => {
                 userEmail: email,
                 userPassword: password
             });
+
             console.log('status: ', status);
             setLoading(false)
-            if (session?.id) {
+            if (session
+                ?.id) {
                 console.log(session.id);
-                
+
             }
             if (status && status
-                ?.ok ) {
+                ?.ok) {
                 return
             }
             setError('please check your credentials and try again')
@@ -54,7 +59,7 @@ const LoginHook = () => {
 
     };
 
-    return {error, handleSubmit, isLoading}
+    return {error, password, setPassword, handleSubmit, isLoading}
 
 }
 

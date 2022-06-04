@@ -51,8 +51,7 @@ export default NextAuth({
                         return null
                     }
                     const {userEmail, userName, userImage, id} = user
-                    console.log('user: ', user);
-                    console.log('id: ', id);
+
                     const result = await bcrypt.compare(credentials.userPassword, user
                         ?.userPassword)
                     if (!result) {

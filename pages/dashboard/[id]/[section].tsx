@@ -69,8 +69,9 @@ const Section = () => {
         if (id) {
             getCurrentUser(`${id}`)
         }
-    }, [id, section])
+    }, [id, session])
 
+    
     return (
         <Box
             maxWidth='lg'
@@ -95,7 +96,10 @@ const Section = () => {
                         ? <FavoriteProperties/>
                         : section === 'contacts'
                             ? <UserContacts/>
-                            : <Main setCurrentUser={setCurrentUser} currentUser={currentUser} isLoading={isLoading}/>}
+                            : <Main
+                                setCurrentUser={setCurrentUser}
+                                currentUser={currentUser}
+                                isLoading={isLoading}/>}
 
                     {!session || !session.user && <Box>
                         <Typography fontSize='1.2em'>

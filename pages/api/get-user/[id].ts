@@ -24,7 +24,14 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
             .findFirst({
                 where: {
                     id: `${id}`
-                }
+                },
+                select: {
+                    userEmail: true,
+                    userName: true,
+                    userPhone: true,
+                    userImage: true,
+                    id : true
+                  },
             })
         if (!user) {
             return res

@@ -10,12 +10,19 @@ import {
     TextField,
     FormControlLabel,
     Checkbox,
-    Button
+    Button,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    FormControl,
+    Input
 } from '@mui/material';
 import Link from 'next/link'
 import {getProviders, signIn, signOut} from 'next-auth/react';
 import {useState} from 'react';
 import LoginHook from '../../../src/Hooks/accountHooks/LoginHook';
+import {VisibilityOff, Visibility} from '@mui/icons-material';
 
 export function Copyright(props : any) {
     return (
@@ -37,8 +44,17 @@ export function Copyright(props : any) {
 const theme = createTheme();
 
 const LoginForm = () => {
+    const [showPassword,
+        setShowPassword] = useState(false)
 
-    const {error, handleSubmit, isLoading} = LoginHook()
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword)
+    };
+
+    const handleMouseDownPassword = (event : React.MouseEvent < HTMLButtonElement >) => {
+        event.preventDefault();
+    };
+    const {error,password, setPassword , handleSubmit, isLoading} = LoginHook()
 
     return (
         <ThemeProvider theme={theme}>
@@ -88,26 +104,45 @@ const LoginForm = () => {
                             margin="normal"
                             required
                             fullWidth
+                            data-cy='create-email'
                             id="email"
                             label="Email Address"
                             name="email"
                             autoComplete="email"
                             autoFocus/>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            InputProps={{
-                            inputProps: {
-                                min: 3,
-                                max: 20
-                            }
+
+                        <FormControl
+                            sx={{
+                            mt: 1,
+                            width: '100%'
                         }}
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"/>
+                            variant="outlined">
+
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <OutlinedInput
+                                sx={{
+                                width: '100%'
+                            }}
+                            
+                            value={`${password}`}
+                            onChange={(e)=>setPassword(`${e.target.value}`)}
+                                id="outlined-adornment-password"
+                                type={showPassword
+                                ? 'text'
+                                : 'password'}
+                                endAdornment={< InputAdornment position = "end" > <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end">
+                                {showPassword
+                                    ? <VisibilityOff/>
+                                    : <Visibility/>}
+                            </IconButton> 
+                            </InputAdornment>}
+                                label="Password"/>
+                        </FormControl>
+
                         <FormControlLabel
                             control={< Checkbox value = "remember" color = "primary" />}
                             label="Remember me"/>
@@ -149,3 +184,20 @@ const LoginForm = () => {
     );
 }
 export default LoginForm
+
+{/* <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            InputProps={{
+                            inputProps: {
+                                min: 3,
+                                max: 20
+                            }
+                        }}
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"/> */
+}

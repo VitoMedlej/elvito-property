@@ -41,9 +41,8 @@ const Main = ({isLoading ,setCurrentUser ,currentUser} : IMain) => {
     const {data: session} = useSession()
     const router = useRouter()
     const {id} = router.query
-    console.log('session: ', session);
+   
 
-    console.log('isLoading: ', isLoading);
     return (
         <Box>
             {currentUser && !isLoading
