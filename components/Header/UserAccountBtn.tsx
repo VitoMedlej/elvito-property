@@ -22,8 +22,9 @@ const UserAccountBtn = () => {
     const handleClick = (event : React.MouseEvent < HTMLElement >) => {
         if (session
             ?.user) {
+                setOpen(false)
 
-            router.push(`/dashboard/${session.user.name}`);
+            router.push(`/dashboard/${session.id}/main`);
             return
         }
         setAnchorEl(event.currentTarget);

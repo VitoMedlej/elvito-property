@@ -16,6 +16,7 @@ import CustomInput from "../components/SubmitProperty/Forms/CustomInput";
 import FormHandlingHook from "../src/Hooks/FormHandlingHook";
 import staticData from '../staticData.json'
 import {useSession} from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const {
     propertyTypes,
@@ -34,11 +35,31 @@ const submitProperty = () => {
         handleOwnerDetailsChange,
         handleBoolChange,
         handleInputChange,
+        imagesString,
+        setFormData,
         formData
     } = FormHandlingHook();
     const session = useSession()
     const isAuthed = session && session.status === 'authenticated' && session.data.user
-  
+
+    useEffect(() => {
+        if (isAuthed && session.data.user) {
+           
+            setFormData({
+                ...formData,
+                ownerDetails: {
+                    ...formData.ownerDetails,
+                    ownerId: `${session.data.id}`,
+                    ownerName: `${session.data.user.name}`,
+                    ownerEmail: `${session.data.user.email}`,
+                    ownerProfileImage: `${session.data.user.image}`
+                }
+            })
+        }
+    }, [session])
+
+
+
     return (
 
         <Box
@@ -50,7 +71,9 @@ const submitProperty = () => {
             component='form'
             maxWidth="lg"
             sx={{
-            boxShadow: isAuthed ? 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px' : '',
+            boxShadow: isAuthed
+                ? 'rgba(0, 0, 0, 0.25) 0px 25px 50px -12px'
+                : '',
             my: '3em',
             minHeight: '90vh',
             mx: {
@@ -186,6 +209,7 @@ const submitProperty = () => {
 
                         <DetailsSection title='Property Description'>
                             <TextField
+                                required
                                 onChange={(e) => handleInputChange(e)}
                                 value={formData.description}
                                 name='description'
@@ -267,6 +291,7 @@ const submitProperty = () => {
                             }}>
                                 <InputLabel id="demo-multiple-name-label">Key words</InputLabel>
                                 <Select
+                                    required
                                     onChange={(e) => handleInputChange(e)}
                                     value={formData.keywords}
                                     name='keywords'
@@ -297,7 +322,8 @@ const submitProperty = () => {
                                 label="Name"/>
                             <CustomInput
                                 name='ownerEmail'
-                                value={formData.ownerDetails.ownerEmail}
+                                
+                                value={ formData.ownerDetails.ownerEmail}
                                 onChange={handleOwnerDetailsChange}
                                 type='email'
                                 label="Email"/>
@@ -310,8 +336,24 @@ const submitProperty = () => {
                                 label="Phone Number"/>
                         </DetailsSection>
 
-                        <ImageGalleryForm onChange={handleImageChange}/>
-
+                        <ImageGalleryForm />
+                        <DetailsSection title='Property Images (option 2)'>
+                            <TextField
+                                required
+                                onChange={(e) => handleImageChange(e)}
+                                value={`${imagesString}`}
+                                name='images'
+                                id="outlined-multiline-images"
+                                label="images url"
+                                multiline
+                                rows={3}
+                                sx={{
+                                width: {
+                                    xs: '100%',
+                                    sm: '99%'
+                                }
+                            }}/>
+                        </DetailsSection>     
                         <DetailsSection
                             sx={{
                             mx: '0 auto',

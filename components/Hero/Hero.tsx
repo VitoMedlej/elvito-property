@@ -3,8 +3,11 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import {useEffect, useRef} from "react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
+import { IFormData } from "../../src/Types";
+
 
 const Hero = () => {
+    
     const elementRef = useRef()
     const router = useRouter()
     useEffect(() => {

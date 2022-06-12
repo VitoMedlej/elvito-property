@@ -23,7 +23,7 @@ export const handlePostRequest = async(requestBody : any) => {
 
         return
     } catch (err) {
-        console.log('err: ', err);
+        console.log('err 1.2: ', err);
         throw err
 
     } finally {
@@ -40,10 +40,11 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
         }
 
         let formData = req.body
-        if (!formData || !formData
-            ?.coverPhoto || !formData
-                ?.price) {
+        if (!formData || !formData.images
+           || !formData
+                .price) {
 
+                    
             return res
                 .status(400)
                 .json({message: `Error, missing property details! `})
@@ -59,5 +60,5 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
             .status(400)
             .json({message: `Error, something went wrong! ,${err}`})
     }
-
+   
 }

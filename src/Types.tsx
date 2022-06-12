@@ -1,6 +1,6 @@
 import {SvgIconTypeMap} from "@mui/material";
 import {OverridableComponent} from "@mui/material/OverridableComponent";
-import { ChangeEvent } from "react";
+import {ChangeEvent} from "react";
 import {Dispatch, SetStateAction} from "react";
 
 export interface IStatInfo {
@@ -25,6 +25,8 @@ export interface IFilterOption {
     setOpen : Dispatch < SetStateAction < any >>
 }
 export interface IPropertySection {
+    AllProperties : IFormData[]
+    totalCount : number
     sectionTitle : string | undefined
 }
 export interface IHouseCard {
@@ -35,19 +37,30 @@ export interface IHouseCard {
     } | string
     isMinWidthDisabled?: boolean
     isFeatured?: boolean
+    img : string
+    propertySize : string
+    id?: string
+    type : string
+    baths : number
+    rooms : number
+    currency : string
+    price : number
+    title : string
+    location : string
 }
 export interface IBreadcrumbLink {
     title : string;
     href : string;
 }
 export interface IBreadcrumb {
-    id : string;
+    title : string;
     category : string;
 }
 export interface IPropertyPageCarousel {
     className : string;
 }
 export interface IContactForm {
+    id : string
     isHiddenOnMobile?: boolean;
 }
 export interface ISummaryInfo {
@@ -56,7 +69,7 @@ export interface ISummaryInfo {
         muiName: string;
     }
     title : string
-    MainTitle : string
+    MainTitle : string | number
 }
 export interface ISwipeableMenuDrawer {
     setDrawerOpen : Dispatch < SetStateAction < boolean >>;
@@ -79,9 +92,9 @@ export interface IDetailsSection {
     sx?: any
 }
 export interface IFormData {
-    bathrooms : number;
-    coverPhoto : string;
-    createdAt : string ;
+    bathrooms : number 
+    id?: string
+    createdAt : string;
     currency : string;
     description : string;
     isFurnished : boolean;
@@ -95,32 +108,33 @@ export interface IFormData {
         ownerPhoneNumber: string,
         ownerProfileImage: string
     },
-    balconies : number,
+    balconies : number 
     paymentMethod : string,
-    price : number,
+    price : number 
     propertySize : string,
     purpose : string,
-    rentFrequency : string,
-    rooms : number,
+    rentFrequency?: string,
+    rooms : number 
     slug : string,
     state : string,
     title : string,
     type : string
+
 }
 
-export interface ICustomInput  {
+export interface ICustomInput {
     name : string
     value : string | number | string[]
     label : string
-    onChange : (e : any,isNumber ?: boolean) => void
+    onChange : (e : any, isNumber?: boolean) => void
     type?: string
-    children ?: any
-    InputProps ?: {
+    children?: any
+    InputProps?: {
         inputProps: {
             min: number;
             max: number;
         };
-    } 
+    }
 }
 export interface ICurrentUser {
 
@@ -133,5 +147,5 @@ export interface ICurrentUser {
 export interface IMain {
     isLoading : boolean
     currentUser : ICurrentUser | null
-    setCurrentUser : Dispatch<SetStateAction<ICurrentUser | null>>
+    setCurrentUser : Dispatch < SetStateAction < ICurrentUser | null >>
 }

@@ -21,6 +21,7 @@ const CustomInput = ({
     const isNumber = type === 'number' 
     return (
         <TextField
+        required
             onChange={(e) => onChange(e,isNumber)}
             value={value}
             name={name}

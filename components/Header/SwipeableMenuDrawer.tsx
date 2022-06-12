@@ -75,7 +75,7 @@ const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawe
                     <MenuBtn
                         handleClick={() => setDrawerOpen(false)}
                         title='Buy'
-                        href='/real-estate-and-homes/properties?for=sale'
+                        href='/real-estate-and-homes/properties?purpose=for-sale'
                         Icon={PaidOutlinedIcon}/>
 
                     <MenuBtn
@@ -87,13 +87,13 @@ const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawe
                     <MenuBtn
                         handleClick={() => setDrawerOpen(false)}
                         title='Rent'
-                        href='/real-estate-and-homes/properties?for=rent'
+                        href='/real-estate-and-homes/properties?purpose=for-rent'
                         Icon={CalendarMonthOutlinedIcon}/>
 
                     <MenuBtn
                         handleClick={() => setDrawerOpen(false)}
                         title='User'
-                        href={session?.user ? `/dashboard/${session.user.name}` :'/account/login'}
+                        href={session?.user ? `/dashboard/${session.id}/main` :'/account/login'}
                         Icon={PersonOutlineOutlinedIcon}/>
 
                 </List>

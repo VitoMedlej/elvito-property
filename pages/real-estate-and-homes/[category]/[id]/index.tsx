@@ -1,20 +1,43 @@
 import {Box, IconButton, Typography} from "@mui/material"
 import {useRouter} from "next/router";
 import Breadcrumb from "../../../../components/breadcrumb/Breadcrumb";
-import {useState} from "react";
 import ContactForm from "../../../../components/PropertyPageComps/ContactForm";
 import PropertyPageCarousel from "../../../../components/PropertyPageComps/PropertyPageCarousel";
-import SummaryInfo from "../../../../components/PropertyPageComps/SummaryInfo";
+import SummaryInfo from '../../../../components/PropertyPageComps/SummaryInfo';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
-
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
+import {PrismaClient} from "@prisma/client";
+import {toJson} from "../index";
+import currencyToSymbol from "../../../../src/Functions/currencyToSymbol";
+import BedIcon from '@mui/icons-material/Bed';
+import BalconyIcon from '@mui/icons-material/Balcony';
+import StraightenIcon from '@mui/icons-material/Straighten';
+import {useState} from "react";
+import {IFormData} from "../../../../src/Types";
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import { useSession } from "next-auth/react";
 
 const style = {
     display: 'flex',
     alignItems: 'center'
 }
-const Index = () => {
+const style2 =
 
+    {
+        pb: '.5em',
+        fontSize:'1.5em'    ,
+        fontWeight:'500'
+    }
+
+
+const Index = ({results} : any) => {
+
+    let currentData : IFormData = results && JSON.parse(results)
+    console.log('currentData: ', currentData);
+    const session = useSession()
+    const sessionId = session?.data?.id
+    console.log('sessionId: ', sessionId);
+    
     const router = useRouter()
     return (
         <Box
@@ -26,10 +49,13 @@ const Index = () => {
             mb: '5em',
             borderTop: '1px solid #80808061'
         }}>
-            <Box maxWidth="lg" sx={{
+            {currentData && <Box maxWidth="lg" sx={{
                 margin: '0 auto'
             }}>
-                <Breadcrumb id={`${router.query.id}`} category={`${router.query.category}`}/>
+                <Breadcrumb
+                    title={`${currentData
+                    ?.title || 'Item'}`}
+                    category={`${router.query.category}`}/>
                 <Box
                     sx={{
                     display: 'flex',
@@ -37,8 +63,8 @@ const Index = () => {
                     flexWrap: 'wrap'
                 }}>
 
-                    <PropertyPageCarousel/>
-                    <ContactForm isHiddenOnMobile={true}/>
+                    <PropertyPageCarousel images={currentData.images}/>
+                    <ContactForm id={currentData.ownerDetails.ownerId} isHiddenOnMobile={true}/>
                 </Box>
                 <Box
                     sx={{
@@ -57,41 +83,45 @@ const Index = () => {
                         flexDirection: 'column'
                     }}>
 
-                        <Typography fontSize="1.6em" fontWeight="600">
-                            Whole Luxury Building For Sale In Rabieh
+                        <Typography sx={{fontSize:{xs:'1.2em',sm:'1.4em',md:"1.5em"}}} fontWeight="600">
+                            {currentData.title}
                         </Typography>
-                        <Typography fontSize="1.1em" color='#000000bf' fontWeight="500">
-                            2653 Rosemont Cir, Davenport, FL 33837
+                        <Typography sx={{fontSize:{xs:'.85em',sm:'.95em',md:"1.1em"}}} color='#000000bf' fontWeight="500">
+                            {currentData.location}
                         </Typography>
                         <Box
                             sx={{
                             ...style,
                             gap: '.5em'
                         }}>
-                            <Typography color='#000000bf'>
-                                For Sale :
+                            <Typography
+                            sx={{fontSize:{xs:'.8em',sm:'.9em',md:"1em"}}}
+                            color='#000000bf'>
+                                {currentData.purpose === 'for-sale'
+                                    ? 'For Sale'
+                                    : currentData.purpose === 'for-rent' && 'For Rent'}:
                             </Typography>
-                            <Typography fontSize="1.3em" color='green' fontWeight="400">
-                                $350,000
+                            <Typography fontSize="1.2em" color='green' fontWeight="400">
+                                {currencyToSymbol(currentData.currency)}{currentData.price} {' '}
+                                {`${currentData
+                                    ?.rentFrequency}`}
                             </Typography>
                         </Box>
                     </Box>
 
                     <Box
                         sx={{
-                        py: '1.5em',
+                        py: '2em',
                         borderBottom: "1px solid #c4c4c4"
                     }}>
                         <Typography
-                            sx={{
-                            pb: '.5em'
-                        }}
-                            fontSize='1.5em'
-                            fontWeight='500'>
+                            sx={style2}
+                            >
                             Property Facts
                         </Typography>
                         <Box
                             sx={{
+                            gap:'10px',
                             display: 'flex',
                             justifyContent: 'end',
                             flexWrap: 'wrap'
@@ -99,83 +129,57 @@ const Index = () => {
                             <SummaryInfo
                                 Icon={HomeWorkOutlinedIcon}
                                 title={"Property Type"}
-                                MainTitle={"House"}/>
-                            <SummaryInfo Icon={BathtubOutlinedIcon} title={"Bathrooms"} MainTitle={"5"}/>
+                                MainTitle={`${currentData.type}`}/>
                             <SummaryInfo
-                                Icon={HomeWorkOutlinedIcon}
-                                title={"Property Type"}
-                                MainTitle={"House"}/>
+                                Icon={BathtubOutlinedIcon}
+                                title={"Bathrooms"}
+                                MainTitle={currentData.bathrooms}/>
+                                
+                                 {currentData.rooms
+                                ? <SummaryInfo Icon={BedIcon} title={"Bedrooms"} MainTitle={currentData.rooms}/>
+                                : ''}
+
+                            {currentData.balconies
+                                ? <SummaryInfo
+                                        Icon={BalconyIcon}
+                                        title={"Balconies"}
+                                        MainTitle={currentData.balconies}/>
+                                : ''}
                             <SummaryInfo
-                                Icon={HomeWorkOutlinedIcon}
-                                title={"Property Type"}
-                                MainTitle={"House"}/>
+                                Icon={StraightenIcon}
+                                title={"Property Size"}
+                                MainTitle={currentData.propertySize}/>
+
                             <SummaryInfo
-                                Icon={HomeWorkOutlinedIcon}
-                                title={"Property Type"}
-                                MainTitle={"House"}/>
+                                Icon={PaidOutlinedIcon}
+                                MainTitle={currentData.paymentMethod}
+                                title={'Payment Method'}/>
+
                         </Box>
                     </Box>
 
                     <Box
                         sx={{
-                        py: '1.5em',
+                        py: '2em',
                         borderBottom: "1px solid #c4c4c4"
                     }}>
                         <Typography
-                            sx={{
-                            pb: '.5em'
-                        }}
-                            fontSize='1.5em'
-                            fontWeight='500'>
+                            sx={style2}
+                            >
                             Description
                         </Typography>
                         <Typography
                             sx={{
                             whiteSpace: 'pre-wrap'
                         }}>
-                            {` mazing Building / Villa For Sale In Rabieh
-In A Prime Location
-Private Dead End Street
-
-Space : 2,500 Sqm
-+ Huge Swimming Pool
-
-
-Unit Features:
-
-• 4 Floors
-• 3 Duplexes + 1 x 400 Sqm Huge Flat
-• Private Jacuzzis
-• Balconies With Sea View
-
-Features:
-
-• Heating System
-• Central AC
-• Video Phone
-• Door Camera
-
-Facilities:
-
-• 10+ Covered Parkings + Parking For Visitors
-• 24/7 Elevators
-• Full Time Concierge
-• A Private Generator For The Building
-• Well Secured Area and Building
-
-2 minutes away from the highway`}
+                            {`${currentData.description}`}
                         </Typography>
                     </Box>
-                    <Box
-                        sx={{
-                        py: '1.5em',
+                    <Box sx={{
+                        py: '2em'
                     }}>
                         <Typography
-                            sx={{
-                            pb: '.5em'
-                        }}
-                            fontSize='1.5em'
-                            fontWeight='500'>
+                            sx={style2}>
                             More Details
                         </Typography>
                         <Box
@@ -194,11 +198,11 @@ Facilities:
                                 ...style,
                                 gap: '1em'
                             }}>
-                                <Typography>
+                                <Typography fontWeight='500'>
                                     Listed :
                                 </Typography>
-                                <Typography fontWeight='600'>
-                                    14 days ago
+                                <Typography fontWeight='300'>
+                                    {currentData.createdAt || 'New'}
                                 </Typography>
 
                             </Box>
@@ -207,11 +211,11 @@ Facilities:
                                 ...style,
                                 gap: '1em'
                             }}>
-                                <Typography>
+                                <Typography fontWeight='500'>
                                     Property Id :
                                 </Typography>
-                                <Typography fontWeight='600'>
-                                   412RC-KLB-EZ
+                                <Typography fontWeight='300'>
+                                    {currentData.id}
                                 </Typography>
 
                             </Box>
@@ -219,11 +223,86 @@ Facilities:
                         </Box>
 
                     </Box>
-                </Box>
-            </Box>
+                    <Box sx={{
+                       py: '2em',
+                        borderTop: "1px solid #c4c4c4"
+                    }}>
+                        <Typography
+                            sx={style2}>
+                            Owner's Details
+                        </Typography>
+                        <Box
+                                sx={{
+                                ...style,
+                                gap: '1em'
+                            }}>
+                                <Typography fontWeight='500'>
+                                    Name :
+                                </Typography>
+                                <Typography fontWeight='300'>
+                                {currentData.ownerDetails.ownerName}
+                                </Typography>
 
+                            </Box>
+                            <Box
+                                sx={{
+                                ...style,
+                                gap: '1em'
+                            }}>
+                                <Typography fontWeight='500'>
+                                    Email :
+                                </Typography>
+                                <Typography fontWeight='300'>
+                                {currentData.ownerDetails.ownerEmail}
+                                </Typography>
+
+                            </Box>
+                </Box>
+                </Box>
+            </Box>}
+            <ContactForm id={currentData.ownerDetails.ownerId} />
         </Box>
     )
 }
 
 export default Index
+
+export async function getServerSideProps({query} : any) {
+
+    const prisma = new PrismaClient()
+    try {
+
+        let data = await prisma
+            .properties
+            .findUnique({
+                where: {
+                    id: query.id
+                }
+            })
+        if (!data) {
+            return {
+                redirect: {
+                    destination: '/real-estate-and-homes/properties',
+                    statusCode: 307
+                }
+            }
+        }
+        let results = toJson(data)
+
+        return {props: {
+                results
+            }}
+    } catch (e) {
+        console.log('e: ', e);
+
+        return {
+            redirect: {
+                destination: '/real-estate-and-homes/properties',
+                statusCode: 307
+            }
+        }
+    } finally {
+        await prisma.$disconnect()
+
+    }
+}

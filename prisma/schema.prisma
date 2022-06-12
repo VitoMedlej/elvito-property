@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type FeaturedOwnerDetails {
+  ownerEmail        String
+  ownerId           String
+  ownerName         String
+  ownerPhoneNumber  String
+  ownerProfileImage String
+}
+
 type PropertiesOwnerDetails {
   ownerEmail        String
   ownerId           String
@@ -15,11 +23,34 @@ type PropertiesOwnerDetails {
   ownerProfileImage String
 }
 
+model Featured {
+  id            String               @id @default(auto()) @map("_id") @db.ObjectId
+  balconies     BigInt
+  bathrooms     BigInt
+  createdAt     String
+  currency      String
+  description   String
+  images        String[]
+  isFurnished   Boolean
+  keywords      String[]
+  location      String
+  ownerDetails  FeaturedOwnerDetails
+  paymentMethod String
+  price         BigInt
+  propertySize  String
+  purpose       String
+  rentFrequency String
+  rooms         BigInt
+  slug          String
+  state         String
+  title         String
+  type          String
+}
+
 model Properties {
   id            String                 @id @default(auto()) @map("_id") @db.ObjectId
   balconies     BigInt
   bathrooms     BigInt
-  coverPhoto    String
   createdAt     String
   currency      String
   description   String

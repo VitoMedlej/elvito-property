@@ -15,6 +15,7 @@ const LoginHook = () => {
     const handleSubmit = async(event : React.FormEvent < HTMLFormElement >) => {
         try {
             event.preventDefault();
+            setError('')
             if (session
                 ?.user) {
                 setError('You are already logged in. ')
@@ -23,7 +24,6 @@ const LoginHook = () => {
             const data = new FormData(event.currentTarget);
             const email = data.get('email')
 
-            console.log('password: ', password);
             if (!email || !password || password.length < 4) {
                 setError('Please make sure to fill in the inputs .')
                 return
@@ -36,13 +36,8 @@ const LoginHook = () => {
                 userPassword: password
             });
 
-            console.log('status: ', status);
             setLoading(false)
-            if (session
-                ?.id) {
-                console.log(session.id);
-
-            }
+         
             if (status && status
                 ?.ok) {
                 return

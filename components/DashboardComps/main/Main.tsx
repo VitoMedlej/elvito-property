@@ -37,12 +37,12 @@ const styles = {
 }
 
 const Main = ({isLoading ,setCurrentUser ,currentUser} : IMain) => {
-    console.log('currentUser: ', currentUser);
     const {data: session} = useSession()
     const router = useRouter()
     const {id} = router.query
    
 
+   
     return (
         <Box>
             {currentUser && !isLoading

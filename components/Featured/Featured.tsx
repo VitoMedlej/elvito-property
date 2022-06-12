@@ -1,8 +1,15 @@
 import {Box, Typography} from '@mui/material'
 import SwiperCarouselSkeleton from '../../Skeletons/SwiperCarouselSkeleton'
-import SwiperCarousel from '../Swiper/SwiperCarousel'
+import { IFormData } from '../../src/Types'
+import SwiperCarousel from '../SwiperComps/SwiperCarousel'
 
-const Featured = () => {
+export interface IfeaturedProperties {
+    featuredProperties : IFormData[]
+}
+
+const Featured = ({featuredProperties}  : IfeaturedProperties) => {
+    
+    console.log('featuredProperties: ', featuredProperties);
     return (
         <Box
             maxWidth='lg'
@@ -28,8 +35,8 @@ const Featured = () => {
                 New Featured Homes
             </Typography>
             <Box>
-                {true
-                    ? <SwiperCarousel/>
+                {true 
+                    ? <SwiperCarousel featuredProperties={featuredProperties}/>
                     : <SwiperCarouselSkeleton/>
 }
             </Box>

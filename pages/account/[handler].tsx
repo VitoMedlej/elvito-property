@@ -12,7 +12,7 @@ const Handler = () => {
     const {data : session } = useSession()
     useEffect(() => {
             if (session && session.id && session.user) {
-                router.push(`/dashboard/${session.id}`)
+                router.push(`/dashboard/${session.id}/main`)
                 return
             }
     }, [session])  

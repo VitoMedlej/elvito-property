@@ -20,7 +20,6 @@ const theme = createTheme();
 
 const RegisterFrom = () => {
     const {error, isLoading, handleChange,formData ,handleSubmit} = RegisterHook()
-    console.log('formData: ', formData);
 
     return (
         <ThemeProvider theme={theme}>

@@ -44,8 +44,11 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
             .json(user)
 
     } catch (err) {
-        console.log('err: ', err);
+        console.log('err 1.3: ', err);
         throw err
 
+    }
+    finally {
+        await prisma.$disconnect()
     }
 }

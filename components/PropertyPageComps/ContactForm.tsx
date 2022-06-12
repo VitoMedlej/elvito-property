@@ -1,12 +1,18 @@
 import { Box, Typography, TextField, Button } from '@mui/material'
+import { useSession } from 'next-auth/react'
 import { IContactForm } from '../../src/Types'
 
-const ContactForm = ({isHiddenOnMobile} : IContactForm) => {
+
+
+const ContactForm = ({isHiddenOnMobile ,id} : IContactForm) => {
+    const session = useSession()
+    const sessionId = session?.data?.id
+    const sameUser = sessionId === id
     return (
 
         <Box
             sx={{
-            display : {xs: isHiddenOnMobile ? 'none' : 'block', md : 'block'},
+            display : {xs: isHiddenOnMobile ? 'none' : 'block', md : !isHiddenOnMobile ? 'none' : 'block'},
             width: {
                 xs: '100%',
                 md: '30%'
@@ -45,6 +51,7 @@ const ContactForm = ({isHiddenOnMobile} : IContactForm) => {
                     label="Message"
                     variant="outlined"/>
                 <Button
+                    disabled={sameUser}
                     variant="contained"
                     sx={{
                         backgroundColor: "#d42c2a",

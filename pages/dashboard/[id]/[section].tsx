@@ -31,17 +31,19 @@ const Section = () => {
         setLoading] = useState(false)
 
     const getCurrentUser = async(id?: string) => {
-
+        setLoading(true)
         if (session
             ?.user && session
                 ?.id) {
-            console.log('should');
 
             setCurrentUser({
-                ...session.user,
+                userName : session.user.name,
+                userEmail : session.user.email,
+                userImage : session.user.image,
                 id: `${session
                     ?.id}`
             })
+            setLoading(false)
 
             return
         }
@@ -59,7 +61,7 @@ const Section = () => {
 
         } catch (err) {
             setLoading(false)
-            console.log(err);
+            console.log('err 1 : ' ,err);
 
         }
 

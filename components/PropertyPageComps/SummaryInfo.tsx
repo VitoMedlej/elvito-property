@@ -5,11 +5,11 @@ const SummaryInfo = ({Icon ,title ,MainTitle} : ISummaryInfo) => {
     return (
         <Box
             sx={{
-            gap: '10px',
+            gap: '8px',
             display: 'flex',
             alignItems: 'center',
             color: '#333333',
-            width:'33%',
+            width:{xs:'45%',sm:'32%'},
             pb:'1em',
         }}>
         <>

@@ -110,13 +110,13 @@ const MainNavBar = () => {
                         {([
                             {
                                 title: 'Buy',
-                                href: "/real-estate-and-homes/properties?for=sale"
+                                href: "/real-estate-and-homes/properties?purpose=for-sale"
                             }, {
                                 title: 'Sell',
                                 href: "/submit-property"
                             }, {
                                 title: 'Rent',
-                                href: "/real-estate-and-homes/properties?for=rent"
+                                href: "/real-estate-and-homes/properties?purpose=for-rent"
                             }
                         ]as const).map(item => {
                             return <TopNavBarLink key={item.title} href={item.href} title={item.title}/>

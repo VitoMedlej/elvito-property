@@ -34,7 +34,7 @@ export const handlePostRequest = async(requestBody : any) => {
 
         return
     } catch (err) {
-        console.log('err: ', err);
+        console.log('err 1.1: ', err);
         throw err
 
     } finally {
@@ -85,6 +85,9 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
         return res
             .status(400)
             .json({message: `Error, something went wrong! ,${err}`})
+    }
+    finally {
+        await prisma.$disconnect()
     }
 
 }
