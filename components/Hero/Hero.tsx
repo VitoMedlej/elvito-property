@@ -107,7 +107,7 @@ const Hero = () => {
                     margin: '2em auto',
                     width: 'max-content'
                 }}>
-                    <input type="text" placeholder="Search area" className='HeroInput p1'/>
+                    <input type="text" placeholder="Enter Keyword" className='HeroInput p1'/>
                     <IconButton
                         sx={{
                         color: 'white',
@@ -115,6 +115,7 @@ const Hero = () => {
                         top: '0%',
                         right: '0%',
                         border: '1px solid white',
+                        borderRadius:'7px',
                         padding: '8px',
                         background: '#d42c2a',
                         ':hover': {

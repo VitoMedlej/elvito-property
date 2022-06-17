@@ -29,7 +29,7 @@ const Category = () => {
     }, [])
 
     return (
-        <Box>
+  
             <Box
                 ref={ref}
                 maxWidth='lg'
@@ -114,7 +114,7 @@ const Category = () => {
 
                 </Grid>
             </Box>
-        </Box>
+      
     )
 }
 

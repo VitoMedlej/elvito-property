@@ -1,43 +1,46 @@
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {FreeMode, Pagination} from "swiper";
+import {FreeMode,Autoplay, Pagination} from "swiper";
 import 'swiper/css';
 import HouseCard from '../Cards/HouseCard';
-import {IFormData} from '../../src/Types';
-import { IfeaturedProperties } from '../Featured/Featured';
-
-// const Slide = () => {     return <Box         sx={{         width: '24%',
-//     minWidth: '300px',         height: '300px',         border: '1px solid
-// green',         margin: '10px',         background: 'red'     }}></Box> }
+import { IProperties } from '../Featured/Featured';
 
 
-const SwiperCarousel = ({featuredProperties} :IfeaturedProperties) => {
+const SwiperCarousel = ({PropertiesArray,delay, isFeatured} :IProperties) => {
+   
     return (
         <Swiper
-            freeMode={true}
-            spaceBetween={1}
             pagination={{
-            clickable: true
-        }}
-            modules={[FreeMode, Pagination]}
+                clickable: true,
+              }}
+              autoplay={{
+                delay: delay || 3000,
+                disableOnInteraction: false,
+              }}
+              navigation={true}
+            spaceBetween={10}
+            modules={[FreeMode,Autoplay, Pagination]}
             breakpoints={{
-            200: {
-                width: 640,
-                slidesPerView: 2
-            },
-            768: {
-                width: 768,
-                slidesPerView: 2
-            }
+                
+                200: {
+                    width: 310,
+                    slidesPerView: 1
+                },
+                768: {
+                    width: 768,
+                    slidesPerView: 2
+                },
+             
+               
         }}>
 
-            {featuredProperties && featuredProperties.map(property => {
+            {PropertiesArray && PropertiesArray.map(property => {
 
                 return <SwiperSlide key={property.id}>
                     <HouseCard
                         img={property.images[0] || property.images[1]}
                         width='95%'
                         id={property.id}
-                        isFeatured={true}
+                        isFeatured={isFeatured !== undefined ? isFeatured : true}
                         propertySize={property.propertySize}
                         type={property.type}
                         baths={property.bathrooms}

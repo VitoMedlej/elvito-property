@@ -1,15 +1,22 @@
 import {Box, Pagination, Typography} from "@mui/material"
+import { useRouter } from "next/router";
+
+import handlePagination from "../../src/Functions/HandlePagination";
 import {IPropertySection} from "../../src/Types"
 import HouseCard from "../Cards/HouseCard"
 
 const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySection) => {
+    console.log('sectionTitle: ', sectionTitle);
+ 
     const capitalizeString = (s : string) => s && s[0].toUpperCase() + s.slice(1)
    // first we limit the number of products per page
     const itemsPerPage = 9
-   // then we calculate how many pages we have and round it (35.5 => 36)
-    const totalPages = Math.round(totalCount / itemsPerPage)
-    const numberOfButtons = Math.ceil(totalPages)
+   // then we calculate how many pages we have and round its ceiled value  (1.2 => 2)
+    const totalPages = totalCount / itemsPerPage
+    const numberOfButtons = Math.round(Math.ceil(totalPages))
 
+    const router = useRouter()
+ 
     return (
         <Box
             component='section'
@@ -31,10 +38,10 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
                     md: '1.4em'
                 }
             }}>
-                {capitalizeString(sectionTitle || 'propertie')}s for sale and rent in lebanon
+               Best {capitalizeString(sectionTitle || 'propertie')}s in lebanon
             </Typography>
             <Typography color='#000000ad'>
-                {AllProperties.length || '0'} {sectionTitle || 'propertie'}s
+                showing {AllProperties?.length || 0} out of {totalCount || 0} items
             </Typography>
             
             </> : <Typography fontWeight='500' fontSize='1.3em' color='#ff0000d6'>
@@ -86,6 +93,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
                 justifyContent: 'center'
             }}>
                 <Pagination
+                    onChange={(e)=>handlePagination(e,router)}
                     count={numberOfButtons || 1}
                     shape="rounded"/>
             </Box>

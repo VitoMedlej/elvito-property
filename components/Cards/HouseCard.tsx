@@ -12,7 +12,7 @@ import HotelOutlinedIcon from '@mui/icons-material/HotelOutlined';
 import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
 import {useRouter} from 'next/router';
 import {IHouseCard} from '../../src/Types';
-import BalconyIcon from '@mui/icons-material/Balcony';
+
 
 export default function HouseCard({
     width,
@@ -27,8 +27,7 @@ export default function HouseCard({
     location,
     isFeatured,
     id,
-    type,
-    
+    type
 } : IHouseCard) {
     const router = useRouter()
     return (
@@ -86,7 +85,7 @@ export default function HouseCard({
                 <Typography fontSize='.9em' fontWeight='300'>
                     {location}
                 </Typography>
-                <Typography fontSize='1em' fontWeight='600'>
+                <Typography className='limitTextLines' fontSize='1em' fontWeight='600'>
                     {title}
                 </Typography>
                 <Typography fontSize='.9em' color='green' fontWeight='500'>
@@ -97,7 +96,9 @@ export default function HouseCard({
                             ? '€'
                             : 'L.L'}{price}
                 </Typography>
-                <Box>
+                <Box sx={{
+                    display: 'flex'
+                }}>
 
                     <Button
                         sx={{
@@ -130,7 +131,6 @@ export default function HouseCard({
                             </Button>
                         : ''}
 
-                
                 </Box>
 
             </CardContent>

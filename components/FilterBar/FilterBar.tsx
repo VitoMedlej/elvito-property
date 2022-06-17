@@ -63,8 +63,7 @@ const FilterBar = () => {
                         fontSize={{
                         xs: '12px'
                     }}>
-                        More Filters
-
+                Filters
                     </Typography>
                 </Button>
 

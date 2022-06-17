@@ -3,13 +3,14 @@ import SwiperCarouselSkeleton from '../../Skeletons/SwiperCarouselSkeleton'
 import { IFormData } from '../../src/Types'
 import SwiperCarousel from '../SwiperComps/SwiperCarousel'
 
-export interface IfeaturedProperties {
-    featuredProperties : IFormData[]
+export interface IProperties {
+    PropertiesArray : IFormData[]
+    isFeatured ?: boolean
+    delay ?: number 
 }
 
-const Featured = ({featuredProperties}  : IfeaturedProperties) => {
+const Featured = ({PropertiesArray}  : IProperties) => {
     
-    console.log('featuredProperties: ', featuredProperties);
     return (
         <Box
             maxWidth='lg'
@@ -35,8 +36,8 @@ const Featured = ({featuredProperties}  : IfeaturedProperties) => {
                 New Featured Homes
             </Typography>
             <Box>
-                {true 
-                    ? <SwiperCarousel featuredProperties={featuredProperties}/>
+                {PropertiesArray && PropertiesArray.length > 0 
+                    ? <SwiperCarousel PropertiesArray={PropertiesArray}/>
                     : <SwiperCarouselSkeleton/>
 }
             </Box>

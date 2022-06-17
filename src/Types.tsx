@@ -140,6 +140,7 @@ export interface ICurrentUser {
 
     userName?: string | null | undefined;
     userEmail?: string | null | undefined;
+    userPhone ?: string | null | undefined;
     userImage?: string | null | undefined;
     id?: string | null | undefined;
 

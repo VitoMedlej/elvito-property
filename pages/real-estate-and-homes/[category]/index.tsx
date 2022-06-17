@@ -2,7 +2,7 @@ import {Box, Button, Drawer} from "@mui/material"
 import {PrismaClient} from "@prisma/client"
 import {useSession} from "next-auth/react"
 import {useRouter} from "next/router"
-import {useEffect, useState} from "react"
+import {createContext, useEffect, useState} from "react"
 import FilterBar from "../../../components/FilterBar/FilterBar"
 import PropertySection from "../../../components/PropertySection/PropertySection"
 
@@ -10,11 +10,10 @@ const Index = ({results, totalCount} : {
     results: any,
     totalCount: number
 }) => {
-
+    const MyContext = createContext('defaultValue');
     const AllProperties = results && JSON.parse(results)
 
     const router = useRouter()
-    const {data: session} = useSession()
 
     const [isDrawerOpen,
         setDrawerOpen] = useState(false)
@@ -28,28 +27,32 @@ const Index = ({results, totalCount} : {
     };
 
     return (
-        <Box
-            sx={{
-            px: {
-                xs: '3vw',
-                lg: '0'
-            },
-            borderTop: '1px solid #80808061'
-        }}>
+        <MyContext.Provider value='foo'>
 
-            <FilterBar/>
-            <PropertySection
-                totalCount={totalCount}
-                AllProperties={AllProperties}
-                sectionTitle={`${router.query.id || 'propertie'}`}/>
+            <Box
+                sx={{
+                px: {
+                    xs: '3vw',
+                    lg: '0'
+                },
+                borderTop: '1px solid #80808061'
+            }}>
 
-            <Drawer open={isDrawerOpen} onClose={toggleDrawer(false)}>
-                <Box sx={{
-                    width: '300px'
-                }}></Box>
-            </Drawer>
+                <FilterBar/>
+                <PropertySection
+                    totalCount={totalCount}
+                    AllProperties={AllProperties}
+                    sectionTitle={`${router.query.id || 'propertie'}`}/>
 
-        </Box>
+                <Drawer open={isDrawerOpen} onClose={toggleDrawer(false)}>
+                    <Box sx={{
+                        width: '300px'
+                    }}></Box>
+                </Drawer>
+
+            </Box>
+        </MyContext.Provider>
+
     )
 }
 
@@ -60,59 +63,123 @@ export const toJson = (data : any) => {
         ? `${v}n`
         : v).replace(/"(-?\d+)n"/g, (_, a) => a);
 }
-export async function getServerSideProps({query} : any) {
 
-    const prisma = new PrismaClient()
+const Category = (categoryQuery: string) => {
+    let categories = ["apartment", "villa", "comercial", "land", "chalet"]
+
+   if ( !categories.includes(categoryQuery)) {
+            return undefined
+   }
+   return categoryQuery
+}
+let isPurposeValid = (purposeQuery : string) => {
+    if (purposeQuery === 'for-sale' || purposeQuery === 'for-rent') return purposeQuery
+   return undefined
+
+} 
+const GetProperties = async(prisma : PrismaClient, skip ?: number ,OR?: any[], itemsPerPage?: number,query ?: any) => {
+    const select = {
+        id: true,
+        type: true,
+        bathrooms: true,
+        rooms: true,
+        price: true,
+        propertySize: true,
+        images: true,
+        title: true,
+        location: true,
+        purpose: true,
+        currency: true,
+        description: true
+    }
+
     try {
-
-        let categories = ["apartment", "villa", "comercial", "land", "chalet"]
-        let selectedCategory = categories.includes(`${query
-            ?.category}`)
-            ? query.category
-            : undefined
-        let selectedPurpose = query && query
-            ?.purpose === 'for-sale' || query
-                ?.purpose === 'for-rent'
-                    ? query.purpose
-                    : undefined
-
-        const propertiesArray = await prisma
+        let data = await prisma
             .properties
             .findMany({
-                take: 9,
+                skip: skip,
+                take: itemsPerPage,
                 where: {
-                    purpose: selectedPurpose,
-                    type: selectedCategory
+                    purpose:isPurposeValid(query?.purpose),
+                    type:Category(query?.category),
+                    OR
                 },
-                select: {
-                    id: true,
-                    type: true,
-                    bathrooms: true,
-                    rooms: true,
-                    price: true,
-                    propertySize: true,
-                    images: true,
-                    title: true,
-                    location: true,
-                    purpose: true,
-                    currency: true
-                }
+                select
             })
-        const results = toJson(propertiesArray)
-        
+        return [...data]
+    } catch (err) {
+        console.log(err);
+
+    } finally {
+        await prisma.$disconnect()
+    }
+}
+export async function getServerSideProps({query} : any) {
+
+    const itemsPerPage = 9
+    const prisma = new PrismaClient()
+    try {
+        let searchQuery = query
+        ?.q
+            ?.toLowerCase()
+        let OR = searchQuery
+        ? [
+            {
+                description: {
+                    contains: searchQuery
+                }
+            }, {
+                title: {
+                    contains: searchQuery
+                }
+
+            }
+
+        ]
+        : undefined
+        const page = query
+            ?.page || 0;
+     
+     
         const totalCount = await prisma
             .properties
             .count({
                 where: {
-                    type: selectedCategory
+                    type: Category(query?.category),
+                    purpose: isPurposeValid(query?.purpose),
+                    OR
                 }
             })
-        if (!results) {
+       
+        const totalPages = Math.round(totalCount / itemsPerPage)
+        let skip = (page * itemsPerPage) || undefined
+        if (page > totalPages || page < 0) 
+            skip = 0
+        const propertiesArray = await GetProperties(prisma ,skip,OR,itemsPerPage,query)
+        // let propertiesArray = await prisma
+        //     .properties
+        //     .findMany({
+        //         skip: skip,
+        //         take: itemsPerPage,
+        //         where: {
+        //             purpose: isPurposeValid
+        //                 ? purposeQuery
+        //                 : undefined,
+        //             type: isCategoryValid
+        //                 ? categoryQuery
+        //                 : undefined,
+        //             OR
+        //         },
+        //         select
+        //     })
+
+        if (!propertiesArray || propertiesArray
+            ?.length < 1) {
             throw new Error('error ,no data found')
         }
         return {
             props: {
-                results,
+                results: toJson([...propertiesArray]),
                 totalCount
 
             }

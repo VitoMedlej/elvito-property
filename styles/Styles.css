@@ -34,11 +34,25 @@ body {
   left: 0;
 }
 
+.limitTextLines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .HeroInput {
   outline: none;
   border: none;
   max-width: 600px;
-  border-radius: 500px;
+  border-radius: 7px;
+}
+
+@media (min-width: 460px) {
+  .HeroInput {
+    min-width: 250px;
+  }
 }
 
 .p1 {
@@ -47,6 +61,11 @@ body {
 
 .p2 {
   padding: 10px 0px 10px 15px;
+}
+
+.p3 {
+  padding: 10px;
+  border-radius: 7px;
 }
 
 .icons {

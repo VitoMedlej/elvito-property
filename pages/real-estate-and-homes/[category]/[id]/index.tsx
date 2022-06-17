@@ -16,6 +16,7 @@ import {useState} from "react";
 import {IFormData} from "../../../../src/Types";
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import { useSession } from "next-auth/react";
+import UserProfile from "../../../../components/DashboardComps/UserProfile/UserProfile";
 
 const style = {
     display: 'flex',
@@ -33,11 +34,19 @@ const style2 =
 const Index = ({results} : any) => {
 
     let currentData : IFormData = results && JSON.parse(results)
-    console.log('currentData: ', currentData);
     const session = useSession()
     const sessionId = session?.data?.id
-    console.log('sessionId: ', sessionId);
-    
+    const {ownerName ,ownerEmail ,ownerId,ownerProfileImage,ownerPhoneNumber} = currentData.ownerDetails
+    const isSameUser = sessionId === ownerId
+    const currentUser = {
+        userName : ownerName,
+        userEmail : ownerEmail,
+        userId : ownerId,
+        userImage : ownerProfileImage,
+        userPhone : ownerPhoneNumber,
+
+
+    }    
     const router = useRouter()
     return (
         <Box
@@ -64,7 +73,7 @@ const Index = ({results} : any) => {
                 }}>
 
                     <PropertyPageCarousel images={currentData.images}/>
-                    <ContactForm id={currentData.ownerDetails.ownerId} isHiddenOnMobile={true}/>
+                    <ContactForm id={ownerId} isHiddenOnMobile={true}/>
                 </Box>
                 <Box
                     sx={{
@@ -223,7 +232,8 @@ const Index = ({results} : any) => {
                         </Box>
 
                     </Box>
-                    <Box sx={{
+                    
+                     <Box sx={{
                        py: '2em',
                         borderTop: "1px solid #c4c4c4"
                     }}>
@@ -231,36 +241,13 @@ const Index = ({results} : any) => {
                             sx={style2}>
                             Owner's Details
                         </Typography>
-                        <Box
-                                sx={{
-                                ...style,
-                                gap: '1em'
-                            }}>
-                                <Typography fontWeight='500'>
-                                    Name :
-                                </Typography>
-                                <Typography fontWeight='300'>
-                                {currentData.ownerDetails.ownerName}
-                                </Typography>
-
-                            </Box>
-                            <Box
-                                sx={{
-                                ...style,
-                                gap: '1em'
-                            }}>
-                                <Typography fontWeight='500'>
-                                    Email :
-                                </Typography>
-                                <Typography fontWeight='300'>
-                                {currentData.ownerDetails.ownerEmail}
-                                </Typography>
-
-                            </Box>
-                </Box>
+                        <UserProfile  currentUser={currentUser} isSameUser={isSameUser} logOutOption={false}/>
+                  
+                      
+                </Box> 
                 </Box>
             </Box>}
-            <ContactForm id={currentData.ownerDetails.ownerId} />
+            <ContactForm id={ownerId} />
         </Box>
     )
 }

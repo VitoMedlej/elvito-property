@@ -1,15 +1,9 @@
 import {
     Box,
-    Button,
-    Divider,
     Grid,
-    List,
-    ListItem,
-    ListItemText,
-
     Typography
 } from "@mui/material"
-import {signOut, useSession} from "next-auth/react"
+import { useSession} from "next-auth/react"
 import Link from "next/link"
 import {useRouter} from "next/router"
 import {useEffect, useState} from "react"

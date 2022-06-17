@@ -51,6 +51,7 @@ const ContactForm = ({isHiddenOnMobile ,id} : IContactForm) => {
                     label="Message"
                     variant="outlined"/>
                 <Button
+
                     disabled={sameUser}
                     variant="contained"
                     sx={{
@@ -59,6 +60,9 @@ const ContactForm = ({isHiddenOnMobile ,id} : IContactForm) => {
                         ":hover": {
                             background: '#bb0806',
                             border: "1px solid #bb0806"
+                        },
+                        ':disabled' : {
+                            border: '1px solid'
                         }
                 }}>
                     Submit
