@@ -3,7 +3,6 @@ import type {NextApiRequest, NextApiResponse}
 from 'next'
 
 import {PrismaClient} from '@prisma/client'
-import { useSession } from 'next-auth/react'
 
 const prisma = new PrismaClient()
 
