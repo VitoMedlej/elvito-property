@@ -23,7 +23,7 @@ const Main = ({isLoading ,setCurrentUser ,currentUser} : IMain) => {
                    
 }
 {!session && !currentUser && !isLoading &&
-  <Typography>Sorry, we couldn't find any users!</Typography>}
+  <Typography>Sorry, we couldn&apos;t find any users!</Typography>}
 
             { !currentUser && <Box
                 sx={{

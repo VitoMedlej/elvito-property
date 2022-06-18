@@ -239,11 +239,10 @@ const Index = ({results} : any) => {
                     }}>
                         <Typography
                             sx={style2}>
-                            Owner's Details
+                            Owner&apos;s Details
                         </Typography>
                         <UserProfile  currentUser={currentUser} isSameUser={isSameUser} logOutOption={false}/>
                   
-                      
                 </Box> 
                 </Box>
             </Box>}

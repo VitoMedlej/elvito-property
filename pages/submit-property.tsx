@@ -16,7 +16,7 @@ import CustomInput from "../components/SubmitProperty/Forms/CustomInput";
 import FormHandlingHook from "../src/Hooks/FormHandlingHook";
 import staticData from '../staticData.json'
 import {useSession} from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const {
     propertyTypes,
@@ -28,7 +28,7 @@ const {
     textFieldStyles
 } = staticData[0]
 
-const submitProperty = () => {
+const SubmitProperty = () => {
     const {
         handleImageChange,
         handleSubmit,
@@ -56,7 +56,7 @@ const submitProperty = () => {
                 }
             })
         }
-    }, [session])
+    }, [session,isAuthed])
 
 
 
@@ -385,4 +385,4 @@ const submitProperty = () => {
     )
 }
 
-export default submitProperty
+export default SubmitProperty
