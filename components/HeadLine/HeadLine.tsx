@@ -81,7 +81,7 @@ const HeadLine = () => {
                 </Typography>
                 <Button
                     className='item item2'
-                    onClick={() => router.push('/')}
+                    onClick={() => router.push('/real-estate-and-homes/properties')}
                     variant="contained"
                     sx={{
                     fontWeight: '200',

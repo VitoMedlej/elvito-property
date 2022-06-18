@@ -12,7 +12,8 @@ import HotelOutlinedIcon from '@mui/icons-material/HotelOutlined';
 import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
 import {useRouter} from 'next/router';
 import {IHouseCard} from '../../src/Types';
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { IconButton } from '@mui/material';
 
 export default function HouseCard({
     width,
@@ -50,6 +51,9 @@ export default function HouseCard({
                 boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'
             }
         }}>
+            {/* <IconButton sx={{width:'50px',height:'50px',color:'red',position:'absolute',right:'0%',m:'.5em',zIndex:'555555'}}>
+                <FavoriteBorderIcon/>
+            </IconButton> */}
             <CardMedia
                 component="img"
                 className='img cardImg'

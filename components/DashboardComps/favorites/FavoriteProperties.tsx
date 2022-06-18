@@ -1,7 +1,7 @@
 
 const FavoriteProperties = () => {
   return (
-    <div>FavoriteProperties</div>
+    <div>This section is still under development</div>
   )
 }
 

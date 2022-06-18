@@ -1,13 +1,13 @@
 import {Box, IconButton, Typography} from "@mui/material"
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import {useEffect, useRef} from "react";
+import {ChangeEvent, FormEventHandler, useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
 import { IFormData } from "../../src/Types";
 
 
 const Hero = () => {
-    
+    const [formValue,setFormValue] = useState({searchValue:'',isLoading:false})
     const elementRef = useRef()
     const router = useRouter()
     useEffect(() => {
@@ -29,7 +29,7 @@ const Hero = () => {
             })
         }
      
-    })
+    },[])
 
     return (
         <Box>
@@ -100,15 +100,25 @@ const Hero = () => {
                     </Typography>
                 </Box>
                 <Box
+                    onSubmit={async (e: React.FormEvent)=>{
+                    e.preventDefault();
+                    setFormValue({...formValue,isLoading:true})
+                   await router.push(`/real-estate-and-homes/properties?q=${formValue.searchValue}`)
+                    setFormValue({...formValue,isLoading:false})
                     
+                }}
+                        
+                    component='form'
                     className='title'
                     sx={{
                     position: 'relative',
                     margin: '2em auto',
                     width: 'max-content'
                 }}>
-                    <input type="text" placeholder="Enter Keyword" className='HeroInput p1'/>
+                    <input value={formValue.searchValue} onChange={(e)=>setFormValue({...formValue,searchValue:`${e.target.value}`})} type="text" placeholder="Enter Keyword" className='HeroInput p1'/>
                     <IconButton
+                    type='submit'
+                        disabled={formValue.isLoading}
                         sx={{
                         color: 'white',
                         position: 'absolute',
