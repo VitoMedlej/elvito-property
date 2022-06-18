@@ -70,10 +70,7 @@ const FormHandlingHook = () => {
         })
     }
     const handleImageChange = async(e : ChangeEvent < HTMLInputElement | HTMLTextAreaElement >) => {
-        //   console.log('imagesString: ', imagesString);     let foo =
-        // imagesString.split("\n"); one might wonder wth am i saving all the images url
-        // in a string ,well idk either const imagesArray = images       .split(' ')[0]
-        //    .split('\n');
+     
         const imagesArray = `${e
             .target
             .value}`

@@ -10,7 +10,7 @@ export default NextAuth({
     // Configure one or more authentication providers adapter:
     // PrismaAdapter(prisma),
     providers: [CredentialsProvider({
-      
+
             credentials: {
                 userEmail: {
                     label: "email",
@@ -23,7 +23,6 @@ export default NextAuth({
             },
             async authorize(credentials) {
                 try {
-
 
                     if (!credentials || credentials.userPassword.length < 3 || !credentials
                         ?.userEmail) {

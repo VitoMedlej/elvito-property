@@ -6,7 +6,6 @@ import {IPropertySection} from "../../src/Types"
 import HouseCard from "../Cards/HouseCard"
 
 const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySection) => {
-    console.log('sectionTitle: ', sectionTitle);
  
     const capitalizeString = (s : string) => s && s[0].toUpperCase() + s.slice(1)
    // first we limit the number of products per page
