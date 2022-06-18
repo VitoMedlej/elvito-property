@@ -44,7 +44,7 @@ const RegisterHook = () => {
                 return
             }
             setLoading(true)
-            const request = await fetch('http://localhost:3000/api/create-user', {
+            const request = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/create-user`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

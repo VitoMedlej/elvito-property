@@ -47,7 +47,7 @@ const Section = () => {
             }
 
             setLoading(true)
-            const req = await fetch(`http://localhost:3000/api/get-user/${id}?id=${id}`)
+            const req = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/get-user/${id}?id=${id}`)
             const results = await req.json()
             if (results) 
                 setCurrentUser(results)

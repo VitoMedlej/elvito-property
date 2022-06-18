@@ -1,5 +1,5 @@
 beforeEach('Launch site', () => {
-    cy.visit(`http://localhost:3000/account/register`)
+    cy.visit(`${process.env.NEXT_PUBLIC_SITE_URL}/account/register`)
 })
 
 describe('Test creating account', () => {

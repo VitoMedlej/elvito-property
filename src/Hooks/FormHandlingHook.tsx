@@ -106,7 +106,7 @@ const FormHandlingHook = () => {
 
         if (formData) {
 
-            const request = await fetch('api/submit-property', {
+            const request = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/submit-property`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
