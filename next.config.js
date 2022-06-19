@@ -5,7 +5,7 @@ const nextConfig = {
     BASE_URL: process.env.BASE_URL,
   },
   images: {
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com','ucarecdn.com','www.rizkproperties.net'],
   },
 }
 

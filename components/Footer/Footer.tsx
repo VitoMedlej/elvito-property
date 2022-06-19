@@ -37,7 +37,7 @@ const Footer = () => {
                 <Box sx={styles}> 
                 <Typography color='#ffffff7a'>
                     This application is no more than a personal project used 
-                    to improve my web development using new tools i've decided 
+                    to improve my web development using new tools i&apos;ve decided 
                     to pick up and learn. All data used was taken from various 
                     sources from different lebanese websites, and I claim nothing to be mine whatsoever.
                 </Typography>
@@ -61,7 +61,7 @@ const Footer = () => {
                         <Box
                         className='link'
                         sx={styles}>
-                        <a target='_blank' href='https://github.com/VitoMedlej'>Github</a>
+                        <a target='_blank' rel="noreferrer" href='https://github.com/VitoMedlej'>Github</a>
                         <Typography color='#ffffff7a'>vito.medlej@gmail.com</Typography>
                         <Typography color='#ffffff7a'>Lebanon/beirut</Typography>
                         <Typography color='#ffffff7a'>+961/81826445</Typography>

@@ -3,6 +3,7 @@ import CategoryItem from "./CategoryItem"
 import {gsap} from "gsap";
 import {useRef, useEffect} from "react";
 import staticData from '../../staticData.json'
+
 const Category = () => {
     const {CategoryItems} = staticData[1]
     const ref = useRef()

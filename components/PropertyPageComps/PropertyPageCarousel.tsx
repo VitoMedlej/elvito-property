@@ -6,6 +6,8 @@ import {Box, Typography, IconButton} from '@mui/material';
 import {useState} from 'react';
 import 'swiper/css';
 import {Autoplay, Pagination, Navigation} from "swiper";
+import Image from 'next/image'
+
 
 interface IPropertyPageCarousel {
     images : string[]
@@ -116,9 +118,10 @@ const PropertyPageCarousel = ({images} : IPropertyPageCarousel) => {
                             }
                         }}>
                             <img
+      
                                 className={`${className}`}
                                 src={`${img && img}` || 'https://i.stack.imgur.com/6M513.png'}
-                                alt=""/>
+                                alt="Carousel image"/>
 
                         </Box>
 

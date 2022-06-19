@@ -13,6 +13,8 @@ import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
 import TopNavBarLink from "./TopNavBarLink";
 import UserAccountBtn from './UserAccountBtn';
 import {useSession} from "next-auth/react";
+import Image from 'next/image'
+
 
 const MainNavBar = () => {
     const [isDrawerOpen,
@@ -81,8 +83,8 @@ const MainNavBar = () => {
                 }}>
                     <img
                         className='img'
-                        src={`https://ucarecdn.com/cf7a29ca-a79d-4c05-bfae-f6ae35e16a23/`}
-                        alt=""/>
+                        src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655668382/Static/Logo_foxnxc.jpg`}
+                        alt="Image"/>
 
                 </Box>
                 <Box

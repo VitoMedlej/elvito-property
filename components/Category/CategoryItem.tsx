@@ -38,7 +38,7 @@ const CategoryItem = ({img, height, href, title} : ICategoryItem) => {
                 borderRadius: '4px'
             }}>
                 
-                <Image layout='fill' className='img BR' src={`${img}`} alt=""/>
+                <Image layout='fill' className='img BR' src={`${img}`} alt="Category Image"/>
             </Box>
         </Box>
     )
