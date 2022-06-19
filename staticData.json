@@ -1,4 +1,5 @@
-[{
+[ 
+   {
         "textFieldStyles": {
             "width": {
                 "xs": "100%",
@@ -56,7 +57,7 @@
         ],
         "propertyTypes": ["apartment", "villa", "comercial", "land", "chalet"]
 
-    },
+  },
     {
       "CategoryItems" :  [
             {

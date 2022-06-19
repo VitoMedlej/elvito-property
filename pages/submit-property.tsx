@@ -27,6 +27,7 @@ const {
     keywords,
     textFieldStyles
 } = staticData[0]
+console.log('textFieldStyles: ', textFieldStyles);
 
 const SubmitProperty = () => {
     const {
@@ -112,7 +113,7 @@ const SubmitProperty = () => {
                                 value={`${formData.type}`}
                                 onChange={handleInputChange}>
 
-                                {propertyTypes.map(type => {
+                                {propertyTypes?.map(type => {
 
                                     return <MenuItem value={type} key={type}>
                                         <Typography>
@@ -132,7 +133,7 @@ const SubmitProperty = () => {
                                     name='currency'
                                     onChange={handleInputChange}
                                     value={`${formData.currency}`}>
-                                    {currencies.map(currency => {
+                                    {currencies && currencies.map(currency => {
                                         return <MenuItem value={currency} key={currency}>
                                             <Typography>
                                                 {currency}
@@ -154,7 +155,7 @@ const SubmitProperty = () => {
                                     value={`${formData.rentFrequency}`}
                                     name='rentFrequency'
                                     label="Rent frequency">
-                                    {RentFrequency.map(frequency => {
+                                    {RentFrequency?.map(frequency => {
                                         return <MenuItem value={frequency} key={frequency}>
                                             <Typography>
                                                 {frequency}
@@ -170,7 +171,7 @@ const SubmitProperty = () => {
                                     value={formData.paymentMethod}
                                     name='paymentMethod'
                                     label="Payment Method">
-                                    {paymentMethods.map(method => {
+                                    {paymentMethods?.map(method => {
 
                                         return <MenuItem value={method} key={method}>
                                             <Typography>
@@ -299,7 +300,7 @@ const SubmitProperty = () => {
                                     id="demo-multiple-name2"
                                     multiple
                                     input={< OutlinedInput label = "keywords" />}>
-                                    {keywords.map((word) => (
+                                    {keywords?.map((word) => (
                                         <MenuItem key={word} value={word}>
                                             {word}
                                         </MenuItem>
