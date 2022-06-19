@@ -1,6 +1,8 @@
 import {Box, Typography} from "@mui/material"
 import {useRouter} from "next/router"
 import {ICategoryItem} from "../../src/Types"
+import Image from 'next/image'
+
 
 const CategoryItem = ({img, height, href, title} : ICategoryItem) => {
     const router = useRouter()
@@ -35,7 +37,8 @@ const CategoryItem = ({img, height, href, title} : ICategoryItem) => {
                 height: `100%`,
                 borderRadius: '4px'
             }}>
-                <img className='img BR' src={`${img}`} alt=""/>
+                
+                <Image layout='fill' className='img BR' src={`${img}`} alt=""/>
             </Box>
         </Box>
     )

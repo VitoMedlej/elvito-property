@@ -2,6 +2,7 @@ import {Box, Button, Typography} from "@mui/material"
 import {useRouter} from "next/router"
 import {useEffect, useRef} from "react"
 import {gsap} from "gsap";
+import Image from 'next/image'
 
 
 
@@ -55,10 +56,9 @@ const HeadLine = () => {
                 height: '400px',
                 position: 'absolute'
             }}>
-                <img
-                    className='img'
-                    src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`}
-                    alt=""/>
+                <Image priority={true} layout='fill' className='img'src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`} alt="Headline image"/>
+
+               
             </Box>
             <Box ref={ref} sx={{
                 zIndex: '1412'

@@ -27,7 +27,6 @@ const {
     keywords,
     textFieldStyles
 } = staticData[0]
-console.log('textFieldStyles: ', textFieldStyles);
 
 const SubmitProperty = () => {
     const {
