@@ -57,7 +57,7 @@ const HeadLine = () => {
             }}>
                 <img
                     className='img'
-                    src={`https://images.unsplash.com/photo-1510629326852-3f0946701bc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1075&q=80`}
+                    src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`}
                     alt=""/>
             </Box>
             <Box ref={ref} sx={{

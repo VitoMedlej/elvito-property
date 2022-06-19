@@ -12,7 +12,6 @@ import PropertiesModuleSection from '../components/PropertiesModuleSection/Prope
 import {Box} from '@mui/material';
 
 const Home : NextPage = ({FeaturedData ,RandomData} : any) => {
-    console.log('FeaturedData: ', FeaturedData);
     const featuredProperties : IFormData[] = FeaturedData && JSON.parse(FeaturedData)
     let RandomProperties : IFormData[] = RandomData && JSON.parse(RandomData)
     

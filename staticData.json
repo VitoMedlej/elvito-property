@@ -56,5 +56,30 @@
         ],
         "propertyTypes": ["apartment", "villa", "comercial", "land", "chalet"]
 
+    },
+    {
+      "CategoryItems" :  [
+            {
+              "href":"land",
+              "title":"Lands",
+              "img":"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655631002/Static/land_1_h26qy7.jpg"
+            },
+            {
+              "href":"villa",
+              "title":"Villas",
+              "img":"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655631153/Static/villa_1_uphsid.jpg"
+            },
+            {
+              "href":"comerical",
+              "title":"Comericals",
+              "img":"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655631201/Static/com_rmq8zq.jpg"
+            },
+            {
+              "href":"chalet",
+              "title":"Chalets",
+              "img":"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655631296/Static/5l2020-01-20-07-10-27_1_1_gfz58m.jpg"
+            }
+          ]
     }
+
 ]

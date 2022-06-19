@@ -1,15 +1,21 @@
 import {Box, Pagination, Typography} from "@mui/material"
 import { useRouter } from "next/router";
+import { useEffect ,useState } from "react";
 
 import handlePagination from "../../src/Functions/HandlePagination";
 import {IPropertySection} from "../../src/Types"
 import HouseCard from "../Cards/HouseCard"
 
 const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySection) => {
- 
-    const capitalizeString = (s : string) => s && s[0].toUpperCase() + s.slice(1)
+    const [currentPage,setCurrentPage] = useState(0)
+  
+
+    useEffect(() => {
+        setCurrentPage(Number(router.query?.page ) || 0)
+    },[currentPage])
+    const capitalizeString = (s : string) => s && s[0].toUpperCase() + s.slice(1);
    // first we limit the number of products per page
-    const itemsPerPage = 9
+    const itemsPerPage = 9;
    // then we calculate how many pages we have and round its ceiled value  (1.2 => 2)
     const totalPages = totalCount / itemsPerPage
     const numberOfButtons = Math.round(Math.ceil(totalPages))
@@ -92,6 +98,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
                 justifyContent: 'center'
             }}>
                 <Pagination
+                 page={currentPage + 1}
                     onChange={(e)=>handlePagination(e,router)}
                     count={numberOfButtons || 1}
                     shape="rounded"/>

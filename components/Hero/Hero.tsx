@@ -1,9 +1,8 @@
 import {Box, IconButton, Typography} from "@mui/material"
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import {ChangeEvent, FormEventHandler, useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
-import { IFormData } from "../../src/Types";
 
 
 const Hero = () => {
@@ -46,7 +45,7 @@ const Hero = () => {
             }}>
                 <img
                     className='img'
-                    src="https://ucarecdn.com/5b313412-d0dd-4970-b174-ba600d4d2d93/"
+                    src="https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632166/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9.jpg"
                     alt=""/>
             </Box>
 
