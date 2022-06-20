@@ -44,8 +44,6 @@ const Index = ({results} : any) => {
         userId : ownerId,
         userImage : ownerProfileImage,
         userPhone : ownerPhoneNumber,
-
-
     }    
     const router = useRouter()
     return (

@@ -45,7 +45,7 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
 
     } catch (err) {
         console.log('err 1.3: ', err);
-        throw err
+      
 
     }
     finally {

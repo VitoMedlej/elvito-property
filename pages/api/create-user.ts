@@ -21,7 +21,7 @@ export const handlePostRequest = async(requestBody : any) => {
 
         requestBody.userPassword = hashedPassword
 
-        await prisma
+        const user =    await prisma
             .users
             .create({
                 data: {
@@ -31,11 +31,13 @@ export const handlePostRequest = async(requestBody : any) => {
                             'ng.png'
                 }
             })
-
+        if (!user) {
+            throw new Error('Error creating user')
+        }
         return
+        
     } catch (err) {
         console.log('err 1.1: ', err);
-        throw err
 
     } finally {
         await prisma.$disconnect()

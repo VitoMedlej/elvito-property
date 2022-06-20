@@ -16,10 +16,8 @@ import {
     InputLabel,
     OutlinedInput,
     FormControl,
-    Input
 } from '@mui/material';
 import Link from 'next/link'
-import {getProviders, signIn, signOut} from 'next-auth/react';
 import {useState} from 'react';
 import LoginHook from '../../../src/Hooks/accountHooks/LoginHook';
 import {VisibilityOff, Visibility} from '@mui/icons-material';
@@ -185,19 +183,3 @@ const LoginForm = () => {
 }
 export default LoginForm
 
-{/* <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            InputProps={{
-                            inputProps: {
-                                min: 3,
-                                max: 20
-                            }
-                        }}
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"/> */
-}

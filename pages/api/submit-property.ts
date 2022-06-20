@@ -23,7 +23,7 @@ export const handlePostRequest = async(requestBody : any) => {
         return
     } catch (err) {
         console.log('err 1.2: ', err);
-        throw err
+  
 
     } finally {
         await prisma.$disconnect()

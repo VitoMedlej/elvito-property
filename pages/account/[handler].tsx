@@ -18,7 +18,7 @@ const Handler = () => {
     }, [session])  
     return (
         <Box>
-        {isHandlerValid &&    <Box maxWidth='lg' sx={{
+        {isHandlerValid && <Box maxWidth='lg' sx={{
                 m: '0 auto'
             }}>
                 <Grid

@@ -9,8 +9,6 @@ import {
     Box,
     Avatar,
     TextField,
-    FormControlLabel,
-    Checkbox,
     Button
 } from '@mui/material';
 import {Copyright} from '../LoginForm/LoginForm';
