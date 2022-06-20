@@ -31,11 +31,11 @@ export default Home
 
 export const getStaticProps = async() => {
 
-    const prisma = new PrismaClient()
+      const prisma = new PrismaClient()
     try {
         console.log('ran');
         
-        await prisma.$connect()
+        // await prisma.$connect()
         const FeaturedData = await prisma
             .featured
             .findMany({})
