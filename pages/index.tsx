@@ -11,14 +11,14 @@ import {IFormData} from '../src/Types';
 import PropertiesModuleSection from '../components/PropertiesModuleSection/PropertiesModuleSection';
 import {Box} from '@mui/material';
 
-const Home : NextPage = ({FeaturedData ,RandomData} : any) => {
-    const featuredProperties : IFormData[] = FeaturedData && JSON.parse(FeaturedData)
-    let RandomProperties : IFormData[] = RandomData && JSON.parse(RandomData)
-    
+const Home : NextPage = ({FeaturedData, RandomData} : any) => {
+    const FeaturedProperties = FeaturedData && JSON.parse(FeaturedData)
+    const RandomProperties = RandomData && JSON.parse(RandomData)
+
     return (
         <Box>
             <Hero/>
-            < Featured PropertiesArray={featuredProperties}/>
+            <Featured PropertiesArray={FeaturedProperties}/>
             <Stats/>
             <PropertiesModuleSection PropertiesArray={RandomProperties}/>
             <Category/>
@@ -33,21 +33,23 @@ export const getStaticProps = async() => {
 
     const prisma = new PrismaClient()
     try {
-      
+        console.log('ran');
         
         await prisma.$connect()
         const FeaturedData = await prisma
             .featured
-            .findMany()
+            .findMany({})
         const productsCount = await prisma
             .properties
             .count();
         const skip = Math.floor(Math.random() * productsCount) || 3;
         const RandomData = await prisma
             .properties
-            .findMany({skip,take:4})
+            .findMany({skip, take: 4})
 
         if (!FeaturedData || !RandomData) {
+        console.log('failed');
+
             return {props: {}}
         }
         return {
@@ -63,5 +65,4 @@ export const getStaticProps = async() => {
         await prisma.$disconnect()
     }
 
-   
 }
