@@ -9,6 +9,7 @@ const Handler = () => {
     const router = useRouter()
     const {handler} = router.query
     const isHandlerValid = handler === `login` || handler === 'register'
+    console.log('isHandlerValid: ', isHandlerValid);
     const {data : session } = useSession()
     useEffect(() => {
             if (session && session.id && session.user) {

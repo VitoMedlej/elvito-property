@@ -22,11 +22,15 @@ export default NextAuth({
                 }
             },
             async authorize(credentials) {
-                try {
 
+                try {
+                    console.log('started');
+                    
                     if (!credentials || credentials.userPassword.length < 3 || !credentials
                         ?.userEmail) {
-                        return null
+                            console.log(null);
+                            return null
+
                     }
                     await prisma.$connect()                    
                     const user = await
