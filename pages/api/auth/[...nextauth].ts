@@ -28,7 +28,7 @@ export default NextAuth({
                         ?.userEmail) {
                         return null
                     }
-                    await prisma.$connect()
+                    await prisma.$connect()                    
                     const user = await
                     prisma
                         .users
@@ -53,7 +53,6 @@ export default NextAuth({
                         image: userImage,
                         id
                     }
-
                     return currentUser
                 } catch (err) {
                     console.log('err ...auth: ', err);

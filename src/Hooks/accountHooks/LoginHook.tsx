@@ -1,5 +1,4 @@
 import {signIn, useSession} from "next-auth/react";
-import {useRouter} from "next/router";
 import {useState} from "react";
 
 const LoginHook = () => {
@@ -22,8 +21,9 @@ const LoginHook = () => {
                 return
             }
             const data = new FormData(event.currentTarget);
-            const email = data.get('email')
-
+            const email = `${data.get('email')}`.replace(/\s/g, '')
+         
+            
             if (!email || !password || password.length < 4) {
                 setError('Please make sure to fill in the inputs .')
                 return
@@ -35,14 +35,19 @@ const LoginHook = () => {
                 userEmail: email,
                 userPassword: password
             });
+            console.log(email,password);
+            
 
-            setLoading(false)
+   
          
+            console.log('status: ', status);
             if (status && status
                 ?.ok) {
+                setLoading(false)
                 return
             }
             setError('please check your credentials and try again')
+            setLoading(false)
             return
         } catch (err) {
             setLoading(false)
