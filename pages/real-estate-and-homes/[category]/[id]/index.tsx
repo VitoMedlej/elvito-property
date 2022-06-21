@@ -263,6 +263,7 @@ export async function getServerSideProps({query} : any) {
                     id: query.id
                 }
             })
+            console.log('data: ', data);
         if (!data) {
             return {
                 redirect: {

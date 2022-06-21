@@ -4,8 +4,8 @@ import {PrismaAdapter} from "@next-auth/prisma-adapter"
 import {PrismaClient} from "@prisma/client"
 const bcrypt = require('bcrypt');
 
-const prisma = new PrismaClient()
 
+const prisma = new PrismaClient()
 export default NextAuth({
     // Configure one or more authentication providers adapter:
     // PrismaAdapter(prisma),

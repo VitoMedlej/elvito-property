@@ -31,24 +31,34 @@ export default Home
 
 export const getStaticProps = async() => {
 
-      const prisma = new PrismaClient()
+    const prisma = new PrismaClient()
+    const select = {
+        images: true,
+        id: true,
+        propertySize: true,
+        type: true,
+        bathrooms: true,
+        rooms: true,
+        currency: true,
+        price: true,
+        title: true,
+        location: true
+    }
     try {
-        console.log('ran');
-        
-        // await prisma.$connect()
+
         const FeaturedData = await prisma
             .featured
-            .findMany({})
+            .findMany({select})
         const productsCount = await prisma
             .properties
             .count();
         const skip = Math.floor(Math.random() * productsCount) || 3;
         const RandomData = await prisma
             .properties
-            .findMany({skip, take: 4})
+            .findMany({skip, select, take: 4})
 
         if (!FeaturedData || !RandomData) {
-        console.log('failed');
+            console.log('failed');
 
             return {props: {}}
         }

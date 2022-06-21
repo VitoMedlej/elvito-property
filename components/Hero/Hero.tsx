@@ -48,7 +48,7 @@ const Hero = () => {
                     priority={true}
                     className='img'
                     layout='fill'
-                      alt="Picture of the author"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632166/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9.jpg"}/>
+                    alt="Picture of the author"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}/>
             </Box>
 
             <Box

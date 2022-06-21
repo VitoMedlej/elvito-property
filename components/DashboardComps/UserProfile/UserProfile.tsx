@@ -56,7 +56,7 @@ const UserProfile = ({currentUser, setCurrentUser, logOutOption, isSameUser} : I
             }}>
                 <img
                     className='img rounded'
-                    src="https://www.pngitem.com/pimgs/m/551-5510463_default-user-image-png-transparent-png.png"
+                    src="https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796988/Static/551-5510463_default-user-image-png-transparent-png_1_1_wfgkva.png"
                     alt=""/>
             </Box>
             <Box
