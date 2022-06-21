@@ -9,7 +9,7 @@ const Handler = () => {
     const router = useRouter()
     const {handler} = router.query
     const isHandlerValid = handler === `login` || handler === 'register'
-    console.log('isHandlerValid: ', isHandlerValid);
+   
     const {data : session } = useSession()
     useEffect(() => {
             if (session && session.id && session.user) {
@@ -17,6 +17,7 @@ const Handler = () => {
                 return
             }
     }, [session])  
+
     return (
         <Box>
         {isHandlerValid && <Box maxWidth='lg' sx={{
@@ -34,8 +35,10 @@ const Handler = () => {
                 }}>
 
                     <Grid item xs={12} sm={8} md={6} lg={5.5}>
-                        {handler === 'login' && <LoginForm/>}
+                        
                         {handler === 'register' && <RegisterForm/>}
+                        {handler === 'login' && <LoginForm/>}
+                        
                     </Grid>
                 </Grid>
             </Box>}

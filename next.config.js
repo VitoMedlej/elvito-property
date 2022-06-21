@@ -7,6 +7,20 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com','ucarecdn.com','www.rizkproperties.net'],
   },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: '/api/auth/signin',
+  //       destination: '/account/login',
+  //       permanent: true,
+  //     },
+  //     {
+  //       source: '/auth/error',,
+  //       destination: '/account/login',
+  //       permanent: true,
+  //     },
+  //   ]
+  // },
 }
 
 module.exports = nextConfig

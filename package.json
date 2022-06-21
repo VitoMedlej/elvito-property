@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    
     "start": "next start",
     "lint": "next lint",
     "cypress": "cypress open"
@@ -16,7 +15,6 @@
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.6.2",
     "@next-auth/prisma-adapter": "^1.0.3",
-    "@types/next-auth": "^3.15.0",
     "@uploadcare/react-widget": "^2.1.0",
     "bcrypt": "^5.0.1",
     "gsap": "^3.10.4",

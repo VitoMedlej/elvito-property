@@ -67,6 +67,11 @@ export default NextAuth({
                 }
             }
         })],
+    pages : {
+        signIn: '/account/login',
+        error: '/account/login',
+        newUser: '/dashboard/main'
+    },
     secret: process.env.NEXTAUTH_SECRET,
 
     callbacks: {
