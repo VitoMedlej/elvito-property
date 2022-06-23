@@ -102,7 +102,7 @@ const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, item
                 where: {
                     purpose: isPurposeValid(query.purpose),
                     type: Category(query.category),
-                    OR: OR && OR
+                    OR: OR && OR,
                 },
                 select
             })

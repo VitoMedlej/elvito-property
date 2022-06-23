@@ -44,11 +44,9 @@ const Hero = () => {
                 position: 'absolute'
             }}>
             
-                    <Image
-                    priority={true}
+                    <img
                     className='img'
-                    layout='fill'
-                    alt="Picture of the author"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}/>
+                    alt="Main picture"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}/>
             </Box>
 
             <Box

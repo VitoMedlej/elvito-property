@@ -49,9 +49,9 @@ export const getStaticProps = async() => {
         const FeaturedData = await prisma
             .featured
             .findMany({select})
-        const productsCount = await prisma
-            .properties
-            .count();
+        // const productsCount = await prisma
+        //     .properties
+        //     .count();
         // const skip = Math.floor(Math.random() * productsCount) || 3;
         const skip = 3
         const RandomData = await prisma

@@ -4,9 +4,6 @@ import {useEffect, useRef} from "react"
 import {gsap} from "gsap";
 import Image from 'next/image'
 
-
-
-
 const HeadLine = () => {
     const router = useRouter()
 
@@ -21,13 +18,13 @@ const HeadLine = () => {
             opacity: 0,
             y: '25px'
         }, {
-          
+
             y: 0,
             opacity: 1,
             stagger: .19,
             scrollTrigger: {
                 trigger: '.item2',
-                start :'bottom 70%'
+                start: 'bottom 70%'
             }
         })
     })
@@ -56,9 +53,11 @@ const HeadLine = () => {
                 height: '400px',
                 position: 'absolute'
             }}>
-                <Image priority={true} layout='fill' className='img'src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`} alt="Headline image"/>
+                <img
+                    className='img'
+                    src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`}
+                    alt="Headline image"/>
 
-               
             </Box>
             <Box ref={ref} sx={{
                 zIndex: '1412'
