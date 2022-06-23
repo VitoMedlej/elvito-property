@@ -42,10 +42,11 @@ const LoginHook = () => {
    
          
             console.log('status: ', status);
-            if (status && 'ok' in status) {
+            if (status && status?.ok) {
                 setLoading(false)
+                
                 router.push('/dashboard/main');
-
+                
                 return
             }
             if (status && 'url' in status) {

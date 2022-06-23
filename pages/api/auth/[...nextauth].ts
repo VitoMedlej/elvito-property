@@ -23,7 +23,7 @@ export default NextAuth({
             async authorize(credentials) {
 
                 try {
-                    console.log('started');
+                   
                     
                     if (!credentials || credentials.userPassword.length < 3 || !credentials
                         ?.userEmail) {
@@ -31,6 +31,7 @@ export default NextAuth({
                             return null
 
                     }
+                    
                     await prisma.$connect()                    
                     const user = await
                     prisma
@@ -41,6 +42,7 @@ export default NextAuth({
                             }
                         })
                     if (!user) {
+                        console.log('no users found');
                         return null
                     }
                     const {userEmail, userName, userImage, id} = user
@@ -48,6 +50,7 @@ export default NextAuth({
                     const result = await bcrypt.compare(credentials.userPassword, user
                         ?.userPassword)
                     if (!result) {
+                        console.log('result: wrong password');
                         return null
                     }
                     let currentUser = {
@@ -56,6 +59,8 @@ export default NextAuth({
                         image: userImage,
                         id
                     }
+                    console.log('successfully logged in');
+                    
                     return currentUser
                 } catch (err) {
                     console.log('err ...auth: ', err);
