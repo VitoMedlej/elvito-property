@@ -36,7 +36,6 @@ const LoginHook = () => {
                 redirect: true,
                 redirectUrl: `${window.location.origin}/dashboard/main`
             });
-            console.log(email,password);
             
 
    
