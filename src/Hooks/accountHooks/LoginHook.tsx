@@ -31,9 +31,10 @@ const LoginHook = () => {
             setLoading(true)
 
             const status : any | undefined = await signIn('credentials', {
-                redirect: false,
                 userEmail: email,
-                userPassword: password
+                userPassword: password,
+                redirect: true,
+                redirectUrl: `${window.location.origin}/dashboard/main`
             });
             console.log(email,password);
             

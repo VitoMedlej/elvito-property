@@ -1,7 +1,6 @@
 import {Box, Typography} from "@mui/material"
 import {useRouter} from "next/router"
 import {ICategoryItem} from "../../src/Types"
-import Image from 'next/image'
 
 
 const CategoryItem = ({img, height, href, title} : ICategoryItem) => {

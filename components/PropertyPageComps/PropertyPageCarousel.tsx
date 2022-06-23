@@ -6,7 +6,6 @@ import {Box, Typography, IconButton} from '@mui/material';
 import {useState} from 'react';
 import 'swiper/css';
 import {Autoplay, Pagination, Navigation} from "swiper";
-import Image from 'next/image'
 
 
 interface IPropertyPageCarousel {

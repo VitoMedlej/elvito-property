@@ -13,7 +13,6 @@ import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
 import TopNavBarLink from "./TopNavBarLink";
 import UserAccountBtn from './UserAccountBtn';
 import {useSession} from "next-auth/react";
-import Image from 'next/image'
 
 
 const MainNavBar = () => {

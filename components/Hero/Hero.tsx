@@ -3,7 +3,6 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
-import Image from 'next/image'
 
 const Hero = () => {
     const [formValue,setFormValue] = useState({searchValue:'',isLoading:false})

@@ -2,7 +2,7 @@ import {Box, Button, Typography} from "@mui/material"
 import {useRouter} from "next/router"
 import {useEffect, useRef} from "react"
 import {gsap} from "gsap";
-import Image from 'next/image'
+
 
 const HeadLine = () => {
     const router = useRouter()
