@@ -1,5 +1,5 @@
-import {Box, Typography, Button, Skeleton} from "@mui/material"
-import {signOut, useSession} from "next-auth/react"
+import {Box, Typography, Skeleton} from "@mui/material"
+import { useSession} from "next-auth/react"
 import {useRouter} from "next/router"
 import {IMain} from "../../../src/Types"
 import UserProfile from "../UserProfile/UserProfile"

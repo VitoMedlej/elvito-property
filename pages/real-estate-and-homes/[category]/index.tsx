@@ -1,6 +1,5 @@
 import {Box, Button, Drawer} from "@mui/material"
 import {PrismaClient} from "@prisma/client"
-import {useSession} from "next-auth/react"
 import {useRouter} from "next/router"
 import {createContext, useEffect, useState} from "react"
 import FilterBar from "../../../components/FilterBar/FilterBar"
@@ -74,7 +73,7 @@ const Category = (categoryQuery : string) => {
 }
 const isPurposeValid = (purposeQuery : string) => {
     if (purposeQuery === 'for-sale' || purposeQuery === 'for-rent') 
-        return purposeQuery
+        {return purposeQuery}
     return undefined
 
 }

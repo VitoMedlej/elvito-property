@@ -7,13 +7,14 @@ import Category from '../components/Category/Category';
 import HeadLine from '../components/HeadLine/HeadLine';
 import {PrismaClient} from '@prisma/client';
 import {toJson} from './real-estate-and-homes/[category]';
-import {IFormData} from '../src/Types';
 import PropertiesModuleSection from '../components/PropertiesModuleSection/PropertiesModuleSection';
 import {Box} from '@mui/material';
 
 const Home : NextPage = ({FeaturedData, RandomData} : any) => {
+    console.time('here')
     const FeaturedProperties = FeaturedData && JSON.parse(FeaturedData)
     const RandomProperties = RandomData && JSON.parse(RandomData)
+    console.timeEnd('here')
 
     return (
         <Box>
@@ -30,8 +31,6 @@ const Home : NextPage = ({FeaturedData, RandomData} : any) => {
 export default Home
 
 export const getStaticProps = async() => {
-
-    const prisma = new PrismaClient()
     const select = {
         images: true,
         id: true,
@@ -44,6 +43,7 @@ export const getStaticProps = async() => {
         title: true,
         location: true
     }
+    const prisma = new PrismaClient()
     try {
 
         const FeaturedData = await prisma
@@ -52,16 +52,16 @@ export const getStaticProps = async() => {
         const productsCount = await prisma
             .properties
             .count();
-        const skip = Math.floor(Math.random() * productsCount) || 3;
+        // const skip = Math.floor(Math.random() * productsCount) || 3;
+        const skip = 3
         const RandomData = await prisma
             .properties
             .findMany({skip, select, take: 4})
 
         if (!FeaturedData || !RandomData) {
-            console.log('failed');
-
-            return {props: {}}
+           throw new Error('No data found')
         }
+
         return {
             props: {
                 FeaturedData: toJson(FeaturedData),

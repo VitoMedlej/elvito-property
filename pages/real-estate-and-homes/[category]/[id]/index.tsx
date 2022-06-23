@@ -273,7 +273,6 @@ export async function getServerSideProps({query} : any) {
             }
         }
         let results = toJson(data)
-
         return {props: {
                 results
             }}
