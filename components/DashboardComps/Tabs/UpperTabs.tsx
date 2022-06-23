@@ -5,7 +5,6 @@ import {useState} from 'react';
 const SideTabs = () => {
     const [value,
         setValue] = useState(0);
-    const [currentUser ,setCurrentUser] = useState('')
     const handleChange = (event : React.SyntheticEvent, newValue : number) => {
         setValue(newValue);
     };

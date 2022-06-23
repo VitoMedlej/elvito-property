@@ -27,7 +27,7 @@ export default NextAuth({
                     
                     if (!credentials || credentials.userPassword.length < 3 || !credentials
                         ?.userEmail) {
-                            console.log(null);
+                            console.log('missing user data');
                             return null
 
                     }
@@ -87,13 +87,8 @@ export default NextAuth({
             }
             return session
         },
-        async redirect({ url, baseUrl }) {
-            // Allows relative callback URLs
-            if (url.startsWith("/")) return `${baseUrl}${url}`
-            // Allows callback URLs on the same origin
-            else if (new URL(url).origin === baseUrl) return url
-            return baseUrl
-          }
+        
+        
     }
 
 })

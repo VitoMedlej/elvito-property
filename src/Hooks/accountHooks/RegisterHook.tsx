@@ -39,6 +39,7 @@ const RegisterHook = () => {
                 setError('Please make sure to fill in the inputs.')
                 return
             }
+          
             if (`${formData.userPassword}`.length < 4 || formData.userPassword === formData.userName) {
                 setError('Please make sure your password is strong enough')
                 return

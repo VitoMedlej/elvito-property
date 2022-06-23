@@ -40,6 +40,7 @@ const SubmitProperty = () => {
         formData
     } = FormHandlingHook();
     const session = useSession()
+   
     const isAuthed = session && session.status === 'authenticated' && session.data.user
 
     useEffect(() => {

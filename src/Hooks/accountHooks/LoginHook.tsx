@@ -1,4 +1,5 @@
 import {signIn, useSession} from "next-auth/react";
+import { useRouter } from "next/router";
 import {useState} from "react";
 
 const LoginHook = () => {
@@ -10,7 +11,7 @@ const LoginHook = () => {
         setPassword] = useState('')
     const [error,
         setError] = useState('')
-
+    const router = useRouter()
     const handleSubmit = async(event : React.FormEvent < HTMLFormElement >) => {
         try {
             event.preventDefault();
@@ -33,26 +34,27 @@ const LoginHook = () => {
             const status : any | undefined = await signIn('credentials', {
                 userEmail: email,
                 userPassword: password,
-                redirect: true,
-                redirectUrl: `${window.location.origin}/dashboard/main`
+                redirect: false,
+                redirectUrl: `${window.location.origin}/account/login`
             });
             
 
    
          
             console.log('status: ', status);
-            if (status && status
-                ?.ok) {
+            if (status && 'ok' in status) {
                 setLoading(false)
+                router.push('/dashboard/main');
+
                 return
             }
-            setError('please check your credentials and try again')
-            setLoading(false)
-            return
+            if (status && 'url' in status) {
+               router.push(status.url);
+            }
+            throw new Error('err')
         } catch (err) {
             setLoading(false)
             console.log('err here', err);
-
             setError('please check your credentials and try again')
             return
         }
