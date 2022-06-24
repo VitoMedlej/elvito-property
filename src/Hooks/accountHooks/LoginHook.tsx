@@ -31,7 +31,7 @@ const LoginHook = () => {
             }
             setLoading(true)
 
-            const status : any | undefined = await signIn('credentials', {
+            const status : any = await signIn('credentials', {
                 userEmail: email,
                 userPassword: password,
                 redirect: false,
@@ -51,6 +51,7 @@ const LoginHook = () => {
             }
             if (status && 'url' in status) {
                router.push(status.url);
+               return
             }
             throw new Error('err')
         } catch (err) {
