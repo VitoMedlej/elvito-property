@@ -11,10 +11,8 @@ import PropertiesModuleSection from '../components/PropertiesModuleSection/Prope
 import {Box} from '@mui/material';
 
 const Home : NextPage = ({FeaturedData, RandomData} : any) => {
-    console.time('here')
     const FeaturedProperties = FeaturedData && JSON.parse(FeaturedData)
     const RandomProperties = RandomData && JSON.parse(RandomData)
-    console.timeEnd('here')
 
     return (
         <Box>

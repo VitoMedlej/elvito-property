@@ -83,6 +83,7 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
             .json({message: 'Success, user saved!'})
 
     } catch (err) {
+        console.log('err: ', err);
 
         return res
             .status(400)

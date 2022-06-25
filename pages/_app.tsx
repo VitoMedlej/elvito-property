@@ -22,11 +22,12 @@ function MyApp({
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(ScrollToPlugin);
 
+     console.log('session: ', session)
     return (
         <ThemeProvider theme={theme}>
             <SessionProvider session={session}>
 
-                <MainNavBar/>
+                <MainNavBar session={session}/>
                 <Component th {...pageProps}/>
                 <ScrollToTopBtn/>
                 <Footer/>

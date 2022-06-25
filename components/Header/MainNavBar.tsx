@@ -15,7 +15,8 @@ import UserAccountBtn from './UserAccountBtn';
 import {useSession} from "next-auth/react";
 
 
-const MainNavBar = () => {
+const MainNavBar = ({session} : any) => {
+    console.log('session: ', session);
     const [isDrawerOpen,
         setDrawerOpen] = useState(false)
     const router = useRouter()
@@ -47,7 +48,7 @@ const MainNavBar = () => {
 
     }, []);
 
-    const {data: session} = useSession()
+    // const {data: session} = useSession()
     
     return (
         <AppBar
