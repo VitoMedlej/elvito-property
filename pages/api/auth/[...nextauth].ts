@@ -4,11 +4,13 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaClient } from "@prisma/client"
 const bcrypt = require('bcrypt');
 
-
+{console.log('process.env.SECRET: ', process.env.SECRET ,process.env.NEXT_PUBLIC_SECRET)}
 const prisma = new PrismaClient()
 export default NextAuth({
     // Configure one or more authentication providers adapter:
     // PrismaAdapter(prisma : any),
+    secret: `${process.env.NEXT_PUBLIC_SECRET || process.env.SECRET}`,
+
     providers: [CredentialsProvider({
 
             credentials: {
@@ -22,6 +24,7 @@ export default NextAuth({
                 }
             },
             async authorize(credentials) {
+                console.log('credentials: ', credentials);
 
                 try {
                    
@@ -79,12 +82,12 @@ export default NextAuth({
                 }
             }
         })],
-        secret: `${process.env.NEXT_PUBLIC_SECRET || process.env.NEXT_PUBLIC_SECRET}`,
-    pages : {
-        signIn: '/account/login',
-        error: '/account/login',
-        // newUser: '/dashboard/main'
-    },
+
+    // pages : {
+    //     signIn: '/account/login',
+    //     error: '/account/login',
+    //     // newUser: '/dashboard/main'
+    // },
 
     callbacks: {
         jwt: async({token, user}) => {
