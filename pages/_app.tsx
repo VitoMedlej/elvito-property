@@ -10,31 +10,55 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import ScrollToTopBtn from '../components/ScrollToTopBtn'
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 import gsap from 'gsap';
-import {SessionProvider} from "next-auth/react"
+import {createContext, useEffect, useLayoutEffect, useState} from 'react'
+import { ISession } from '../src/Types'
+import getCookie from '../src/Functions/getCookie'
+
+
+export const Session = createContext < ISession > ({
+    session: null,
+    setSession: () => undefined
+})
 
 function MyApp({
     Component,
     pageProps: {
-        session,
+
         ...pageProps
     }
 } : AppProps) {
+   
+    const [session,
+        setSession] = useState(null)
+    useEffect(() => {
+      
+    const userSession = getCookie('user-session')
+    if (userSession) {
+        setSession(userSession)
+    }
+    }, [])
+ 
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(ScrollToPlugin);
 
     return (
         <ThemeProvider theme={theme}>
-            <SessionProvider session={session}>
+            <Session.Provider
+                value={{
+                session,
+                setSession
+            }}>
 
                 <MainNavBar/>
                 <Component th {...pageProps}/>
                 <ScrollToTopBtn/>
                 <Footer/>
 
-            </SessionProvider>
+            </Session.Provider>
         </ThemeProvider>
     )
 
 }
 
 export default MyApp
+

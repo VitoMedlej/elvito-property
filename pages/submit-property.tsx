@@ -15,8 +15,8 @@ import ImageGalleryForm from '../components/SubmitProperty/Forms/ImageGalleryFor
 import CustomInput from "../components/SubmitProperty/Forms/CustomInput";
 import FormHandlingHook from "../src/Hooks/FormHandlingHook";
 import staticData from '../staticData.json'
-import {useSession} from "next-auth/react";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { Session } from "./_app";
 
 const {
     propertyTypes,
@@ -39,21 +39,21 @@ const SubmitProperty = () => {
         setFormData,
         formData
     } = FormHandlingHook();
-    const session = useSession()
+    const {session} = useContext(Session);
    
-    const isAuthed = session && session.status === 'authenticated' && session.data.user
-
+    const isAuthed = session && session.id 
     useEffect(() => {
-        if (isAuthed && session.data.user) {
+        if (isAuthed && session.email && session.name) {
            
             setFormData({
                 ...formData,
                 ownerDetails: {
                     ...formData.ownerDetails,
-                    ownerId: `${session.data.id}`,
-                    ownerName: `${session.data.user.name}`,
-                    ownerEmail: `${session.data.user.email}`,
-                    ownerProfileImage: `${session.data.user.image}`
+                    ownerId: `${session.id}`,
+                    ownerName: `${session.name}`,
+                    ownerEmail: `${session.email}`,
+                    ownerPhoneNumber: `${session.userPhone || ''}`,
+                    ownerProfileImage: `${session.image}`
                 }
             })
         }
@@ -86,7 +86,7 @@ const SubmitProperty = () => {
                 ? <Box>
                         <DetailsSection title='Main Details'>
                             <CustomInput
-                                value={formData.title}
+                                value={`${formData.title}`}
                                 name='title'
                                 onChange={handleInputChange}
                                 label='Property title'/>
@@ -145,9 +145,15 @@ const SubmitProperty = () => {
 
                                 <CustomInput
                                     onChange={handleInputChange}
-                                    value={formData.price}
+                                    value={formData.price }
                                     name='price'
                                     type="number"
+                                    InputProps={{
+                                        inputProps: {
+                                           min : 0,
+                                            max: 100000000
+                                        }
+                                    }}
                                     label="Price (numbers only)"></CustomInput>
 
                                 {formData.purpose === 'for-rent' && <CustomInput
@@ -234,7 +240,7 @@ const SubmitProperty = () => {
                                 name='bathrooms'
                                 InputProps={{
                                 inputProps: {
-                                    min: 0,
+                                   
                                     max: 15
                                 }
                             }}
@@ -248,7 +254,6 @@ const SubmitProperty = () => {
                                 type='number'
                                 InputProps={{
                                 inputProps: {
-                                    min: 0,
                                     max: 15
                                 }
                             }}
@@ -261,7 +266,6 @@ const SubmitProperty = () => {
                                 type='number'
                                 InputProps={{
                                 inputProps: {
-                                    min: 0,
                                     max: 15
                                 }
                             }}
@@ -285,7 +289,7 @@ const SubmitProperty = () => {
                                 </MenuItem>
                             </CustomInput >
 
-                            <FormControl
+                            {/* <FormControl
                                 size='small'
                                 sx={{
                                 ...textFieldStyles
@@ -294,7 +298,7 @@ const SubmitProperty = () => {
                                 <Select
                                     required
                                     onChange={(e) => handleInputChange(e)}
-                                    value={formData.keywords}
+                                    value={[...formData.keywords]}
                                     name='keywords'
                                     labelId="demo-multiple-name-label2"
                                     id="demo-multiple-name2"
@@ -306,7 +310,7 @@ const SubmitProperty = () => {
                                         </MenuItem>
                                     ))}
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
                             <CustomInput
                                 onChange={handleInputChange}
                                 value={formData.propertySize}

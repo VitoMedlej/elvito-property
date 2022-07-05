@@ -7,7 +7,7 @@ const style = {
     bgcolor: 'background.paper',
     mr: '1em'
 };
-const Tabs = () => {
+const SideTabs = () => {
     const router = useRouter()
     const {id} = router.query
 
@@ -45,4 +45,4 @@ const Tabs = () => {
     )
 }
 
-export default Tabs
+export default SideTabs

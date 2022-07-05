@@ -12,9 +12,7 @@ import HotelOutlinedIcon from '@mui/icons-material/HotelOutlined';
 import StraightenOutlinedIcon from '@mui/icons-material/StraightenOutlined';
 import {useRouter} from 'next/router';
 import {IHouseCard} from '../../src/Types';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { IconButton } from '@mui/material';
-
+import Image from "next/image";
 export default function HouseCard({
     width,
     isMinWidthDisabled,
@@ -54,13 +52,27 @@ export default function HouseCard({
             {/* <IconButton sx={{width:'50px',height:'50px',color:'red',position:'absolute',right:'0%',m:'.5em',zIndex:'555555'}}>
                 <FavoriteBorderIcon/>
             </IconButton> */}
+{/*             
             <CardMedia
+
                 component="img"
                 className='img cardImg'
                 height="140"
                 image={img || "https://ap.rdcpix.com/06547a8e2a49c644f7a277130c39e3del-m4093847176od-w480_h360." +
                 "webp"}
-                alt="green iguana"/>
+                alt="green iguana"/> */}
+               <Box sx={{width: '100%', height: '250px', position: 'relative'}}>
+               <Image 
+                src={`${img}` || "https://ap.rdcpix.com/06547a8e2a49c644f7a277130c39e3del-m4093847176od-w480_h360." +
+               "webp"}
+                  alt="Property Image"
+
+                  objectFit='cover'
+                  layout="fill"
+                  loading="lazy"
+                />
+            </Box>
+           
             <Box
                 sx={{
                 display: isFeatured

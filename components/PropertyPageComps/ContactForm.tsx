@@ -1,11 +1,10 @@
 import { Box, Typography, TextField, Button } from '@mui/material'
-import { useSession } from 'next-auth/react'
 import { IContactForm } from '../../src/Types'
 
 
 
 const ContactForm = ({isHiddenOnMobile ,id} : IContactForm) => {
-    const session = useSession()
+    const session = {data:{id:''},}
     const sessionId = session?.data?.id
     const sameUser = sessionId === id
     return (

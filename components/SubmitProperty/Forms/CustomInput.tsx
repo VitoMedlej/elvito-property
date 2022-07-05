@@ -18,18 +18,18 @@ const CustomInput = ({
     type,
     InputProps,
 } : ICustomInput) => {
-    const isNumber = type === 'number' 
+    let isTypeNumber = type === 'number'
     return (
         <TextField
         required
-            onChange={(e) => onChange(e,isNumber)}
-            value={value}
+            onChange={(e) => onChange(e,isTypeNumber)}
+                value={`${value}` }
             name={name}
             sx={{
             ...textFieldStyles
         }}
+        InputProps={InputProps}
             size='small'
-            InputProps={InputProps ? InputProps : undefined}
             type={type || 'text'}
             label={label}
             select={children ? true : false}

@@ -44,7 +44,7 @@ export interface IHouseCard {
     baths : number
     rooms : number
     currency : string
-    price : number
+    price : number | string
     title : string
     location : string
 }
@@ -110,7 +110,7 @@ export interface IFormData {
     },
     balconies : number 
     paymentMethod : string,
-    price : number 
+    price : number | string
     propertySize : string,
     purpose : string,
     rentFrequency?: string,
@@ -131,7 +131,7 @@ export interface ICustomInput {
     children?: any
     InputProps?: {
         inputProps: {
-            min: number;
+            min?: number;
             max: number;
         };
     }
@@ -149,4 +149,40 @@ export interface IMain {
     isLoading : boolean
     currentUser : ICurrentUser | null
     setCurrentUser : Dispatch < SetStateAction < ICurrentUser | null >>
+}
+export type Session = {
+
+    id: string;
+    name: string;
+    email: string;
+    userPhone?: string;
+    image?: string
+
+}
+
+export interface ISession {
+    session : Session | null,
+    setSession ?: (newValue : any) => void
+}
+export type TuserCreds = {
+    email: string;
+    password: string
+}
+export type TuserSchema = {
+    email: string;
+    id: string
+}
+export type TData = {
+    message?: string;
+    email?: string;
+    password?: string;
+    id?: string;
+    image?: string;
+    userPhone?: string;
+}
+export interface IUserProfile {
+    currentUser : ICurrentUser | null;
+    isSameUser : boolean;
+    setCurrentUser?: Dispatch < SetStateAction < ICurrentUser | null >>;
+    logOutOption : boolean
 }

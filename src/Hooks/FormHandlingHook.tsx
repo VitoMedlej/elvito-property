@@ -1,11 +1,9 @@
-import {useSession} from 'next-auth/react'
-import {ChangeEvent, useState, useEffect} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {IFormData} from '../Types'
 
 const FormHandlingHook = () => {
-    const {data: session} = useSession()
     let today = new Date().toLocaleDateString()
-  
+
     const defaultFormState : IFormData = {
         balconies: 0,
         bathrooms: 0,
@@ -24,7 +22,7 @@ const FormHandlingHook = () => {
             ownerProfileImage: ''
         },
         paymentMethod: "",
-        price: 0,
+        price: '',
         propertySize: "",
         purpose: "for-rent",
         rentFrequency: "",
@@ -35,27 +33,30 @@ const FormHandlingHook = () => {
         type: ""
     }
 
-
-
     const [formData,
         setFormData] = useState < IFormData > (defaultFormState)
     const [imagesString,
         setImagesString] = useState('')
 
-    const handleInputChange = (e : any, isNumber?: boolean) => {
-        let value = e.target
-            ?.value
-        if (value) {
-            // I genuinly have 0 idea why i wrote this **** ,it makes 0 sense bruh anyways
-            // imma keep it just in case and I wanna look at it in the future to laugh at my
-            // self
-            if (isNumber && typeof(value) !== 'number') 
-                value = JSON.parse(value)
-            setFormData({
-                ...formData,
-                [e.target.name]: value
-            })
+    const handleInputChange = (e : any, isTypeNumber?: boolean) => {
+        let value = `${e.target
+            ?.value}`
+
+        // incase we have '5' change it to 5
+
+        if (value && isTypeNumber && !isNaN(e.target.value) && typeof value !== 'number') {
+
+            value = JSON.parse(value)
         }
+        // in case the user is a troublemaker and changed the value to -1 Bathrooms
+        if (!isNaN(e.target.value) && e.target.value < 0) {
+            value = ''
+        }
+        setFormData({
+            ...formData,
+            [e.target.name]: value
+        })
+
     }
     const handleOwnerDetailsChange = (e : any) => {
         const value = e.target
@@ -70,7 +71,7 @@ const FormHandlingHook = () => {
         })
     }
     const handleImageChange = async(e : ChangeEvent < HTMLInputElement | HTMLTextAreaElement >) => {
-     
+
         const imagesArray = `${e
             .target
             .value}`
@@ -98,12 +99,6 @@ const FormHandlingHook = () => {
     }
     const handleSubmit = async() => {
 
-        if (!session || !session
-            ?.id) {
-            return
-        }
-
-
         if (formData) {
 
             const request = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/submit-property`, {
@@ -114,7 +109,6 @@ const FormHandlingHook = () => {
                 body: JSON.stringify(formData)
             })
 
-            const response = await request.json()
             if (request.status === 200) {
                 setFormData(defaultFormState)
                 setImagesString('')

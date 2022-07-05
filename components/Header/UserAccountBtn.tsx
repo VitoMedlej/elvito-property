@@ -9,22 +9,20 @@ import {
 } from "@mui/material"
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import router from "next/router";
-import {useState} from "react";
-import {useSession} from "next-auth/react";
+import {useContext, useState} from "react";
+import { Session } from "../../pages/_app";
 
 const UserAccountBtn = () => {
-    const {data: session} = useSession()
+    const {session} = useContext(Session);
 
     const [anchorEl,
         setAnchorEl] = useState < null | HTMLElement > (null);
     const [isOpen,
         setOpen] = useState(false)
     const handleClick = (event : React.MouseEvent < HTMLElement >) => {
-        if (session
-            ?.user) {
+        if (session && session.id) {
                 setOpen(false)
-
-            router.push(`/dashboard/${session.id}/main`);
+                router.push(`/dashboard/${session.id}/main`);
             return
         }
         setAnchorEl(event.currentTarget);

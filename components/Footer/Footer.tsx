@@ -51,7 +51,7 @@ const Footer = () => {
                         sx={styles}>
                         <Link href='/'>Home</Link>
                         <Link href='/account/login'>Login</Link>
-                        <Link href='/dashboard/main'>Dashboard</Link>
+                        {/* <Link href='/dashboard/main'>Dashboard</Link> */}
                         <Link href='/real-estate-and-homes/properties'>Properties</Link>
                     </Box>
 

@@ -1,8 +1,8 @@
 import {Box, Typography, Button} from '@mui/material';
-import {signOut} from 'next-auth/react';
 import router from 'next/router';
-import {Dispatch, SetStateAction} from 'react';
-import {ICurrentUser} from '../../../src/Types';
+import {Dispatch, SetStateAction, useContext} from 'react';
+import {Session} from '../../../pages/_app';
+import {ICurrentUser, IUserProfile} from '../../../src/Types';
 const styles = {
     flexDirection: {
         xs: 'column',
@@ -34,14 +34,28 @@ const styles = {
     display: 'flex'
 }
 
-interface IUserProfile {
-    currentUser : ICurrentUser | null;
-    isSameUser : boolean;
-    setCurrentUser?: Dispatch < SetStateAction < ICurrentUser | null >> ;
-    logOutOption : boolean
+interface IsignOut {
+    redirect : boolean;
+    redirectUrl?: string;
+    setCurrentUser : Dispatch < SetStateAction < ICurrentUser | null >> | undefined;
+    setSession : ((newValue : any) => void) | undefined
 }
+const signOut = async({redirect, redirectUrl, setCurrentUser, setSession} : IsignOut) => {
+
+    const req = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/sign-out`, {method: 'POST'})
+
+    if (req.status === 200 && redirect) {
+        setCurrentUser && setCurrentUser(null);
+        setSession && setSession(null)
+        router.push(redirectUrl || '/')
+        return
+    }
+
+}
+
 const UserProfile = ({currentUser, setCurrentUser, logOutOption, isSameUser} : IUserProfile) => {
-    
+    const {session, setSession} = useContext(Session);
+    const {id} = router.query
     return (
         <Box sx={{
             ...styles
@@ -104,26 +118,25 @@ const UserProfile = ({currentUser, setCurrentUser, logOutOption, isSameUser} : I
                             Contact
                         </Typography>
                     </Button>
-                    {logOutOption && isSameUser && <Button
-                        onClick={async() => {
-                        await signOut({redirect: false});
-                        setCurrentUser && setCurrentUser(null);
-                        router.push('/');
-                    }}
-                        sx={{
-                        borderColor: '#d42c2a',
-                        background: '#d42c2a',
-                        color: 'white',
-                        ':hover': {
-                            borderColor: '#bf201f',
-                            background: '#bf201f'
-                        }
-                    }}
-                        variant='outlined'>
-                        <Typography fontSize='.8em'>
-                            logout
-                        </Typography>
-                    </Button>}
+                    {logOutOption && session
+                        ?.id === id && <Button
+                            onClick={async() => {
+                            await signOut({redirect: true, redirectUrl: '/', setCurrentUser, setSession});
+                        }}
+                            sx={{
+                            borderColor: '#d42c2a',
+                            background: '#d42c2a',
+                            color: 'white',
+                            ':hover': {
+                                borderColor: '#bf201f',
+                                background: '#bf201f'
+                            }
+                        }}
+                            variant='outlined'>
+                            <Typography fontSize='.8em'>
+                                logout
+                            </Typography>
+                        </Button>}
                 </Box>
             </Box>
         </Box>
