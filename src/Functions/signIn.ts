@@ -11,7 +11,6 @@ const signIn = async (userCreds : TuserCreds) => {
               body: JSON.stringify(userCreds)
         })
         const res = await req.json()
-        console.log('res: ', res);
         if (!res) throw new Error('Failed to log you in')
         return res
     }
