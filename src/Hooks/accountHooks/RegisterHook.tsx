@@ -1,9 +1,9 @@
-import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {ChangeEvent, useState} from "react";
 
 const RegisterHook = () => {
-    const {data: session} = useSession()
+    const session = {user:''}
+
     const [isLoading,
         setLoading] = useState(false)
     const [error,
@@ -23,29 +23,28 @@ const RegisterHook = () => {
         try {
 
             event.preventDefault();
+            // some validations
             if (session
                 ?.user) {
-                setError('You are already logged in. ')
-
-                return
+                throw 'You are already logged in. '
             }
 
             if (!`${formData
                 ?.userEmail}`.includes('@')) {
-                setError('Please make sure to enter a vaild email')
-                return
+                throw 'Please make sure to enter a vaild email'
+
             }
             if (!formData || !formData.userName || !formData.userEmail || formData.userPassword.length < 4) {
-                setError('Please make sure to fill in the inputs.')
-                return
+                throw 'Please make sure to fill in the inputs.'
+
             }
-          
+
             if (`${formData.userPassword}`.length < 4 || formData.userPassword === formData.userName) {
-                setError('Please make sure your password is strong enough')
-                return
+                throw 'Please make sure your password is strong enough'
+
             }
             setLoading(true)
-            const request = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/create-user`, {
+            const request = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/create-user`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -54,17 +53,19 @@ const RegisterHook = () => {
             })
 
             const response = await request.json()
+
             setLoading(false)
 
             if (request.status === 200) {
+
                 router.push('/account/login')
                 return
             }
-            setError(`${response.message}`)
+            throw `${response.message}`
 
         } catch (err) {
             setLoading(false)
-            setError('Error')
+            setError(`${err}`)
             console.log('err here', err);
             return
 

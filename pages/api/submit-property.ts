@@ -42,11 +42,7 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
         if (!formData || !formData.images
            || !formData
                 .price) {
-
-                    
-            return res
-                .status(400)
-                .json({message: `Error, missing property details! `})
+                    throw new Error('Missing details')
         }
         await handlePostRequest(formData)
         return res
@@ -57,7 +53,7 @@ export default async function handler(req : NextApiRequest, res : NextApiRespons
 
         return res
             .status(400)
-            .json({message: `Error, something went wrong! ,${err}`})
+            .json({message: `Something went wrong! ,${err}`})
     }
    
 }

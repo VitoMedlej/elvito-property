@@ -5,18 +5,9 @@ const nextConfig = {
     BASE_URL: process.env.BASE_URL,
   },
   images: {
-    domains: ['res.cloudinary.com','ucarecdn.com','www.rizkproperties.net'],
+    domains: ['www.isold-realestate.com','res.cloudinary.com','ucarecdn.com','www.rizkproperties.net'],
   },
-  async redirects() {
-    return [
-     
-      {
-        source: '/auth/error',
-        destination: '/account/login',
-        permanent: true,
-      },
-    ]
-  },
+  
 }
 
 module.exports = nextConfig

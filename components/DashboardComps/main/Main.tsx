@@ -1,6 +1,7 @@
 import {Box, Typography, Skeleton} from "@mui/material"
-import { useSession} from "next-auth/react"
 import {useRouter} from "next/router"
+import { useContext } from "react"
+import { Session } from "../../../pages/_app"
 import {IMain} from "../../../src/Types"
 import UserProfile from "../UserProfile/UserProfile"
 
@@ -9,10 +10,10 @@ import UserProfile from "../UserProfile/UserProfile"
 
 
 const Main = ({isLoading ,setCurrentUser ,currentUser} : IMain) => {
-    const session = useSession()
+    const {session} = useContext(Session);
     const router = useRouter()
     const {id} = router.query
-    const isSameUser =  session?.data?.id === id  &&  currentUser?.id === id
+    const isSameUser =  session?.id === id  &&  currentUser?.id === id
    
 
    

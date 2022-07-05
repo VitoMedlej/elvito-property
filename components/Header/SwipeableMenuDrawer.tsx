@@ -8,10 +8,10 @@ import SellOutlinedIcon from '@mui/icons-material/SellOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { useSession } from 'next-auth/react';
 
 const SwipeableMenuDrawer = ({setDrawerOpen, isDrawerOpen} : ISwipeableMenuDrawer) => {
-    const {data : session } = useSession()
+    // const {data : session } = {data:{session}}
+    const session = {user:'',id:''}
     return (
         <SwipeableDrawer
             sx={{

@@ -2,17 +2,18 @@ import {Grid, Box} from "@mui/material"
 import { useRouter } from "next/router"
 import LoginForm from "../../components/Account/LoginForm/LoginForm"
 import RegisterForm from "../../components/Account/RegisterForm/RegisterForm"
-import { useEffect } from 'react';
-import { useSession } from "next-auth/react";
+import { useContext, useEffect } from 'react';
+import { Session } from "../_app";
 
 const Handler = () => {
     const router = useRouter()
     const {handler} = router.query
     const isHandlerValid = handler === `login` || handler === 'register'
-   
-    const {data : session } = useSession()
+    const {session} = useContext(Session);
+    
+
     useEffect(() => {
-            if (session && session.id && session.user) {
+            if (session && session.id ) {
                 router.push(`/dashboard/${session.id}/main`)
                 return
             }

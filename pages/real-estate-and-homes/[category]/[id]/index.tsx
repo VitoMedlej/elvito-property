@@ -1,4 +1,4 @@
-import {Box, IconButton, Typography} from "@mui/material"
+import {Box, Typography} from "@mui/material"
 import {useRouter} from "next/router";
 import Breadcrumb from "../../../../components/breadcrumb/Breadcrumb";
 import ContactForm from "../../../../components/PropertyPageComps/ContactForm";
@@ -12,10 +12,8 @@ import currencyToSymbol from "../../../../src/Functions/currencyToSymbol";
 import BedIcon from '@mui/icons-material/Bed';
 import BalconyIcon from '@mui/icons-material/Balcony';
 import StraightenIcon from '@mui/icons-material/Straighten';
-import {useState} from "react";
 import {IFormData} from "../../../../src/Types";
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
-import { useSession } from "next-auth/react";
 import UserProfile from "../../../../components/DashboardComps/UserProfile/UserProfile";
 
 const style = {
@@ -34,7 +32,7 @@ const style2 =
 const Index = ({results} : any) => {
 
     let currentData : IFormData = results && JSON.parse(results)
-    const session = useSession()
+    const session = {data:{id:''}}
     const sessionId = session?.data?.id
     const {ownerName ,ownerEmail ,ownerId,ownerProfileImage,ownerPhoneNumber} = currentData.ownerDetails
     const isSameUser = sessionId === ownerId

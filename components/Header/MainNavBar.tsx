@@ -7,16 +7,18 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {useRouter} from "next/router";
-import {useEffect, useRef, useState} from "react";
+import { useContext, useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import SwipeableMenuDrawer from "./SwipeableMenuDrawer";
 import TopNavBarLink from "./TopNavBarLink";
 import UserAccountBtn from './UserAccountBtn';
-import {useSession} from "next-auth/react";
+import { Session } from "../../pages/_app";
 
 
-const MainNavBar = ({session} : any) => {
-    console.log('session: ', session);
+const MainNavBar = () => {
+    const {session} = useContext(Session);
+   
+
     const [isDrawerOpen,
         setDrawerOpen] = useState(false)
     const router = useRouter()
@@ -48,7 +50,6 @@ const MainNavBar = ({session} : any) => {
 
     }, []);
 
-    // const {data: session} = useSession()
     
     return (
         <AppBar

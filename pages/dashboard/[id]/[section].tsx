@@ -1,39 +1,39 @@
-import {
-    Box,
-    Grid,
-    Typography
-} from "@mui/material"
-import { useSession} from "next-auth/react"
+import {Box, Grid, Typography} from "@mui/material"
 import Link from "next/link"
 import {useRouter} from "next/router"
-import {useEffect, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import FavoriteProperties from "../../../components/DashboardComps/favorites/FavoriteProperties"
 import Main from "../../../components/DashboardComps/main/Main"
 import UpperTabs from "../../../components/DashboardComps/Tabs/UpperTabs"
 import SideTabs from "../../../components/DashboardComps/Tabs/SideTabs"
 import UserContacts from "../../../components/DashboardComps/userContacts/UserContacts"
 import {ICurrentUser} from "../../../src/Types"
+import {Session} from "../../_app"
 
 const Section = () => {
     const router = useRouter()
     const {section, id} = router.query
 
-    const {data: session} = useSession()
+    const {session} = useContext(Session);
+
     const [currentUser,
         setCurrentUser] = useState < null | ICurrentUser > (null)
     const [isLoading,
         setLoading] = useState(false)
+    // currentUser is the profile of whom is being visited like for example you
+    // visit the profile of a home owner now, currentUser holds the details for that
+    // user (name,email,phone number...) if the profile we're visiting is ours, then
+    // the current session becomes the currentuser
 
     const getCurrentUser = async(id?: string) => {
         setLoading(true)
-        if (session
-            ?.user && session
-                ?.id) {
+        if (session && session
+            ?.id) {
 
             setCurrentUser({
-                userName : session.user.name,
-                userEmail : session.user.email,
-                userImage : session.user.image,
+                userName: session.name,
+                userEmail: session.email,
+                userImage: session.image,
                 id: `${session
                     ?.id}`
             })
@@ -55,19 +55,18 @@ const Section = () => {
 
         } catch (err) {
             setLoading(false)
-            console.log('err 1 : ' ,err);
+            console.log('err 1 : ', err);
 
         }
 
     }
 
     useEffect(() => {
-        if (id) {
+        if (id ) {
             getCurrentUser(`${id}`)
         }
     }, [id, session])
 
-    
     return (
         <Box
             maxWidth='lg'
@@ -97,7 +96,7 @@ const Section = () => {
                                 currentUser={currentUser}
                                 isLoading={isLoading}/>}
 
-                    {!session || !session.user && <Box>
+                    {!session || !session.id && <Box>
                         <Typography fontSize='1.2em'>
                             You are not logged in yet ,create your account {' '}
                             <Link href='/account/register'>Here</Link>
