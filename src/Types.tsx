@@ -44,7 +44,7 @@ export interface IHouseCard {
     baths : number
     rooms : number
     currency : string
-    price : number
+    price : number | string
     title : string
     location : string
 }

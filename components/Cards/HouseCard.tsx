@@ -66,8 +66,6 @@ export default function HouseCard({
                 src={`${img}` || "https://ap.rdcpix.com/06547a8e2a49c644f7a277130c39e3del-m4093847176od-w480_h360." +
                "webp"}
                   alt="Property Image"
-                //   width={'100%'}
-                //   height={140}
 
                   objectFit='cover'
                   layout="fill"
