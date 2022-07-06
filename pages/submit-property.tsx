@@ -223,7 +223,8 @@ const SubmitProperty = () => {
                                 id="outlined-multiline-Description"
                                 label="Description"
                                 multiline
-                                rows={4}
+                                maxRows={12}
+                                minRows={4}
                                 sx={{
                                 width: {
                                     xs: '100%',

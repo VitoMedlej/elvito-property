@@ -2,7 +2,7 @@ import {Box, Typography, Button} from '@mui/material';
 import router from 'next/router';
 import {Dispatch, SetStateAction, useContext} from 'react';
 import {Session} from '../../../pages/_app';
-import {ICurrentUser, IUserProfile} from '../../../src/Types';
+import {ICurrentUser, IsignOut, IUserProfile} from '../../../src/Types';
 const styles = {
     flexDirection: {
         xs: 'column',
@@ -34,12 +34,7 @@ const styles = {
     display: 'flex'
 }
 
-interface IsignOut {
-    redirect : boolean;
-    redirectUrl?: string;
-    setCurrentUser : Dispatch < SetStateAction < ICurrentUser | null >> | undefined;
-    setSession : ((newValue : any) => void) | undefined
-}
+
 const signOut = async({redirect, redirectUrl, setCurrentUser, setSession} : IsignOut) => {
 
     const req = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/sign-out`, {method: 'POST'})

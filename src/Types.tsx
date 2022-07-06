@@ -186,3 +186,9 @@ export interface IUserProfile {
     setCurrentUser?: Dispatch < SetStateAction < ICurrentUser | null >>;
     logOutOption : boolean
 }
+export interface IsignOut {
+    redirect : boolean;
+    redirectUrl?: string;
+    setCurrentUser : Dispatch < SetStateAction < ICurrentUser | null >> | undefined;
+    setSession : ((newValue : any) => void) | undefined
+}

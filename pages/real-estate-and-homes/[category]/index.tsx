@@ -65,19 +65,89 @@ export const toJson = (data : any) => {
 
 const Category = (categoryQuery : string) => {
     let categories = ["apartment", "villa", "comercial", "land", "chalet"]
-
-    if (!categories.includes(categoryQuery)) {
-        return undefined
+    
+    if (categories.includes(categoryQuery)) {
+        return categoryQuery
     }
-    return categoryQuery
+    return undefined
 }
 const isPurposeValid = (purposeQuery : string) => {
     if (purposeQuery === 'for-sale' || purposeQuery === 'for-rent') 
         {return purposeQuery}
     return undefined
-
 }
-const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, itemsPerPage?: number, query?: any) => {
+
+// const GetProperties = async(skip?: number, OR?: any, itemsPerPage?: number, query?: any) => {
+//     const prisma = new PrismaClient()
+//     const select = {
+//         id: true,
+//         type: true,
+//         bathrooms: true,
+//         rooms: true,
+//         price: true,
+//         propertySize: true,
+//         images: true,
+//         title: true,
+//         location: true,
+//         purpose: true,
+//         currency: true,
+//         description: true
+//     }
+
+//     try {
+//         let data = await prisma
+//             .properties
+//             .findMany({
+//                 skip: skip || 0,
+//                 take: itemsPerPage,
+//                 where: {
+//                     purpose: isPurposeValid(query.purpose),
+//                     type: Category(query.category),
+//                     OR: OR && OR,
+//                 },
+//                 select
+//             })
+//         if (!data) 
+//             return []
+//         return data
+//     } catch (err) {
+//         console.log(err);
+
+//     } finally {
+//         await prisma.$disconnect()
+//     }
+// }
+// const GetTotalCount = async( query : any, OR?: any) => {
+//     const prisma = new PrismaClient()
+  
+//     const totalCount = await prisma
+//         .properties
+//         .count({
+//             where: {
+//                 type: Category(query
+//                     ?.category),
+//                 purpose: isPurposeValid(query
+//                     ?.purpose),
+//                 OR
+//             }
+//         })
+//     return totalCount
+// }
+const GetTotalCount = async( type ?: string,purpose?:string) => {
+    const prisma = new PrismaClient()
+  
+    const totalCount = await prisma
+        .properties
+        .count({
+            where: {
+                type,
+                purpose,
+            }
+        })
+    return totalCount || 0
+}
+export async function getServerSideProps({query} : any) {
+
     const select = {
         id: true,
         type: true,
@@ -93,106 +163,104 @@ const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, item
         description: true
     }
 
-    try {
-        let data = await prisma
-            .properties
-            .findMany({
-                skip: skip || 0,
-                take: itemsPerPage,
-                where: {
-                    purpose: isPurposeValid(query.purpose),
-                    type: Category(query.category),
-                    OR: OR && OR,
-                },
-                select
-            })
-        if (!data) 
-            return []
-        return data
-    } catch (err) {
-        console.log(err);
-
-    } finally {
-        await prisma.$disconnect()
-    }
-}
-const GetTotalCount = async(prisma : PrismaClient, query : any, OR?: any) => {
-    const totalCount = await prisma
-        .properties
-        .count({
-            where: {
-                type: Category(query
-                    ?.category),
-                purpose: isPurposeValid(query
-                    ?.purpose),
-                OR
-            }
-        })
-    return totalCount
-}
-export async function getServerSideProps({query} : any) {
-
     const itemsPerPage = 9
     const prisma = new PrismaClient()
+    const purpose = isPurposeValid(`${query.purpose}`)
+    const type = Category(`${query.type}`)
     try {
-        let searchQuery = query
-            ?.q
-                ?.toLowerCase()
-        let OR = searchQuery
-            ? [
-                {
-                    description: {
-                        contains: searchQuery
-                    }
-                }, {
-                    title: {
-                        contains: searchQuery
-                    }
-
-                }
-
-            ]
-            : undefined
-        const page = query
-            ?.page || 0;
-
-        const totalCount = await GetTotalCount(prisma, query, undefined)
+        const currentPage = query.page || 0;
+        const totalCount = await GetTotalCount(type, purpose) || 0
         const totalPages = Math.round(totalCount / itemsPerPage)
-        let skip = (page * itemsPerPage) || undefined
-        if (page > totalPages || page < 0) 
+        let skip = (currentPage * itemsPerPage) || undefined
+        if (currentPage > totalPages || currentPage < 0) 
             skip = 0
 
-        if (query
-            ?.q) {
 
-            let propertiesArray = await GetProperties(prisma, skip, OR, itemsPerPage, query)
-
-            const totalCount = await GetTotalCount(prisma, query, OR)
-            if (propertiesArray && propertiesArray.length > 0) 
-                return {
-                    props: {
-                        results: toJson([...propertiesArray]),
-                        totalCount
-
-                    }
-                }
             
-        }
+        
+        let data : any = await prisma
+        .properties
+        .findMany({
+            skip,
+            take: itemsPerPage,
+            where: {
+                purpose,
+                type,
+            },
+            select
+        })
+        // just returning the first image because that's all I need
+        // wish prisma provided an easier way to do this but oh well
+        data.forEach((item:any)=>{
+            item.images ? item.images = item.images[0] : ''
+        })
 
-        let propertiesArray = await GetProperties(prisma, skip, undefined, itemsPerPage, query)
+        // just a way to deal with bigints
+        data = data && toJson(data)
+       
+        return {props:{results:data,totalCount}}
 
-        if (!propertiesArray || propertiesArray
-            ?.length < 1) {
-            throw new Error('No Items Found')
-        }
+        // let searchQuery = query
+        //     ?.q
+        //         ?.toLowerCase()
+        // let OR = searchQuery
+        //     ? [
+        //         {
+        //             description: {
+        //                 contains: searchQuery
+        //             }
+        //         }, {
+        //             title: {
+        //                 contains: searchQuery
+        //             }
 
-        return {
-            props: {
-                results: toJson([...propertiesArray]),
-                totalCount
+        //         }
 
-            }
-        }
+        //     ]
+        //     : undefined
+        // const currentPage = query
+        //     ?.page || 0;
+
+        // const totalCount = await GetTotalCount( query, undefined)
+        // const totalPages = Math.round(totalCount / itemsPerPage)
+        // let skip = (currentPage * itemsPerPage) || undefined
+        // if (currentPage > totalPages || currentPage < 0) 
+        //     skip = 0
+
+        // if (query
+        //     ?.q) {
+
+        //     let propertiesArray = await GetProperties( skip, OR, itemsPerPage, query)
+
+        //     if (propertiesArray && propertiesArray.length > 0) {
+
+        //         const totalCount = await GetTotalCount( query, OR)
+        //         return {
+        //             props: {
+        //                 results: toJson([...propertiesArray]),
+        //                 totalCount
+                        
+        //             }
+        //         }
+        //     }
+            
+            
+        // }
+
+        // let propertiesArray = await GetProperties( skip, undefined, itemsPerPage, query)
+
+        // if (!propertiesArray || propertiesArray
+        //     ?.length < 1) {
+        //     throw new Error('No Items Found')
+        // }
+
+        // return {
+        //     props: {
+        //         results: toJson([...propertiesArray]),
+        //         totalCount
+
+        //     }
+        // }
     } catch (err) {
         console.log('err 1.4: ', err);
         return {props: {}}
