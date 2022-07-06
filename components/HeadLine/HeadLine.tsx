@@ -2,7 +2,7 @@ import {Box, Button, Typography} from "@mui/material"
 import {useRouter} from "next/router"
 import {useEffect, useRef} from "react"
 import {gsap} from "gsap";
-
+import Image from 'next/image'
 
 const HeadLine = () => {
     const router = useRouter()
@@ -53,12 +53,29 @@ const HeadLine = () => {
                 height: '400px',
                 position: 'absolute'
             }}>
-                <img
+                {/* <img
                     className='img'
                     src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`}
-                    alt="Headline image"/>
+                    alt="Headline image"/> */}
 
+            
+            <Box
+                sx={{
+                width: '100%',
+                height: '100%',
+                position: 'relative'
+            }}>
+
+                <Image
+                    className='img '
+                    src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`}
+                    alt="Headline Image"
+                    objectFit='cover'
+                    layout="fill"
+                    loading="lazy"/>
             </Box>
+            </Box>
+
             <Box ref={ref} sx={{
                 zIndex: '1412'
             }}>
