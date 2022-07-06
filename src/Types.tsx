@@ -13,7 +13,7 @@ export interface ICategoryItem {
     img : string
     title : string
     href : string
-    height : string
+    large ?: boolean
 }
 export interface IFilterOption {
     isOpen : boolean;

@@ -67,7 +67,7 @@ const Category = () => {
                     <CategoryItem
                         href='apartment'
                         title='Apartments'
-                        height='410px'
+                        large={true}
                         img={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655630715/Static/improved_mj65wv.jpg`}/>
                 </Grid>
 
@@ -86,7 +86,7 @@ const Category = () => {
                             <CategoryItem
                                 href={item.href}
                                 title={item.title}
-                                height='200px'
+                               
                                 img={`${item.img}`}/>
                         </Grid>
                     })}
