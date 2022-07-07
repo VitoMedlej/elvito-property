@@ -259,7 +259,6 @@ const Index = ({results} : any) => {
 export default Index
 
 export async function getServerSideProps({query} : any) {
-    console.log('query: ', query);
 
     const prisma = new PrismaClient()
     try {
