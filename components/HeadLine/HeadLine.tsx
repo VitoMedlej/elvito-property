@@ -53,10 +53,7 @@ const HeadLine = () => {
                 height: '400px',
                 position: 'absolute'
             }}>
-                {/* <img
-                    className='img'
-                    src={`https://res.cloudinary.com/dwcu3wcol/image/upload/v1655632032/Static/photo-1510629326852-3f0946701bc6_1_kqahkn.jpg`}
-                    alt="Headline image"/> */}
+ 
 
             
             <Box

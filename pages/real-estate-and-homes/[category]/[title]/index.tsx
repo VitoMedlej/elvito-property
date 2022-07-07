@@ -17,6 +17,7 @@ import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import UserProfile from "../../../../components/DashboardComps/UserProfile/UserProfile";
 import { Session } from "../../../_app";
 import { useContext } from "react";
+import Layout from "../../../../components/layout/Layout";
 
 const style = {
     display: 'flex',
@@ -46,7 +47,11 @@ const Index = ({results} : any) => {
         userPhone : ownerPhoneNumber,
     }    
     const router = useRouter()
+
     return (
+    <Layout description='' title={`${currentData?.title || 'Houses in lebanon | realtors and brokers lebanon'} | el-vito`}>
+
+
         <Box
             sx={{
             px: {
@@ -246,12 +251,15 @@ const Index = ({results} : any) => {
             </Box>}
             <ContactForm id={ownerId} />
         </Box>
+    </Layout>
+
     )
 }
 
 export default Index
 
 export async function getServerSideProps({query} : any) {
+    console.log('query: ', query);
 
     const prisma = new PrismaClient()
     try {

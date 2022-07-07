@@ -45,9 +45,7 @@ const Hero = () => {
                 position: 'absolute'
             }}>
             
-                    {/* <img
-                    className='img'
-                    alt="Main picture"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}/> */}
+           
         
         <Box
                     sx={{

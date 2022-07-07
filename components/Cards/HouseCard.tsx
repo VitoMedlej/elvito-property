@@ -28,11 +28,14 @@ export default function HouseCard({
     id,
     type
 } : IHouseCard) {
+    title = title && `${title}`.trim().replace(/,/g , "").replace(/\s/g , "-");
+    
+    
     const router = useRouter()
     return (
         <Card
             className='houseCard'
-            onClick={() => router.push(`/real-estate-and-homes/${type}/${id}/${title}`, undefined, {scroll: true})}
+            onClick={() => router.push(`/real-estate-and-homes/${type}/${title}?id=${id}`, undefined, {scroll: true})}
             sx={{
             height: '100%',
             position: 'relative',
