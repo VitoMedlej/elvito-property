@@ -32,7 +32,7 @@ export default function HouseCard({
     return (
         <Card
             className='houseCard'
-            onClick={() => router.push(`/real-estate-and-homes/${type}/${id}`, undefined, {scroll: true})}
+            onClick={() => router.push(`/real-estate-and-homes/${type}/${id}/${title}`, undefined, {scroll: true})}
             sx={{
             height: '100%',
             position: 'relative',

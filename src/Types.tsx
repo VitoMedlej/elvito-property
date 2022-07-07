@@ -1,6 +1,6 @@
 import {SvgIconTypeMap} from "@mui/material";
 import {OverridableComponent} from "@mui/material/OverridableComponent";
-import {ChangeEvent} from "react";
+import { NextRouter } from "next/router";
 import {Dispatch, SetStateAction} from "react";
 
 export interface IStatInfo {
@@ -187,6 +187,7 @@ export interface IUserProfile {
     logOutOption : boolean
 }
 export interface IsignOut {
+    router : NextRouter;
     redirect : boolean;
     redirectUrl?: string;
     setCurrentUser : Dispatch < SetStateAction < ICurrentUser | null >> | undefined;

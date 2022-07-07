@@ -15,6 +15,8 @@ import StraightenIcon from '@mui/icons-material/Straighten';
 import {IFormData} from "../../../../src/Types";
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import UserProfile from "../../../../components/DashboardComps/UserProfile/UserProfile";
+import { Session } from "../../../_app";
+import { useContext } from "react";
 
 const style = {
     display: 'flex',
@@ -32,8 +34,8 @@ const style2 =
 const Index = ({results} : any) => {
 
     let currentData : IFormData = results && JSON.parse(results)
-    const session = {data:{id:''}}
-    const sessionId = session?.data?.id
+    const {session} = useContext(Session);
+    const sessionId = session?.id
     const {ownerName ,ownerEmail ,ownerId,ownerProfileImage,ownerPhoneNumber} = currentData.ownerDetails
     const isSameUser = sessionId === ownerId
     const currentUser = {

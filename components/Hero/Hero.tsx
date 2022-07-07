@@ -3,6 +3,8 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
+import Image from 'next/image'
+
 
 const Hero = () => {
     const [formValue,setFormValue] = useState({searchValue:'',isLoading:false})
@@ -43,10 +45,31 @@ const Hero = () => {
                 position: 'absolute'
             }}>
             
-                    <img
+                    {/* <img
                     className='img'
-                    alt="Main picture"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}/>
+                    alt="Main picture"  src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}/> */}
+        
+        <Box
+                    sx={{
+                    width: '100%',
+                    height: '100%',
+                    position: 'relative'
+                }}>
+                    <Image
+                        priority
+                        className='img'
+                        alt="Main picture"
+                        src={"https://res.cloudinary.com/dwcu3wcol/image/upload/v1655796712/Static/piotr-chrobot-KqEYj1VHA_o-unsplash_1_1_vwehb9_1_1_iaxbd3.jpg"}
+                        objectFit='cover'
+                        layout="fill"
+                       />
+                </Box>
+        
+        
             </Box>
+
+
+
 
             <Box
             ref={elementRef}

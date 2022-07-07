@@ -4,7 +4,7 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   scroll-behavior: smooth;
-  font-family: 'Raleway, sans-serif';
+  font-family: 'Raleway', sans-serif;
 }
 
 .img {
@@ -137,5 +137,9 @@ body {
 
 .link a {
   color: #1976d2;
+}
+
+.cap {
+  text-transform: capitalize;
 }
 /*# sourceMappingURL=Styles.css.map */

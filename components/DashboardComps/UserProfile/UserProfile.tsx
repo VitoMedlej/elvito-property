@@ -1,8 +1,8 @@
 import {Box, Typography, Button} from '@mui/material';
-import router from 'next/router';
-import {Dispatch, SetStateAction, useContext} from 'react';
+import {useRouter} from 'next/router';
+import {useContext} from 'react';
 import {Session} from '../../../pages/_app';
-import {ICurrentUser, IsignOut, IUserProfile} from '../../../src/Types';
+import {IsignOut, IUserProfile} from '../../../src/Types';
 const styles = {
     flexDirection: {
         xs: 'column',
@@ -34,10 +34,10 @@ const styles = {
     display: 'flex'
 }
 
-
-const signOut = async({redirect, redirectUrl, setCurrentUser, setSession} : IsignOut) => {
+const signOut = async({router,redirect, redirectUrl, setCurrentUser, setSession} : IsignOut) => {
 
     const req = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/sign-out`, {method: 'POST'})
+  
 
     if (req.status === 200 && redirect) {
         setCurrentUser && setCurrentUser(null);
@@ -50,6 +50,7 @@ const signOut = async({redirect, redirectUrl, setCurrentUser, setSession} : Isig
 
 const UserProfile = ({currentUser, setCurrentUser, logOutOption, isSameUser} : IUserProfile) => {
     const {session, setSession} = useContext(Session);
+    const router = useRouter();
     const {id} = router.query
     return (
         <Box sx={{
@@ -116,7 +117,7 @@ const UserProfile = ({currentUser, setCurrentUser, logOutOption, isSameUser} : I
                     {logOutOption && session
                         ?.id === id && <Button
                             onClick={async() => {
-                            await signOut({redirect: true, redirectUrl: '/', setCurrentUser, setSession});
+                            await signOut({router,redirect: true, redirectUrl: '/', setCurrentUser, setSession});
                         }}
                             sx={{
                             borderColor: '#d42c2a',

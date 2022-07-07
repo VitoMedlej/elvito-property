@@ -1,6 +1,7 @@
 import {Box, Pagination, Typography} from "@mui/material"
 import { useRouter } from "next/router";
 import { useEffect ,useState } from "react";
+import capitalizeString from "../../src/Functions/capitalizeString";
 
 import handlePagination from "../../src/Functions/HandlePagination";
 import {IPropertySection} from "../../src/Types"
@@ -13,7 +14,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
     useEffect(() => {
         setCurrentPage(Number(router.query?.page ) || 0)
     },[currentPage])
-    const capitalizeString = (s : string) => s && s[0].toUpperCase() + s.slice(1);
+   
    // first we limit the number of products per page
     const itemsPerPage = 9;
    // then we calculate how many pages we have and round its ceiled value  (1.2 => 2)

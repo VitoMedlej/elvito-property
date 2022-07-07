@@ -21,7 +21,7 @@ const Home : NextPage = ({FeaturedData, RandomData} : any) => {
             <Stats/>
             <PropertiesModuleSection PropertiesArray={RandomProperties}/>
             <Category/>
-            < HeadLine/>
+            <HeadLine/>
         </Box>
     )
 }
