@@ -52,18 +52,7 @@ export default function HouseCard({
                 boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'
             }
         }}>
-            {/* <IconButton sx={{width:'50px',height:'50px',color:'red',position:'absolute',right:'0%',m:'.5em',zIndex:'555555'}}>
-                <FavoriteBorderIcon/>
-            </IconButton> */}
-{/*             
-            <CardMedia
 
-                component="img"
-                className='img cardImg'
-                height="140"
-                image={img || "https://ap.rdcpix.com/06547a8e2a49c644f7a277130c39e3del-m4093847176od-w480_h360." +
-                "webp"}
-                alt="green iguana"/> */}
                <Box sx={{width: '100%', height: '250px', position: 'relative'}}>
                <Image 
                 src={`${img}` || "https://ap.rdcpix.com/06547a8e2a49c644f7a277130c39e3del-m4093847176od-w480_h360." +

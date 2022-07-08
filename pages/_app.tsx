@@ -14,6 +14,7 @@ import {createContext, useEffect, useState} from 'react'
 import { ISession } from '../src/Types'
 import getCookie from '../src/Functions/getCookie'
 import Layout from '../components/layout/Layout'
+import NextNProgress from "nextjs-progressbar";
 
 
 export const Session = createContext < ISession > ({
@@ -55,7 +56,7 @@ function MyApp({
                  title={'Houses in lebanon | realtors and brokers lebanon | el-vito property'}
                  description={'Checkout el-vito real-estate agency in order to find great properties offered by the most experienced brokers in lebanon. '}
                  >
-
+                  <NextNProgress color='#d42c2a'/>
                 <Component th {...pageProps}/>
                 </Layout>
                 <ScrollToTopBtn/>

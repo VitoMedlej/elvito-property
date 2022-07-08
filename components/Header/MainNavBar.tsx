@@ -132,7 +132,9 @@ const MainNavBar = () => {
                         display: 'flex'
                     }}>
 
-                        <IconButton className='btn'>
+                        <IconButton 
+                        onClick={()=>router.push('/dashboard/account/favorites')}
+                        className='btn'>
                             <FavoriteBorderIcon
                                 sx={{
                                 color: 'black'

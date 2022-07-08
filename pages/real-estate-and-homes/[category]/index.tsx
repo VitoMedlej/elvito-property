@@ -127,9 +127,7 @@ export async function getServerSideProps({query} : any) {
     const itemsPerPage = 9
     const prisma = new PrismaClient()
     const purpose = isPurposeValid(`${query.purpose}`)
- 
     const type = Category(`${query.category}`)
-  
     try {
         const currentPage = query.page || 0;
         const totalCount = await GetTotalCount(type, purpose) || 0
