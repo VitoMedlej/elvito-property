@@ -6,20 +6,19 @@ import Stats from '../components/Stats/Stats';
 import Category from '../components/Category/Category';
 import HeadLine from '../components/HeadLine/HeadLine';
 import {PrismaClient} from '@prisma/client';
-import {toJson} from './real-estate-and-homes/[category]';
 import PropertiesModuleSection from '../components/PropertiesModuleSection/PropertiesModuleSection';
 import {Box} from '@mui/material';
+import { bigInt_To_Number } from './real-estate-and-homes/[category]/[title]';
 
 const Home : NextPage = ({FeaturedData, RandomData} : any) => {
-    const FeaturedProperties = FeaturedData && JSON.parse(FeaturedData)
-    const RandomProperties = RandomData && JSON.parse(RandomData)
+
 
     return (
         <Box>
             <Hero/>
-            <Featured PropertiesArray={FeaturedProperties}/>
+            <Featured PropertiesArray={FeaturedData}/>
             <Stats/>
-            <PropertiesModuleSection PropertiesArray={RandomProperties}/>
+            <PropertiesModuleSection PropertiesArray={RandomData}/>
             <Category/>
             <HeadLine/>
         </Box>
@@ -56,11 +55,13 @@ export const getStaticProps = async() => {
         if (!FeaturedData || !RandomData) {
            throw new Error('No data found')
         }
+        bigInt_To_Number(FeaturedData)
+        bigInt_To_Number(RandomData)
 
         return {
             props: {
-                FeaturedData: toJson(FeaturedData),
-                RandomData: toJson(RandomData)
+                FeaturedData,
+                RandomData
             }
         }
     } catch (err) {

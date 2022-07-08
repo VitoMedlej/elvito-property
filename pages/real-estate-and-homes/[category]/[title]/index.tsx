@@ -7,12 +7,10 @@ import SummaryInfo from '../../../../components/PropertyPageComps/SummaryInfo';
 import HomeWorkOutlinedIcon from '@mui/icons-material/HomeWorkOutlined';
 import BathtubOutlinedIcon from '@mui/icons-material/BathtubOutlined';
 import {PrismaClient} from "@prisma/client";
-import {toJson} from "../index";
 import currencyToSymbol from "../../../../src/Functions/currencyToSymbol";
 import BedIcon from '@mui/icons-material/Bed';
 import BalconyIcon from '@mui/icons-material/Balcony';
 import StraightenIcon from '@mui/icons-material/Straighten';
-import {IFormData} from "../../../../src/Types";
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import UserProfile from "../../../../components/DashboardComps/UserProfile/UserProfile";
 import { Session } from "../../../_app";
@@ -32,13 +30,12 @@ const style2 =
     }
 
 
-const Index = ({results} : any) => {
+const Index = ({results} : any) => {   
 
-    let currentData : IFormData = results && JSON.parse(results)
     const {session} = useContext(Session);
-    const sessionId = session?.id
-    const {ownerName ,ownerEmail ,ownerId,ownerProfileImage,ownerPhoneNumber} = currentData.ownerDetails
-    const isSameUser = sessionId === ownerId
+
+    const {ownerName ,ownerEmail ,ownerId,ownerProfileImage,ownerPhoneNumber} = results.ownerDetails
+    const isSameUser = session?.id === ownerId
     const currentUser = {
         userName : ownerName,
         userEmail : ownerEmail,
@@ -49,7 +46,7 @@ const Index = ({results} : any) => {
     const router = useRouter()
 
     return (
-    <Layout description='' title={`${currentData?.title || 'Houses in lebanon | realtors and brokers lebanon'} | el-vito`}>
+    <Layout description='' title={`${results?.title || 'Houses in lebanon | realtors and brokers lebanon'} | el-vito`}>
 
 
         <Box
@@ -61,11 +58,11 @@ const Index = ({results} : any) => {
             mb: '5em',
             borderTop: '1px solid #80808061'
         }}>
-            {currentData && <Box maxWidth="lg" sx={{
+            {results && <Box maxWidth="lg" sx={{
                 margin: '0 auto'
             }}>
                 <Breadcrumb
-                    title={`${currentData
+                    title={`${results
                     ?.title || 'Item'}`}
                     category={`${router.query.category}`}/>
                 <Box
@@ -75,7 +72,7 @@ const Index = ({results} : any) => {
                     flexWrap: 'wrap'
                 }}>
 
-                    <PropertyPageCarousel images={currentData.images}/>
+                    <PropertyPageCarousel images={results.images}/>
                     <ContactForm id={ownerId} isHiddenOnMobile={true}/>
                 </Box>
                 <Box
@@ -96,10 +93,10 @@ const Index = ({results} : any) => {
                     }}>
 
                         <Typography sx={{fontSize:{xs:'1.2em',sm:'1.4em',md:"1.5em"}}} fontWeight="600">
-                            {currentData.title}
+                            {results.title}
                         </Typography>
                         <Typography sx={{fontSize:{xs:'.85em',sm:'.95em',md:"1.1em"}}} color='#000000bf' fontWeight="500">
-                            {currentData.location}
+                            {results.location}
                         </Typography>
                         <Box
                             sx={{
@@ -109,13 +106,13 @@ const Index = ({results} : any) => {
                             <Typography
                             sx={{fontSize:{xs:'.8em',sm:'.9em',md:"1em"}}}
                             color='#000000bf'>
-                                {currentData.purpose === 'for-sale'
+                                {results.purpose === 'for-sale'
                                     ? 'For Sale'
-                                    : currentData.purpose === 'for-rent' && 'For Rent'}:
+                                    : results.purpose === 'for-rent' && 'For Rent'}:
                             </Typography>
                             <Typography fontSize="1.2em" color='green' fontWeight="400">
-                                {currencyToSymbol(currentData.currency)}{currentData.price} {' '}
-                                {`${currentData
+                                {currencyToSymbol(results.currency)}{results.price} {' '}
+                                {`${results
                                     ?.rentFrequency}`}
                             </Typography>
                         </Box>
@@ -141,30 +138,30 @@ const Index = ({results} : any) => {
                             <SummaryInfo
                                 Icon={HomeWorkOutlinedIcon}
                                 title={"Property Type"}
-                                MainTitle={`${currentData.type}`}/>
+                                MainTitle={`${results.type}`}/>
                             <SummaryInfo
                                 Icon={BathtubOutlinedIcon}
                                 title={"Bathrooms"}
-                                MainTitle={currentData.bathrooms}/>
+                                MainTitle={results.bathrooms}/>
                                 
-                                 {currentData.rooms
-                                ? <SummaryInfo Icon={BedIcon} title={"Bedrooms"} MainTitle={currentData.rooms}/>
+                                 {results.rooms
+                                ? <SummaryInfo Icon={BedIcon} title={"Bedrooms"} MainTitle={results.rooms}/>
                                 : ''}
 
-                            {currentData.balconies
+                            {results.balconies
                                 ? <SummaryInfo
                                         Icon={BalconyIcon}
                                         title={"Balconies"}
-                                        MainTitle={currentData.balconies}/>
+                                        MainTitle={results.balconies}/>
                                 : ''}
                             <SummaryInfo
                                 Icon={StraightenIcon}
                                 title={"Property Size"}
-                                MainTitle={currentData.propertySize}/>
+                                MainTitle={results.propertySize}/>
 
                             <SummaryInfo
                                 Icon={PaidOutlinedIcon}
-                                MainTitle={currentData.paymentMethod}
+                                MainTitle={results.paymentMethod}
                                 title={'Payment Method'}/>
 
                         </Box>
@@ -184,7 +181,7 @@ const Index = ({results} : any) => {
                             sx={{
                             whiteSpace: 'pre-wrap'
                         }}>
-                            {`${currentData.description}`}
+                            {`${results.description}`}
                         </Typography>
                     </Box>
                     <Box sx={{
@@ -214,7 +211,7 @@ const Index = ({results} : any) => {
                                     Listed :
                                 </Typography>
                                 <Typography fontWeight='300'>
-                                    {currentData.createdAt || 'New'}
+                                    {results.createdAt || 'New'}
                                 </Typography>
 
                             </Box>
@@ -227,7 +224,7 @@ const Index = ({results} : any) => {
                                     Property Id :
                                 </Typography>
                                 <Typography fontWeight='300'>
-                                    {currentData.id}
+                                    {results.id}
                                 </Typography>
 
                             </Box>
@@ -257,6 +254,7 @@ const Index = ({results} : any) => {
 }
 
 export default Index
+export const bigInt_To_Number = (a:any) => typeof(a)==='bigint' ?  Number(a) : a
 
 export async function getServerSideProps({query} : any) {
 
@@ -278,9 +276,10 @@ export async function getServerSideProps({query} : any) {
                 }
             }
         }
-        let results = toJson(data)
+       
+        
         return {props: {
-                results
+                results : bigInt_To_Number(data)
             }}
     } catch (e) {
         console.log('e: ', e);

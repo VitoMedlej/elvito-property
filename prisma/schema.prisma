@@ -27,8 +27,8 @@ type PropertiesOwnerDetails {
 
 model Featured {
   id            String               @id @default(auto()) @map("_id") @db.ObjectId
-  balconies     BigInt
-  bathrooms     BigInt
+  balconies     Int
+  bathrooms     Int
   createdAt     String
   currency      String
   description   String
@@ -38,11 +38,11 @@ model Featured {
   location      String
   ownerDetails  FeaturedOwnerDetails
   paymentMethod String
-  price         BigInt
+  price         Int
   propertySize  String
   purpose       String
   rentFrequency String
-  rooms         BigInt
+  rooms         Int
   slug          String
   state         String
   title         String
@@ -51,8 +51,8 @@ model Featured {
 
 model Properties {
   id            String                 @id @default(auto()) @map("_id") @db.ObjectId
-  balconies     BigInt
-  bathrooms     BigInt
+  balconies     Int
+  bathrooms     Int
   createdAt     String
   currency      String
   description   String
@@ -62,11 +62,11 @@ model Properties {
   location      String
   ownerDetails  PropertiesOwnerDetails
   paymentMethod String
-  price         BigInt
+  price         Int
   propertySize  String
   purpose       String
   rentFrequency String
-  rooms         BigInt
+  rooms         Int
   slug          String
   state         String
   title         String

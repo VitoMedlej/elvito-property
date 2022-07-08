@@ -6,13 +6,14 @@ import FilterBar from "../../../components/FilterBar/FilterBar"
 import Layout from "../../../components/layout/Layout"
 import PropertySection from "../../../components/PropertySection/PropertySection"
 import capitalizeString from "../../../src/Functions/capitalizeString"
+import { bigInt_To_Number } from "./[title]"
 
 const Index = ({results, totalCount} : {
     results: any,
     totalCount: number
 }) => {
 
-    const AllProperties = results && JSON.parse(results)
+
 
     const router = useRouter()
     let {purpose, category} = router.query
@@ -58,7 +59,7 @@ const Index = ({results, totalCount} : {
                 <FilterBar/>
                 <PropertySection
                     totalCount={totalCount}
-                    AllProperties={AllProperties}
+                    AllProperties={results}
                     sectionTitle={`${router.query.id || 'propertie'}`}/>
 
                 <Drawer open={isDrawerOpen} onClose={toggleDrawer(false)}>
@@ -74,12 +75,8 @@ const Index = ({results, totalCount} : {
 }
 
 export default Index
-// a function I stole to deal with big ints
-export const toJson = (data : any) => {
-    return JSON.stringify(data, (_, v) => typeof v === 'bigint'
-        ? `${v}n`
-        : v).replace(/"(-?\d+)n"/g, (_, a) => a);
-}
+
+
 
 const Category = (categoryQuery : string) => {
     let categories = ["apartment", "villa", "comercial", "land", "chalet"]
@@ -161,7 +158,7 @@ export async function getServerSideProps({query} : any) {
         })
 
         // just a way to deal with bigints
-        data = data && toJson(data)
+        bigInt_To_Number(data)
 
         return {
             props: {
