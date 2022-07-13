@@ -40,6 +40,7 @@ export const getStaticProps = async() => {
         title: true,
         location: true
     }
+    const skip = 3
     const prisma = new PrismaClient()
     try {
 
@@ -47,7 +48,7 @@ export const getStaticProps = async() => {
             .featured
             .findMany({select})
        
-        const skip = 3
+      
         const RandomData = await prisma
             .properties
             .findMany({skip, select, take: 4})

@@ -78,7 +78,7 @@ export default Index
 
 
 
-const Category = (categoryQuery : string) => {
+const isCategoryValid = (categoryQuery : string) => {
     let categories = ["apartment", "villa", "comercial", "land", "chalet"]
 
     if (categories.includes(categoryQuery)) {
@@ -94,8 +94,7 @@ const isPurposeValid = (purposeQuery : string) => {
 }
 
 
-const GetTotalCount = async(type?: string, purpose?: string) => {
-    const prisma = new PrismaClient()
+const GetTotalCount = async(prisma: PrismaClient,type?: string, purpose?: string) => {
 
     const totalCount = await prisma
         .properties
@@ -108,7 +107,6 @@ const GetTotalCount = async(type?: string, purpose?: string) => {
     return totalCount || 0
 }
 export async function getServerSideProps({query} : any) {
-
     const select = {
         id: true,
         type: true,
@@ -127,15 +125,14 @@ export async function getServerSideProps({query} : any) {
     const itemsPerPage = 9
     const prisma = new PrismaClient()
     const purpose = isPurposeValid(`${query.purpose}`)
-    const type = Category(`${query.category}`)
+    const type = isCategoryValid(`${query.category}`)
     try {
         const currentPage = query.page || 0;
-        const totalCount = await GetTotalCount(type, purpose) || 0
+        const totalCount = await GetTotalCount(prisma,type, purpose) 
         const totalPages = Math.round(totalCount / itemsPerPage)
         let skip = (currentPage * itemsPerPage) || undefined
         if (currentPage > totalPages || currentPage < 0) 
             skip = 0
-
         let data : any = await prisma
             .properties
             .findMany({
@@ -147,7 +144,8 @@ export async function getServerSideProps({query} : any) {
                 },
                 select
             })
-        // just returning the first image because that's all I need wish prisma provided
+
+        // just returning the first image because that's all I need, wish prisma provided
         // an easier way to do this but oh well
         data.forEach((item : any) => {
             item.images
@@ -157,6 +155,7 @@ export async function getServerSideProps({query} : any) {
 
         // just a way to deal with bigints
         bigInt_To_Number(data)
+     
 
         return {
             props: {

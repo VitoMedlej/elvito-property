@@ -257,7 +257,6 @@ export default Index
 export const bigInt_To_Number = (a:any) => typeof(a)==='bigint' ?  Number(a) : a
 
 export async function getServerSideProps({query} : any) {
-
     const prisma = new PrismaClient()
     try {
 
@@ -276,12 +275,10 @@ export async function getServerSideProps({query} : any) {
                 }
             }
         }
-       
-        
         return {props: {
                 results : bigInt_To_Number(data)
             }}
-    } catch (e) {
+        } catch (e) {
         console.log('e: ', e);
 
         return {
