@@ -27,6 +27,7 @@ const style2 = {
 }
 
 const Index = ({results} : any) => {
+    const router = useRouter()
     if (!results) 
         return <h1>Error</h1>
     let currentData : IFormData = results && JSON.parse(results)
@@ -47,7 +48,7 @@ const Index = ({results} : any) => {
         userImage: ownerProfileImage,
         userPhone: ownerPhoneNumber
     }
-    const router = useRouter()
+   
     return (
         <Box
             sx={{
@@ -64,7 +65,7 @@ const Index = ({results} : any) => {
                 <Breadcrumb
                     title={`${currentData
                     ?.title || 'Item'}`}
-                    category={`${router.query.category}`}/>
+                    category={`${router?.query?.category}`}/>
                 <Box
                     sx={{
                     display: 'flex',
