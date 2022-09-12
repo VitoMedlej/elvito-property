@@ -92,6 +92,7 @@ export interface IDetailsSection {
     sx?: any
 }
 export interface IFormData {
+    _id ?: string;
     bathrooms : number 
     id?: string
     createdAt : string;

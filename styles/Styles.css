@@ -1,10 +1,9 @@
 body {
   margin: 0;
   padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   scroll-behavior: smooth;
-  font-family: 'Raleway, sans-serif';
+  font-family: "Raleway", sans-serif;
 }
 
 .img {
@@ -29,7 +28,7 @@ body {
   content: "";
   width: 100%;
   height: 100%;
-  background: #000000a6;
+  background: rgba(0, 0, 0, 0.6509803922);
   position: absolute;
   top: 0;
   left: 0;
@@ -55,7 +54,6 @@ body {
     min-width: 250px;
   }
 }
-
 .p1 {
   padding: 13.6px 85px 13.6px 15px;
 }
@@ -74,21 +72,18 @@ body {
 }
 
 .BR {
-  -webkit-transition: 0.2s ease;
   transition: 0.2s ease;
   border-radius: 4px;
 }
-
 .BR:hover {
-  -webkit-transform: scale(1.08);
-          transform: scale(1.08);
+  transform: scale(1.08);
 }
 
 .layered:after {
   content: "";
   width: 100%;
   height: 100%;
-  background: #0000008f;
+  background: rgba(0, 0, 0, 0.5607843137);
   position: absolute;
   top: 0;
   left: 0;
@@ -99,7 +94,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  background: #00000078;
+  background: rgba(0, 0, 0, 0.4705882353);
   width: 100%;
   height: 100%;
 }
@@ -117,12 +112,10 @@ body {
 .swiper-button-prev {
   padding: 0 5px;
 }
-
 .swiper-button-disabled:after,
 .swiper-button-next:after,
 .swiper-button-prev:after {
-  -webkit-filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.6));
-          filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 0.2rem 0.25rem rgba(0, 0, 0, 0.6));
   color: white;
   font-weight: 600;
 }
@@ -137,5 +130,4 @@ body {
 
 .link a {
   color: #1976d2;
-}
-/*# sourceMappingURL=Styles.css.map */
+}/*# sourceMappingURL=Styles.css.map */

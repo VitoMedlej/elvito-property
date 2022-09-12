@@ -7,6 +7,7 @@ import {IPropertySection} from "../../src/Types"
 import HouseCard from "../Cards/HouseCard"
 
 const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySection) => {
+   
     const [currentPage,setCurrentPage] = useState(0)
   
 
@@ -32,6 +33,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
         }}>
 
         { AllProperties && AllProperties.length > 0 ?
+        
         <>
        
         <Typography
@@ -64,12 +66,12 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
 
                 {AllProperties && AllProperties.map(prop => {
                     
-                    if (!prop.id) {
+                    if (!prop?._id) {
                         return
                     }
                     return <HouseCard
-                    
-                        id={prop.id}
+                        key={prop._id}
+                        id={prop._id}
                         type={prop.type}
                         baths={prop.bathrooms}
                         rooms={prop.rooms}
@@ -79,7 +81,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
                         title={prop.title}
                         location={prop.location}
                         currency={prop.currency}
-                        key={prop.id}
+                      
                         isMinWidthDisabled={true}
                         width={{
                         xs: '98%',
