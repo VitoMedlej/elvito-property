@@ -41,37 +41,56 @@ export const getStaticProps = async() => {
         title: true,
         location: true
     }
+
+    const itemsPerPage = 9
     const prisma = new PrismaClient()
+    const {MongoClient, ServerApiVersion} = require('mongodb');
+    const url = process.env.DATABASE_URL
+    const client = new MongoClient(url);
     try {
 
-        const FeaturedData = await prisma
-            .featured
-            .findMany({select})
-       
-        // const productsCount = await prisma
-        //     .properties
-        //     .count();
-        // const skip = Math.floor(Math.random() * productsCount) || 3;
-        const skip = 3
-        const RandomData = await prisma
-            .properties
-            .findMany({skip, select, take: 4})
+        // const FeaturedData = await prisma     .featured     .findMany({select})
 
-        if (!FeaturedData || !RandomData) {
-           throw new Error('No data found')
+        let FeaturedData : any = []
+        await client
+            .db("PropertyDB")
+            .collection("Featured")
+            .find()
+            .limit(10)
+            .forEach((i : any) => {
+                console.log('i: ', i);
+                FeaturedData.push(i)
+            });
+            FeaturedData = toJson([...FeaturedData])
+
+        let RandomData : any = []
+        await client
+            .db("PropertyDB")
+            .collection("Properties")
+            .find()
+            .skip(4)
+            .limit(10)
+            .forEach((i : any) => {
+                RandomData.push(i)
+            });
+        RandomData = toJson([...RandomData])
+
+        if (!FeaturedData || FeaturedData
+            ?.length < 1 || !RandomData) {
+            throw 'No data found'
         }
 
         return {
             props: {
-                FeaturedData: toJson(FeaturedData),
-                RandomData: toJson(RandomData)
+                FeaturedData,
+                RandomData
             }
         }
     } catch (err) {
         console.log('err: ', err);
         return {props: {}}
     } finally {
-        await prisma.$disconnect()
+        await client.close();
     }
 
 }

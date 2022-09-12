@@ -20,29 +20,33 @@ const style = {
     display: 'flex',
     alignItems: 'center'
 }
-const style2 =
-
-    {
-        pb: '.5em',
-        fontSize:'1.5em'    ,
-        fontWeight:'500'
-    }
-
+const style2 = {
+    pb: '.5em',
+    fontSize: '1.5em',
+    fontWeight: '500'
+}
 
 const Index = ({results} : any) => {
-
+    if (!results) 
+        return <h1>Error</h1>
     let currentData : IFormData = results && JSON.parse(results)
-    const session = {data:{id:''}}
-    const sessionId = session?.data?.id
-    const {ownerName ,ownerEmail ,ownerId,ownerProfileImage,ownerPhoneNumber} = currentData.ownerDetails
+    const session = {
+        data: {
+            id: ''
+        }
+    }
+    const sessionId = session
+        ?.data
+            ?.id
+    const {ownerName, ownerEmail, ownerId, ownerProfileImage, ownerPhoneNumber} = currentData.ownerDetails
     const isSameUser = sessionId === ownerId
     const currentUser = {
-        userName : ownerName,
-        userEmail : ownerEmail,
-        userId : ownerId,
-        userImage : ownerProfileImage,
-        userPhone : ownerPhoneNumber,
-    }    
+        userName: ownerName,
+        userEmail: ownerEmail,
+        userId: ownerId,
+        userImage: ownerProfileImage,
+        userPhone: ownerPhoneNumber
+    }
     const router = useRouter()
     return (
         <Box
@@ -88,10 +92,27 @@ const Index = ({results} : any) => {
                         flexDirection: 'column'
                     }}>
 
-                        <Typography sx={{fontSize:{xs:'1.2em',sm:'1.4em',md:"1.5em"}}} fontWeight="600">
+                        <Typography
+                            sx={{
+                            fontSize: {
+                                xs: '1.2em',
+                                sm: '1.4em',
+                                md: "1.5em"
+                            }
+                        }}
+                            fontWeight="600">
                             {currentData.title}
                         </Typography>
-                        <Typography sx={{fontSize:{xs:'.85em',sm:'.95em',md:"1.1em"}}} color='#000000bf' fontWeight="500">
+                        <Typography
+                            sx={{
+                            fontSize: {
+                                xs: '.85em',
+                                sm: '.95em',
+                                md: "1.1em"
+                            }
+                        }}
+                            color='#000000bf'
+                            fontWeight="500">
                             {currentData.location}
                         </Typography>
                         <Box
@@ -100,8 +121,14 @@ const Index = ({results} : any) => {
                             gap: '.5em'
                         }}>
                             <Typography
-                            sx={{fontSize:{xs:'.8em',sm:'.9em',md:"1em"}}}
-                            color='#000000bf'>
+                                sx={{
+                                fontSize: {
+                                    xs: '.8em',
+                                    sm: '.9em',
+                                    md: "1em"
+                                }
+                            }}
+                                color='#000000bf'>
                                 {currentData.purpose === 'for-sale'
                                     ? 'For Sale'
                                     : currentData.purpose === 'for-rent' && 'For Rent'}:
@@ -119,14 +146,12 @@ const Index = ({results} : any) => {
                         py: '2em',
                         borderBottom: "1px solid #c4c4c4"
                     }}>
-                        <Typography
-                            sx={style2}
-                            >
+                        <Typography sx={style2}>
                             Property Facts
                         </Typography>
                         <Box
                             sx={{
-                            gap:'10px',
+                            gap: '10px',
                             display: 'flex',
                             justifyContent: 'end',
                             flexWrap: 'wrap'
@@ -138,9 +163,7 @@ const Index = ({results} : any) => {
                             <SummaryInfo
                                 Icon={BathtubOutlinedIcon}
                                 title={"Bathrooms"}
-                                MainTitle={currentData.bathrooms}/>
-                                
-                                 {currentData.rooms
+                                MainTitle={currentData.bathrooms}/> {currentData.rooms
                                 ? <SummaryInfo Icon={BedIcon} title={"Bedrooms"} MainTitle={currentData.rooms}/>
                                 : ''}
 
@@ -168,9 +191,7 @@ const Index = ({results} : any) => {
                         py: '2em',
                         borderBottom: "1px solid #c4c4c4"
                     }}>
-                        <Typography
-                            sx={style2}
-                            >
+                        <Typography sx={style2}>
                             Description
                         </Typography>
                         <Typography
@@ -183,8 +204,7 @@ const Index = ({results} : any) => {
                     <Box sx={{
                         py: '2em'
                     }}>
-                        <Typography
-                            sx={style2}>
+                        <Typography sx={style2}>
                             More Details
                         </Typography>
                         <Box
@@ -228,21 +248,24 @@ const Index = ({results} : any) => {
                         </Box>
 
                     </Box>
-                    
-                     <Box sx={{
-                       py: '2em',
+
+                    <Box
+                        sx={{
+                        py: '2em',
                         borderTop: "1px solid #c4c4c4"
                     }}>
-                        <Typography
-                            sx={style2}>
+                        <Typography sx={style2}>
                             Owner&apos;s Details
                         </Typography>
-                        <UserProfile  currentUser={currentUser} isSameUser={isSameUser} logOutOption={false}/>
-                  
-                </Box> 
+                        <UserProfile
+                            currentUser={currentUser}
+                            isSameUser={isSameUser}
+                            logOutOption={false}/>
+
+                    </Box>
                 </Box>
             </Box>}
-            <ContactForm id={ownerId} />
+            <ContactForm id={ownerId}/>
         </Box>
     )
 }
@@ -251,25 +274,26 @@ export default Index
 
 export async function getServerSideProps({query} : any) {
 
-    const prisma = new PrismaClient()
-    try {
+    const {MongoClient, ServerApiVersion, ObjectID} = require('mongodb');
+    const url = process.env.DATABASE_URL
 
-        let data = await prisma
-            .properties
-            .findUnique({
-                where: {
-                    id: query.id
-                }
-            })
-            console.log('data: ', data);
+    const client = new MongoClient(url);
+    try {
+        const {id} = query
+
+        if (!id) 
+            throw 'Id not provided'
+        const _id = new ObjectID(id)
+
+        await client.connect()
+        const data = await client
+            .db("PropertyDB")
+            .collection("Properties")
+            .findOne({_id})
         if (!data) {
-            return {
-                redirect: {
-                    destination: '/real-estate-and-homes/properties',
-                    statusCode: 307
-                }
-            }
+            throw 'Error No data found'
         }
+
         let results = toJson(data)
         return {props: {
                 results
@@ -283,8 +307,8 @@ export async function getServerSideProps({query} : any) {
                 statusCode: 307
             }
         }
-    } finally {
-        await prisma.$disconnect()
-
+    }
+    finally {
+        client.close();
     }
 }

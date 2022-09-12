@@ -1,5 +1,5 @@
 import {Box, Typography, Button} from '@mui/material';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import {Dispatch, SetStateAction, useContext} from 'react';
 import {Session} from '../../../pages/_app';
 import {ICurrentUser, IUserProfile} from '../../../src/Types';
@@ -55,6 +55,7 @@ const signOut = async({redirect, redirectUrl, setCurrentUser, setSession} : Isig
 
 const UserProfile = ({currentUser, setCurrentUser, logOutOption, isSameUser} : IUserProfile) => {
     const {session, setSession} = useContext(Session);
+    const router = useRouter()
     const {id} = router.query
     return (
         <Box sx={{

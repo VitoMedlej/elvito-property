@@ -11,7 +11,6 @@ const Index = ({results, totalCount} : {
 }) => {
     const MyContext = createContext('defaultValue');
     const AllProperties = results && JSON.parse(results)
-    
 
     const router = useRouter()
 
@@ -73,8 +72,9 @@ const Category = (categoryQuery : string) => {
     return categoryQuery
 }
 const isPurposeValid = (purposeQuery : string) => {
-    if (purposeQuery === 'for-sale' || purposeQuery === 'for-rent') 
-        {return purposeQuery}
+    if (purposeQuery === 'for-sale' || purposeQuery === 'for-rent') {
+        return purposeQuery
+    }
     return undefined
 
 }
@@ -103,7 +103,7 @@ const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, item
                 where: {
                     purpose: isPurposeValid(query.purpose),
                     type: Category(query.category),
-                    OR: OR && OR,
+                    OR: OR && OR
                 },
                 select
             })
@@ -117,114 +117,75 @@ const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, item
         await prisma.$disconnect()
     }
 }
-// const GetTotalCount = async(prisma : PrismaClient, query : any, OR?: any) => {
-//     const totalCount = await prisma
-//         .properties
-//         .count({
-//             where: {
-//                 type: Category(query
-//                     ?.category),
-//                 purpose: isPurposeValid(query
-//                     ?.purpose),
-//                 OR
-//             }
-//         })
-//     return totalCount
-// }
+// const GetTotalCount = async(prisma : PrismaClient, query : any, OR?: any) =>
+// {     const totalCount = await prisma         .properties         .count({
+//          where: {                 type: Category(query
+// ?.category),                 purpose: isPurposeValid(query
+//  ?.purpose),                 OR             }         })     return
+// totalCount }
 export async function getServerSideProps({query} : any) {
 
     const itemsPerPage = 9
     const prisma = new PrismaClient()
+    const {MongoClient, ServerApiVersion} = require('mongodb');
+    const url = process.env.DATABASE_URL
+    const client = new MongoClient(url);
     try {
+        await client.connect()
         let searchQuery = query
             ?.q
                 ?.toLowerCase()
-        // let OR = searchQuery
-        //     ? [
-        //         {
-        //             description: {
-        //                 contains: searchQuery
-        //             }
-        //         }, {
-        //             title: {
-        //                 contains: searchQuery
-        //             }
-
-        //         }
-
-        //     ]
-        //     : undefined
+     
         const page = query
             ?.page || 0;
-        const purpose = query?.purpose || undefined
-        // const totalCount = await GetTotalCount(prisma, query, undefined)
-        // const totalPages = Math.round(totalCount / itemsPerPage)
+        const purpose = query
+            ?.purpose || undefined
+   
         let skip = (page * itemsPerPage) || 0
-        // if (page > totalPages || page < 0) 
-        //     skip = 0
+     
 
-        // if (query
-        //     ?.q) {
 
-        //     let propertiesArray = await GetProperties(prisma, skip, OR, itemsPerPage, query)
+      
 
-        //     const totalCount = await GetTotalCount(prisma, query, OR)
-        //     if (propertiesArray && propertiesArray.length > 0) 
-        //         return {
-        //             props: {
-        //                 results: toJson([...propertiesArray]),
-        //                 totalCount
+      
+        const totalCount = await client
+            .db("PropertyDB")
+            .collection("Properties")
+            .count()
 
-        //             }
-        //         }
-            
-        // }
-
-        // let propertiesArray = await GetProperties(prisma, skip, undefined, itemsPerPage, query)
-
-        // if (!propertiesArray || propertiesArray
-        //     ?.length < 1) {
-        //     throw new Error('No Items Found')
-        // }
-
-        // return {
-        //     props: {
-        //         results: toJson([...propertiesArray]),
-        //         totalCount
-
-        const { MongoClient, ServerApiVersion } = require('mongodb');
-
-    const url = process.env.DATABASE_URL
-        const client = new MongoClient(url);
-        
-          
-        await client.connect()
-        const totalCount = await client.db("PropertyDB").collection("Properties").count()
-    
-        if (totalCount < 1){ throw 'Error, no data found';}
+        if (totalCount < 1) {
+            throw 'Error, no data found';
+        }
 
         let data : any = []
-        await client.db("PropertyDB").collection("Properties").find({purpose:''}).limit(itemsPerPage).skip(skip).forEach((i:any)=>{
-            data.push(i)
-        });
-         data = toJson([...data])
+        await client
+            .db("PropertyDB")
+            .collection("Properties")
+            .find()
+            .limit(itemsPerPage)
+            .skip(skip)
+            .forEach((i : any) => {
+                data.push(i)
+            });
+        data = toJson([...data])
 
         if (!data) {
-            return {props:{}}
-        } 
-          client.close();
-        
-          return {props: {
-            totalCount,
-              results : data
-          }}
-       
-     
+            return {props: {}}
+        }
+        client.close();
+
+        return {
+            props: {
+                totalCount,
+                results: data
+            }
+        }
+
     } catch (err) {
         console.log('err 1.4: ', err);
         return {props: {}}
     } finally {
-        await prisma.$disconnect()
+      await  client.close();
     }
 
 }
