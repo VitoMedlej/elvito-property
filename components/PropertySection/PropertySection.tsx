@@ -7,9 +7,10 @@ import {IPropertySection} from "../../src/Types"
 import HouseCard from "../Cards/HouseCard"
 
 const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySection) => {
-   
+    const router = useRouter()
     const [currentPage,setCurrentPage] = useState(0)
-  
+    const category = router?.query?.category === 'properties' ? '' :router?.query?.category  ;
+    
 
     useEffect(() => {
         setCurrentPage(Number(router.query?.page ) || 0)
@@ -18,10 +19,9 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
    // first we limit the number of products per page
     const itemsPerPage = 9;
    // then we calculate how many pages we have and round its ceiled value  (1.2 => 2)
-    const totalPages = totalCount / itemsPerPage
-    const numberOfButtons = Math.round(Math.ceil(totalPages))
+    const totalPages = Number(AllProperties && AllProperties?.filter(x=>x.type === category).length || 0) / itemsPerPage
+    const numberOfButtons = Math.round(totalPages > 1.5 ? Math.ceil(totalPages) : 1)
 
-    const router = useRouter()
  
     return (
         <Box
@@ -32,7 +32,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
             mt: '2em'
         }}>
 
-        { AllProperties && AllProperties.length > 0 ?
+        { AllProperties && AllProperties.length > 0  ?
         
         <>
        
@@ -64,7 +64,7 @@ const PropertySection = ({sectionTitle, totalCount, AllProperties} : IPropertySe
                 mt: '2em'
             }}>
 
-                {AllProperties && AllProperties.map(prop => {
+                {AllProperties && AllProperties.filter(x=> category ? x.type === category : x).map(prop => {
                     
                     if (!prop?._id) {
                         return

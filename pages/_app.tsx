@@ -10,10 +10,10 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import ScrollToTopBtn from '../components/ScrollToTopBtn'
 import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 import gsap from 'gsap';
-import {createContext, useEffect, useLayoutEffect, useState} from 'react'
+import {createContext, useEffect, useState} from 'react'
 import { ISession } from '../src/Types'
 import getCookie from '../src/Functions/getCookie'
-
+import NextNProgress from 'nextjs-progressbar';
 
 export const Session = createContext < ISession > ({
     session: null,
@@ -50,6 +50,7 @@ function MyApp({
             }}>
 
                 <MainNavBar/>
+                <NextNProgress />
                 <Component th {...pageProps}/>
                 <ScrollToTopBtn/>
                 <Footer/>

@@ -4,6 +4,7 @@ import {useRouter} from "next/router"
 import {createContext, useEffect, useState} from "react"
 import FilterBar from "../../../components/FilterBar/FilterBar"
 import PropertySection from "../../../components/PropertySection/PropertySection"
+import { SkipNextOutlined } from "@mui/icons-material"
 
 const Index = ({results, totalCount} : {
     results: any,
@@ -95,6 +96,7 @@ const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, item
     }
 
     try {
+        
         let data = await prisma
             .properties
             .findMany({
@@ -131,7 +133,15 @@ const GetProperties = async(prisma : PrismaClient, skip?: number, OR?: any, item
 //         })
 //     return totalCount
 // }
-export async function getServerSideProps({query} : any) {
+export async function getStaticPaths() {
+    return { paths: ['/real-estate-and-homes/properties',
+    '/real-estate-and-homes/comerical',
+    '/real-estate-and-homes/chalet',
+    '/real-estate-and-homes/land',
+    
+    ,'/real-estate-and-homes/villa','/real-estate-and-homes/apartment'], fallback: false };
+}
+export async function getStaticProps({query} : any) {
 
     const itemsPerPage = 9
     const prisma = new PrismaClient()
@@ -154,9 +164,10 @@ export async function getServerSideProps({query} : any) {
 
         //     ]
         //     : undefined
+        const limit = 100;
         const page = query
             ?.page || 0;
-        const purpose = query?.purpose || undefined
+        const purpose = query?.purpose || null
         // const totalCount = await GetTotalCount(prisma, query, undefined)
         // const totalPages = Math.round(totalCount / itemsPerPage)
         let skip = (page * itemsPerPage) || 0
@@ -204,7 +215,10 @@ export async function getServerSideProps({query} : any) {
         if (totalCount < 1){ throw 'Error, no data found';}
 
         let data : any = []
-        await client.db("PropertyDB").collection("Properties").find({purpose:''}).limit(itemsPerPage).skip(skip).forEach((i:any)=>{
+        // await client.db("PropertyDB").collection("Properties").find({purpose}).limit(itemsPerPage).skip(skip).forEach((i:any)=>{
+        //     data.push(i)
+        // });
+        await client.db("PropertyDB").collection("Properties").find({}).limit(limit).skip(skip).forEach((i:any)=>{
             data.push(i)
         });
          data = toJson([...data])

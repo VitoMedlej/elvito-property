@@ -55,6 +55,8 @@ const Hero = () => {
                     xs: '20em',
                     sm: '25.25em'
                 },
+                opacity:0,
+                        y:'40px',
                 zIndex: '2',
                 pt: {
                     xs: '5em',
@@ -64,10 +66,11 @@ const Hero = () => {
                 textAlign: 'center',
                 px: '3vw'
             }}>
-                <Box  className='title'>
+                <Box  sx={{ }} className='title'>
 
                     <Typography
                         sx={{
+                       
                         fontSize: {
                             xs: '2em',
                             sm: '2.4em',
