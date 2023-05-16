@@ -251,24 +251,26 @@ export default Index
 
 export async function getServerSideProps({query} : any) {
 
-    const prisma = new PrismaClient()
-    try {
+    const {MongoClient, ServerApiVersion, ObjectID} = require('mongodb');
+    const url = process.env.DATABASE_URL
 
-        let data = await prisma
-            .properties
-            .findUnique({
-                where: {
-                    id: query.id
-                }
-            })
+    const client = new MongoClient(url);
+    try {
+        const {id} = query
+
+        if (!id) 
+            throw 'Id not provided'
+        const _id = new ObjectID(id)
+
+        await client.connect()
+        const data = await client
+            .db("PropertyDB")
+            .collection("Properties")
+            .findOne({_id})
         if (!data) {
-            return {
-                redirect: {
-                    destination: '/real-estate-and-homes/properties',
-                    statusCode: 307
-                }
-            }
+            throw 'Error No data found'
         }
+
         let results = toJson(data)
         return {props: {
                 results
@@ -282,8 +284,8 @@ export async function getServerSideProps({query} : any) {
                 statusCode: 307
             }
         }
-    } finally {
-        await prisma.$disconnect()
-
+    }
+    finally {
+        client.close();
     }
 }
